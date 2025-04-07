@@ -1,42 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+html, body {
+    background-color:#ffffe8; 
+  color:#532c09;
+}
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  margin: 0;
+  padding: 0;
+ width: 100vw;
+  height: 100vh;
+  font-family: 'Poppins';
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/*navbar*/
+#navbar {
+  background-color:#ffffe8; 
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#imglogo {
+  max-width: 100px;
+  max-height: 80px;
+  padding: 0px;
+  padding-top: 12px;
+  margin: 0px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+#navbar .nav-link {
+  color: #532c09 !important; 
 }
 
-.card {
-  padding: 2em;
+#navbar .nav-link.active,
+#navbar .nav-link:focus {
+  color: #8B4F1F !important; 
 }
 
-.read-the-docs {
-  color: #888;
+#navbar .nav-link:hover {
+  color: #7A3E1F !important; 
 }
+
+
+
+/*footer*/
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+
+
