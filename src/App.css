@@ -3,12 +3,14 @@
 html, body {
     background-color:#ffffe8; 
   color:#532c09;
+
 }
 #root {
   margin: 0;
   padding: 0;
  width: 100vw;
-  height: 100vh;
+ height: 100%;
+
   font-family: 'Poppins';
 }
 
@@ -39,6 +41,18 @@ html, body {
 }
 
 
+/*home*/
+
+#recensioni {
+  background-color:#ffffe8; 
+}
+#imgrecensioni  {
+  width: 100px;  /* Larghezza */
+  height: 100px; /* Altezza */
+  border-radius: 50%; /* Per renderla rotonda */
+  object-fit: cover;
+  margin: 0 auto;
+}
 
 /*footer*/
 #footer {

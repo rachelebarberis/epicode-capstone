@@ -1,27 +1,37 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { Link } from "react-router-dom";
 const NavBarComponent = () => {
   return (
     <Navbar expand="md" className=" pt-0" id="navbar">
       <Container fluid={true}>
-        <Nav.Link to="/" className="m-0 p-0">
+        <Link to="/" className="m-0 p-0 nav-link">
           <img src="/public/images/logo.jpg" id="imglogo" />
-        </Nav.Link>
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse
           id="basic-navbar-nav"
           className="justify-content-between"
         >
           <Nav className="me-auto">
-            <Nav.Link>Esplora</Nav.Link>
-            <Nav.Link>About Us</Nav.Link>
+            <Link to="/Esplora" className=" nav-link">
+              Esplora
+            </Link>
+            <Link to="/AboutUs" className=" nav-link">
+              About Us
+            </Link>
+            <Link to="/Recensioni" className=" nav-link">
+              Recensioni
+            </Link>
 
-            <Nav.Link>Area Personale</Nav.Link>
+            <Link to="/AreaPersonale" className=" nav-link">
+              Area Personale
+            </Link>
           </Nav>
 
           <Nav>
-            <Nav.Link className="nav-Nav.Link justify-content-end">
+            <Link to="/Login" className=" nav-link">
               Login
-            </Nav.Link>
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
