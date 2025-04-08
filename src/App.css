@@ -17,6 +17,11 @@ html, body {
 /*navbar*/
 #navbar {
   background-color:#ffffe8; 
+  position: fixed;
+  top:0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
 }
 
 #imglogo {
@@ -47,18 +52,193 @@ html, body {
   background-color:#ffffe8; 
 }
 #imgrecensioni  {
-  width: 100px;  /* Larghezza */
-  height: 100px; /* Altezza */
-  border-radius: 50%; /* Per renderla rotonda */
+  width: 100px;  
+  height: 100px; 
+  border-radius: 50%; 
   object-fit: cover;
   margin: 0 auto;
 }
 
+/*login*/
+#login-page {
+ 
+  padding: 100px; 
+  min-height: 100vh;
+}
+
+#login-header h1 {
+  color: #532c09;
+  font-weight: bold;
+}
+
+#login-header p {
+  color: #7A3E1F;
+  font-size: 1.2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#login-button {
+  background-color: #7A3E1F;
+  border: none;
+}
+
+#register-link a {
+  color: #7A3E1F;
+  text-decoration: none;
+}
+
+/*register*/
+#register-page {
+ 
+  padding: 100px; 
+  min-height: 100vh;
+}
+
+#register-header h1 {
+  color: #532c09;
+  font-weight: bold;
+}
+
+#register-header p {
+  color: #7A3E1F;
+  font-size: 1.2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#register-button {
+  background-color: #7A3E1F;
+  border: none;
+}
+
+#login-link a {
+  color: #7A3E1F;
+  text-decoration: none;
+}
+/*Area Personale*/
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 3px solid #7A3E1F;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.custom-btn {
+  font-weight: bold;
+  padding: 8px 20px;
+  border-radius: 25px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-btn:hover {
+  background-color: #7A3E1F;
+  color: white;
+}
+
+
+h4, h5 {
+  color: #532c09;
+}
+
+
+.pt-3 p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+
+@media (max-width: 768px) {
+  .profile-img {
+    width: 120px;
+    height: 120px;
+  }
+
+  h4, h5 {
+    font-size: 1.2rem;
+  }
+
+  .custom-btn {
+    font-size: 0.9rem;
+    padding: 6px 16px;
+  }
+}
+
+/*Esplora*/
+/* Barra di ricerca */
+.search-input {
+  border-radius: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  border-color: #7a3e1f; /* Colore quando il campo è attivo */
+  box-shadow: 0 0 5px rgba(122, 62, 31, 0.4); /* Aggiungi ombra al focus */
+}
+
+/* Stile per il bottone di ricerca */
+#button-addon2 {
+  border-radius: 25px;
+  background-color: #7a3e1f;
+  border: none;
+}
+
+#button-addon2:hover {
+  background-color: #532c09; /* Cambia il colore quando si passa sopra */
+}
+
+/* Responsività */
+@media (max-width: 768px) {
+  .search-input {
+    font-size: 0.9rem;
+  }
+
+  #button-addon2 {
+    padding: 5px 12px;
+  }
+}
+/* Aggiungi qualche personalizzazione se vuoi stilizzare ulteriormente */
+
+/* Stile per la navbar dei tabs (assicurati che le tab siano sopra l'immagine) */
+.card .nav-pills .nav-link {
+  background-color: rgba(255, 255, 255, 0.7);  /* Colore di sfondo trasparente */
+  color: #532c09;
+  border-radius: 0px;
+  margin-bottom: 5px;
+}
+
+.card .nav-pills .nav-link.active {
+  background-color: #7A3E1F; /* Colore di sfondo quando attivo */
+  color: white;
+}
+
+.card .nav-pills {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.card-body {
+  padding-top: 40px; /* Distanza tra l'immagine e il contenuto */
+}
+
+
+
 /*footer*/
 #footer {
+  background-color:#ffffe8; 
   position: fixed;
-  bottom: 0;
+  bottom:0;
+  right: 0;
   left: 0;
+  z-index: 1000;
   width: 100%;
 }
 

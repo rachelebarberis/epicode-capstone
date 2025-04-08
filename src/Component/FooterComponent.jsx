@@ -1,8 +1,8 @@
 import { Container } from "react-bootstrap";
 
 const FooterComponent = () => (
-  <Container style={{ fontFamily: "'Poppins', sans-serif" }}>
-    <footer className="mt-5 mb-0" id="footer">
+  <Container fluid={true} className="p-0" id="footer">
+    <footer className="mt-2">
       <span className="d-flex justify-content-center">
         <strong>WanderLOst</strong> - Viaggia senza limiti, sogna senza confini
       </span>

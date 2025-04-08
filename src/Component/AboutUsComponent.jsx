@@ -2,9 +2,9 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 
 const AboutUsComponent = () => {
   return (
-    <Container fluid className="my-5">
+    <Container fluid className="my-5 pt-5 pb-5 ">
       <div className="text-center mb-5">
-        <h2>Chi Siamo</h2>
+        <h2>Chi Siamo?</h2>
         <p className="lead text-muted">
           Scopri la nostra missione e come ti aiuteremo a vivere esperienze
           uniche in ogni angolo del mondo.
@@ -47,7 +47,12 @@ const AboutUsComponent = () => {
               offre un'esperienza personalizzata, facendoti scoprire
               destinazioni straordinarie e opportunità uniche. Dalle mete più
               famose ai luoghi nascosti, siamo qui per rendere ogni tuo viaggio
-              un'avventura indimenticabile.
+              un'avventura indimenticabile. Siamo un team di appassionati di
+              viaggi, pronti ad aiutarti a scoprire il mondo con facilità e
+              autenticità. La nostra app ti offre un'esperienza personalizzata,
+              facendoti scoprire destinazioni straordinarie e opportunità
+              uniche. Dalle mete più famose ai luoghi nascosti, siamo qui per
+              rendere ogni tuo viaggio un'avventura indimenticabile.
             </p>
             <p>
               <strong>Perché sceglierci?</strong>

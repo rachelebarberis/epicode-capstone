@@ -5,6 +5,11 @@ import NavBarComponent from "./Component/NavBarComponent";
 import HomeComponent from "./Component/HomeComponent";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AboutUsComponent from "./Component/AboutUsComponent";
+import LoginComponent from "./Component/LoginComponent";
+import RegisterComponent from "./Component/RegisterComponent";
+import AreaPersonaleComponent from "./Component/AreaPersonaleComponent";
+import FooterComponent from "./Component/FooterComponent";
+import EsploraComponent from "./Component/EsploraComponent";
 
 const App = () => {
   return (
@@ -13,8 +18,13 @@ const App = () => {
         <NavBarComponent />
         <Routes>
           <Route path="/" element={<HomeComponent />} />
+          <Route path="/Esplora" element={<EsploraComponent />} />
+          <Route path="/AreaPersonale" element={<AreaPersonaleComponent />} />
           <Route path="/AboutUs" element={<AboutUsComponent />} />
+          <Route path="/Login" element={<LoginComponent />} />
+          <Route path="/Register" element={<RegisterComponent />} />
         </Routes>
+        <FooterComponent />
       </BrowserRouter>
     </>
   );

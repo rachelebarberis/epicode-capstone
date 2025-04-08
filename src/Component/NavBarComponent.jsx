@@ -29,6 +29,9 @@ const NavBarComponent = () => {
           </Nav>
 
           <Nav>
+            <Link to="/Carrello" className=" nav-link">
+              <i className="bi bi-cart"></i>
+            </Link>
             <Link to="/Login" className=" nav-link">
               Login
             </Link>

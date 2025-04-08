@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const HomeComponent = () => {
   return (
-    <Container>
+    <Container className="pb-5 mb-5 pt-5 pb-5">
       <div className="d-flex flex-column justify-content-center align-items-center text-center">
         <h1 className="mb-3 mt-5">WanderLOst</h1>
         <h2>Perderti nelle meraviglie del mondo!</h2>
@@ -70,6 +70,7 @@ const HomeComponent = () => {
             </Col>
           </Row>
         </section>
+        <hr className="w-100 m-4" style={{ color: "#7A3E1F" }} />
         <section className="mt-5">
           <div className="d-flex justify-content-between align-content-center">
             <h4>Recensioni</h4>
@@ -141,21 +142,22 @@ const HomeComponent = () => {
             </Col>
           </Row>
         </section>
+        <hr className="w-100 m-4" style={{ color: "#7A3E1F" }} />
         <section className="mt-5">
-          <div className="d-flex flex-column justify-content-center align-items-center border border-1">
-            {" "}
-            <h4>AboutUs</h4>
-            <p>
+          <div className="d-flex flex-column justify-content-center align-items-center">
+            <h4>About Us</h4>
+            <p className="text-center">
               Siamo un team di appassionati viaggiatori pronti a guidarti verso
               le migliori esperienze del mondo.
               <br />
               Scopri di più sulla nostra missione e sul nostro team!
             </p>
-            <Link to="/AboutUs">
+            <Link to="/AboutUs" className="nav-link">
               <p>Scopri di più</p>
             </Link>
           </div>
         </section>
+        <hr className="w-100 m-4 " style={{ color: "#7A3E1F" }} />
       </div>
     </Container>
   );
