@@ -10,6 +10,7 @@ import RegisterComponent from "./Component/RegisterComponent";
 import AreaPersonaleComponent from "./Component/AreaPersonaleComponent";
 import FooterComponent from "./Component/FooterComponent";
 import EsploraComponent from "./Component/EsploraComponent";
+import ItinerarioDettagli from "./Component/ItinerarioDettagli";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomeComponent />} />
           <Route path="/Esplora" element={<EsploraComponent />} />
+          <Route path="/itinerario/:id" element={<ItinerarioDettagli />} />
           <Route path="/AreaPersonale" element={<AreaPersonaleComponent />} />
           <Route path="/AboutUs" element={<AboutUsComponent />} />
           <Route path="/Login" element={<LoginComponent />} />

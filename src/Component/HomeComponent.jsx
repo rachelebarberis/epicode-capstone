@@ -1,7 +1,27 @@
-import { Container, Card, Row, Col, Button } from "react-bootstrap";
+import { Container, Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
 const HomeComponent = () => {
+  const [itinerari, setItinerari] = useState([]);
+
+  useEffect(() => {
+    const fetchItinerari = async () => {
+      try {
+        const response = await fetch("https://localhost:7007/api/Itinerario");
+        if (!response.ok) {
+          throw new Error("Errore durante il recupero degli itinerari");
+        }
+        const data = await response.json();
+        console.log(data);
+        setItinerari(data);
+      } catch (error) {
+        console.error("Errore:", error.message);
+      }
+    };
+
+    fetchItinerari();
+  }, []);
   return (
     <Container className="pb-5 mb-5 pt-5 pb-5">
       <div className="d-flex flex-column justify-content-center align-items-center text-center">
@@ -31,43 +51,33 @@ const HomeComponent = () => {
             <h4>Esplora</h4>
             <div>
               <a>Scopri di più</a>
-              <i class="bi bi-chevron-right"></i>
+              <i className="bi bi-chevron-right"></i>
             </div>
           </div>
 
           <Row>
-            <Col className="p-2" xs={12} sm={6} md={4} lg={3}>
-              <Card>
-                <Card.Img variant="top" src="/public/images/thai.jpg" />
-                <Card.Body>
-                  <Card.Title className="text-center">Thailandia</Card.Title>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col className="p-2" xs={12} sm={6} md={4} lg={3}>
-              <Card>
-                <Card.Img variant="top" src="/public/images/thai.jpg" />
-                <Card.Body>
-                  <Card.Title className="text-center">Thailandia</Card.Title>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col className="p-2" xs={12} sm={6} md={4} lg={3}>
-              <Card>
-                <Card.Img variant="top" src="/public/images/thai.jpg" />
-                <Card.Body>
-                  <Card.Title className="text-center">Thailandia</Card.Title>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col className="p-2" xs={12} sm={6} md={4} lg={3}>
-              <Card>
-                <Card.Img variant="top" src="/public/images/thai.jpg" />
-                <Card.Body>
-                  <Card.Title className="text-center">Thailandia</Card.Title>
-                </Card.Body>
-              </Card>
-            </Col>
+            {itinerari.map((itinerario) => (
+              <Col
+                className="p-2"
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                key={itinerario.idItinerario}
+              >
+                <Card>
+                  <Card.Img
+                    variant="top"
+                    src={itinerario.immagineUrl || "/public/images/default.jpg"}
+                  />
+                  <Card.Body>
+                    <Card.Title className="text-center">
+                      {itinerario.nomeItinerario}
+                    </Card.Title>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
           </Row>
         </section>
         <hr className="w-100 m-4" style={{ color: "#7A3E1F" }} />
@@ -76,7 +86,7 @@ const HomeComponent = () => {
             <h4>Recensioni</h4>
             <div>
               <a>Scopri di più</a>
-              <i class="bi bi-chevron-right"></i>
+              <i className="bi bi-chevron-right"></i>
             </div>
           </div>
           <Row>
