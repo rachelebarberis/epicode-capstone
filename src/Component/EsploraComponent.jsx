@@ -11,8 +11,10 @@ import {
   Nav,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import CreateItinerarioModal from "./ItinerarioAdmin/CreateItinerarioModal";
 const EsploraComponent = () => {
   const [itinerari, setItinerari] = useState([]);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   useEffect(() => {
     const fetchItinerari = async () => {
@@ -50,6 +52,10 @@ const EsploraComponent = () => {
             </InputGroup>
           </Form>
         </Col>
+        <Button variant="success" onClick={() => setShowCreateModal(true)}>
+          Aggiungi Itinerario
+        </Button>
+        <CreateItinerarioModal show={showCreateModal} />
       </Row>
       {itinerari.map((itinerario, index) => {
         const prezzoBase = itinerario.itinerarioFascePrezzo.find(

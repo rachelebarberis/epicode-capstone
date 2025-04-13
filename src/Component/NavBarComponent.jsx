@@ -41,7 +41,7 @@ const NavBarComponent = () => {
                 <Link to="/FascePrezzo" className="nav-link">
                   Fasce di Prezzo
                 </Link>
-                <Link to="/Itinerari" className="nav-link">
+                <Link to="/itinerarioAdmin/:id" className="nav-link">
                   Itinerari
                 </Link>
               </>

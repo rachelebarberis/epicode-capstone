@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, ListGroup, Card } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import DeleteItinerarioModal from "./ItinerarioAdmin/DeleteItinerarioModal";
+import CreateItinerarioModal from "./ItinerarioAdmin/CreateItinerarioModal";
+import UpdateItinerarioModal from "./ItinerarioAdmin/UpdateItinerarioModal";
 
 const ItinerarioDettagli = () => {
   const { id } = useParams();
   const [dettagli, setDettagli] = useState(null);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userRole = useSelector((state) => state.auth.role);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   useEffect(() => {
     const fetchDettagli = async () => {
@@ -95,12 +103,40 @@ const ItinerarioDettagli = () => {
             </div>
           </Col>
         </Row>
+        {isAuthenticated && userRole === "Admin" && (
+          <Row>
+            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
+              Elimina Itinerario
+            </Button>
 
+            <DeleteItinerarioModal
+              show={showDeleteModal}
+              handleClose={() => setShowDeleteModal(false)}
+              id={id}
+              onDeleted={() => {
+                window.location.href = "/Esplora";
+              }}
+            />
+
+            <Button variant="warning" onClick={() => setShowUpdateModal(true)}>
+              Modifica Itinerario
+            </Button>
+
+            <UpdateItinerarioModal
+              show={showUpdateModal}
+              handleClose={() => setShowUpdateModal(false)}
+              itinerario={dettagli} // Passa l'oggetto dettagli completo come props
+              onUpdated={() => {
+                window.location.href = "/Esplora";
+              }}
+            />
+          </Row>
+        )}
         {/* Dettagli del tour come ListGroup */}
         <h4 className="mt-4">Dettagli del tour:</h4>
         <ListGroup>
-          {dettagli.giorni.map((giorno) => (
-            <ListGroup.Item key={giorno.idItinerarioGiorno}>
+          {dettagli.giorni.map((giorno, index) => (
+            <ListGroup.Item key={`${giorno.idItinerarioGiorno}-${index}`}>
               <h5>
                 Giorno {giorno.giorno}: {giorno.titolo}
               </h5>
