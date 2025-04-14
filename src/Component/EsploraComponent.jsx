@@ -16,17 +16,13 @@ import CreateItinerarioModal from "./ItinerarioAdmin/CreateItinerarioModal";
 const EsploraComponent = () => {
   const [itinerari, setItinerari] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); // Stato per la ricerca
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Funzione per recuperare gli itinerari
   const fetchItinerari = async () => {
     try {
       const response = await fetch("https://localhost:7007/api/Itinerario");
-      if (!response.ok) {
-        throw new Error("Errore durante il recupero degli itinerari");
-      }
+      if (!response.ok) throw new Error("Errore nel recupero itinerari");
       const data = await response.json();
-      console.log(data);
       setItinerari(data);
     } catch (error) {
       console.error("Errore:", error.message);
@@ -37,84 +33,73 @@ const EsploraComponent = () => {
     fetchItinerari();
   }, []);
 
-  // Raggruppa gli itinerari per paese
   const itinerariPerPaese = itinerari.reduce((acc, itinerario) => {
     const paese = itinerario.paese.nome;
-    if (!acc[paese]) {
-      acc[paese] = [];
-    }
+    if (!acc[paese]) acc[paese] = [];
     acc[paese].push(itinerario);
     return acc;
   }, {});
 
-  // Funzione per gestire il cambio della ricerca
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  // Filtra gli itinerari in base al paese
   const filteredItinerari = Object.keys(itinerariPerPaese)
-    .filter(
-      (paese) => paese.toLowerCase().includes(searchQuery.toLowerCase()) // Filtra per paese
-    )
+    .filter((paese) => paese.toLowerCase().includes(searchQuery.toLowerCase()))
     .reduce((acc, paese) => {
       acc[paese] = itinerariPerPaese[paese];
       return acc;
     }, {});
 
   return (
-    <Container fluid className="mt-4 pb-5 mb-5">
-      <Row className="justify-content-end mt-5 pt-5">
+    <Container fluid className="pt-5 mt-5 px-4">
+      <Row className="justify-content-between align-items-center mb-4">
         <Col xs={12} md={6} lg={4}>
           <Form>
             <InputGroup>
               <Form.Control
                 type="text"
                 placeholder="Cerca per paese..."
-                aria-label="Cerca"
-                className="search-input"
                 value={searchQuery}
-                onChange={handleSearchChange} // Gestisci il cambio nella ricerca
+                onChange={handleSearchChange}
               />
-              <Button variant="outline-secondary" id="button-addon2">
-                <i className="bi bi-search"></i>
+              <Button variant="outline-secondary">
+                <i className="bi bi-search" />
               </Button>
             </InputGroup>
           </Form>
         </Col>
-        <Button variant="success" onClick={() => setShowCreateModal(true)}>
-          Aggiungi Itinerario
-        </Button>
-
-        {/* MODAL CORRETTO */}
-        <CreateItinerarioModal
-          show={showCreateModal}
-          handleClose={() => setShowCreateModal(false)}
-          onCreated={() => {
-            fetchItinerari(); // aggiorna la lista
-            setShowCreateModal(false); // chiude il modal
-          }}
-        />
+        <Col xs="auto" className="mt-3 mt-md-0">
+          <Button variant="success" onClick={() => setShowCreateModal(true)}>
+            + Aggiungi Itinerario
+          </Button>
+        </Col>
       </Row>
 
-      {/* Rendering degli itinerari raggruppati per paese */}
+      <CreateItinerarioModal
+        show={showCreateModal}
+        handleClose={() => setShowCreateModal(false)}
+        onCreated={() => {
+          fetchItinerari();
+          setShowCreateModal(false);
+        }}
+      />
+
       {Object.keys(filteredItinerari).length === 0 ? (
-        <p>Nessun itinerario trovato per il paese cercato.</p>
+        <p className="text-muted text-center">Nessun itinerario trovato.</p>
       ) : (
-        Object.keys(filteredItinerari).map((paese, index) => {
-          const itinerariDelPaese = filteredItinerari[paese];
-
-          return (
-            <Row key={index} className="pt-4">
-              <div className="d-flex justify-content-between align-content-center mb-3">
-                <h4>{paese}</h4>
-                <div>
-                  <a>Scopri di più</a>
-                  <i className="bi bi-chevron-right ms-1"></i>
-                </div>
+        Object.entries(filteredItinerari).map(([paese, lista], index) => (
+          <div key={index} className="mb-5">
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h4 className="fw-bold">{paese}</h4>
+              <div className="text-success cursor-pointer">
+                <span>Scopri di più</span>
+                <i className="bi bi-chevron-right ms-1"></i>
               </div>
+            </div>
 
-              {itinerariDelPaese.map((itinerario, idx) => {
+            <Row>
+              {lista.map((itinerario, idx) => {
                 const prezzoBase = itinerario.itinerarioFascePrezzo.find(
                   (f) => f.idFasciaDiPrezzo === 1
                 )?.prezzo;
@@ -126,15 +111,17 @@ const EsploraComponent = () => {
                 )?.prezzo;
 
                 return (
-                  <Col key={idx} className="p-2" xs={12} sm={6} md={4} lg={3}>
-                    <Card>
-                      <Tab.Container
-                        id={`card-tabs-${idx}`}
-                        defaultActiveKey="first"
-                      >
+                  <Col key={idx} xs={12} sm={6} md={4} lg={3} className="mb-4">
+                    <Card className="h-100 shadow-sm border-0 hover-shadow transition">
+                      <Tab.Container defaultActiveKey="first">
+                        <Card.Img
+                          variant="top"
+                          src={itinerario.immagineUrl || "/images/thai.jpg"}
+                          style={{ height: "180px", objectFit: "cover" }}
+                        />
                         <Nav
                           variant="pills"
-                          className="flex-row justify-content-center"
+                          className="justify-content-center mt-2"
                         >
                           <Nav.Item>
                             <Nav.Link eventKey="first">€</Nav.Link>
@@ -146,65 +133,39 @@ const EsploraComponent = () => {
                             <Nav.Link eventKey="third">€€€</Nav.Link>
                           </Nav.Item>
                         </Nav>
-
-                        <Card.Img
-                          variant="top"
-                          src={
-                            itinerario.immagineUrl ?? "/public/images/thai.jpg"
-                          }
-                        />
-
-                        <Tab.Content>
+                        <Tab.Content className="p-3">
                           <Tab.Pane eventKey="first">
-                            <Card.Body>
-                              <Card.Title className="text-center">
-                                {itinerario.paese.nome}
-                              </Card.Title>
-                              <p>{itinerario.nomeItinerario}</p>
-                              <p>Prezzo: {prezzoBase}</p>
-                              <p>Durata: {itinerario.durata} giorni</p>
-                              <Link
-                                to={`/itinerario/${itinerario.idItinerario}`}
-                              >
-                                Scopri di più
-                              </Link>
-                            </Card.Body>
+                            <Card.Title>{itinerario.nomeItinerario}</Card.Title>
+                            <p>Prezzo: {prezzoBase ?? "N/D"}</p>
+                            <p>Durata: {itinerario.durata} giorni</p>
+                            <Link
+                              to={`/itinerario/${itinerario.idItinerario}`}
+                              className="btn btn-outline-success btn-sm"
+                            >
+                              Scopri di più
+                            </Link>
                           </Tab.Pane>
                           <Tab.Pane eventKey="second">
-                            <Card.Body>
-                              <Card.Title className="text-center">
-                                {itinerario.paese.nome}
-                              </Card.Title>
-                              <p>
-                                Cultura, tradizioni e storia di{" "}
-                                {itinerario.paese.nome}.
-                              </p>
-                              <p>Prezzo: {prezzoMedio}</p>
-                              <p>Durata: {itinerario.durata} giorni</p>
-                              <Link
-                                to={`/itinerario/${itinerario.idItinerario}`}
-                              >
-                                Scopri di più
-                              </Link>
-                            </Card.Body>
+                            <Card.Title>{itinerario.nomeItinerario}</Card.Title>
+                            <p>Prezzo: {prezzoMedio ?? "N/D"}</p>
+                            <p>Durata: {itinerario.durata} giorni</p>
+                            <Link
+                              to={`/itinerario/${itinerario.idItinerario}`}
+                              className="btn btn-outline-success btn-sm"
+                            >
+                              Scopri di più
+                            </Link>
                           </Tab.Pane>
                           <Tab.Pane eventKey="third">
-                            <Card.Body>
-                              <Card.Title className="text-center">
-                                {itinerario.paese.nome}
-                              </Card.Title>
-                              <p>
-                                Principali attrazioni turistiche di{" "}
-                                {itinerario.paese.nome}.
-                              </p>
-                              <p>Prezzo: {prezzoTop}</p>
-                              <p>Durata: {itinerario.durata} giorni</p>
-                              <Link
-                                to={`/itinerario/${itinerario.idItinerario}`}
-                              >
-                                Scopri di più
-                              </Link>
-                            </Card.Body>
+                            <Card.Title>{itinerario.nomeItinerario}</Card.Title>
+                            <p>Prezzo: {prezzoTop ?? "N/D"}</p>
+                            <p>Durata: {itinerario.durata} giorni</p>
+                            <Link
+                              to={`/itinerario/${itinerario.idItinerario}`}
+                              className="btn btn-outline-success btn-sm"
+                            >
+                              Scopri di più
+                            </Link>
                           </Tab.Pane>
                         </Tab.Content>
                       </Tab.Container>
@@ -213,8 +174,8 @@ const EsploraComponent = () => {
                 );
               })}
             </Row>
-          );
-        })
+          </div>
+        ))
       )}
     </Container>
   );

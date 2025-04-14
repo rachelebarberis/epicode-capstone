@@ -23,7 +23,7 @@ const NavBarComponent = () => {
           <Nav className="me-auto">
             <>
               <Link to="/Esplora" className=" nav-link">
-                Esplora
+                Itinerari
               </Link>
               <Link to="/AboutUs" className=" nav-link">
                 About Us
@@ -32,20 +32,10 @@ const NavBarComponent = () => {
                 Recensioni
               </Link>
             </>
+            <Link to="/Paese" className="nav-link">
+              Paesi
+            </Link>
 
-            {isAuthenticated && userRole === "Admin" && (
-              <>
-                <Link to="/Paese" className="nav-link">
-                  Paesi
-                </Link>
-                <Link to="/FascePrezzo" className="nav-link">
-                  Fasce di Prezzo
-                </Link>
-                <Link to="/itinerarioAdmin/:id" className="nav-link">
-                  Itinerari
-                </Link>
-              </>
-            )}
             {isAuthenticated && userRole === "User" && (
               <Link to="/AreaPersonale" className=" nav-link">
                 Area Personale

@@ -11,7 +11,7 @@ import AreaPersonaleComponent from "./Component/AreaPersonaleComponent";
 import FooterComponent from "./Component/FooterComponent";
 import EsploraComponent from "./Component/EsploraComponent";
 import ItinerarioDettagli from "./Component/ItinerarioDettagli";
-
+import PaeseComponent from "./Component/PaeseComponent";
 const App = () => {
   return (
     <>
@@ -24,6 +24,7 @@ const App = () => {
 
           <Route path="/AreaPersonale" element={<AreaPersonaleComponent />} />
           <Route path="/AboutUs" element={<AboutUsComponent />} />
+          <Route path="/Paese" element={<PaeseComponent />} />
           <Route path="/Login" element={<LoginComponent />} />
           <Route path="/Register" element={<RegisterComponent />} />
         </Routes>
