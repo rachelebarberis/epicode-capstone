@@ -12,6 +12,7 @@ import FooterComponent from "./Component/FooterComponent";
 import EsploraComponent from "./Component/EsploraComponent";
 import ItinerarioDettagli from "./Component/ItinerarioDettagli";
 import PaeseComponent from "./Component/PaeseComponent";
+import RecensioneComponent from "./Component/RecensioneComponent";
 const App = () => {
   return (
     <>
@@ -24,6 +25,7 @@ const App = () => {
 
           <Route path="/AreaPersonale" element={<AreaPersonaleComponent />} />
           <Route path="/AboutUs" element={<AboutUsComponent />} />
+          <Route path="/Recensioni" element={<RecensioneComponent />} />
           <Route path="/Paese" element={<PaeseComponent />} />
           <Route path="/Login" element={<LoginComponent />} />
           <Route path="/Register" element={<RegisterComponent />} />
