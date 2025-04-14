@@ -9,6 +9,7 @@ const UpdateItinerarioModal = ({
   onUpdated,
 }) => {
   const [formData, setFormData] = useState({
+    idItinerario: 1,
     nomeItinerario: "",
     durata: 1,
     immagineUrl: "",
@@ -29,6 +30,7 @@ const UpdateItinerarioModal = ({
     console.log("Itinerario passato:", itinerario); // Log per verificare il valore di itinerario
     if (itinerario) {
       setFormData({
+        idItinerario: itinerario.idItinerario || "",
         nomeItinerario: itinerario.nomeItinerario || "",
         durata: itinerario.durata || 1,
         immagineUrl: itinerario.immagineUrl || "",
@@ -37,7 +39,6 @@ const UpdateItinerarioModal = ({
       });
 
       const giorniFormattati = (itinerario.giorni || []).map((g, i) => ({
-        idItinerarioGiorno: g.idItinerarioGiorno ?? 0,
         giorno: g.giorno ?? i + 1,
         titolo: g.titolo ?? "",
         descrizione: g.descrizione ?? "",
@@ -62,28 +63,24 @@ const UpdateItinerarioModal = ({
       ...prev,
       [name]: value,
     }));
-    console.log("Campo modificato:", name, "Nuovo valore:", value); // Log per tracciare le modifiche ai campi
   };
 
   const handleGiorniChange = (index, field, value) => {
     const updated = [...giorni];
     updated[index][field] = value;
     setGiorni(updated);
-    console.log("Modifica giorno:", index, field, value); // Log per tracciare le modifiche sui giorni
   };
 
   const handlePartenzeChange = (index, field, value) => {
     const updated = [...partenze];
     updated[index][field] = value;
     setPartenze(updated);
-    console.log("Modifica partenza:", index, field, value); // Log per tracciare le modifiche sulle partenze
   };
 
   const handleFascePrezzoChange = (index, value) => {
     const updated = [...fascePrezzo];
     updated[index].prezzo = value;
     setFascePrezzo(updated);
-    console.log("Modifica fascia prezzo:", index, value); // Log per tracciare le modifiche sui prezzi
   };
 
   const addGiorno = () => {
@@ -91,7 +88,6 @@ const UpdateItinerarioModal = ({
       ...prev,
       { giorno: prev.length + 1, titolo: "", descrizione: "" },
     ]);
-    console.log("Aggiunto giorno:", giorni.length + 1); // Log per tracciare l'aggiunta di un giorno
   };
 
   const addPartenza = () => {
@@ -99,13 +95,15 @@ const UpdateItinerarioModal = ({
       ...prev,
       { dataPartenza: "", stato: "Disponibile" },
     ]);
-    console.log("Aggiunta partenza:", partenze.length + 1); // Log per tracciare l'aggiunta di una partenza
   };
 
   // Quando l'utente invia il modulo, creiamo il payload
   const handleSubmit = async () => {
+    const { idItinerario, ...restFormData } = formData;
     const payload = {
-      ...formData,
+      idItinerario,
+      ...restFormData,
+
       durata: parseInt(formData.durata), // Assicurati che la durata sia un numero
       giorni: giorni, // Usa il campo "giorni"
       partenze: partenze.map((p) => ({
@@ -119,13 +117,8 @@ const UpdateItinerarioModal = ({
       paese: { idPaese: formData.paeseId, nome: formData.paeseNome }, // Passiamo correttamente l'oggetto paese
     };
 
-    console.log("Payload prima dell'invio:", payload); // Log per tracciare il payload
-
-    // Aggiungi log per verificare l'ID dell'itinerario prima di inviare la richiesta
-    console.log("ID itinerario:", itinerario.id);
-
     try {
-      await updateItinerario(itinerario.id, payload); // Passa l'ID dell'itinerario da aggiornare
+      await updateItinerario(itinerario.idItinerario, payload);
       alert("Itinerario aggiornato con successo!");
       handleClose();
       if (onUpdated) onUpdated();

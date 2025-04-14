@@ -3,14 +3,12 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col, ListGroup, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import DeleteItinerarioModal from "./ItinerarioAdmin/DeleteItinerarioModal";
-
 import UpdateItinerarioModal from "./ItinerarioAdmin/UpdateItinerarioModal";
 
 const ItinerarioDettagli = () => {
   const { id } = useParams();
   const [dettagli, setDettagli] = useState(null);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
   const userRole = useSelector((state) => state.auth.role);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -22,6 +20,10 @@ const ItinerarioDettagli = () => {
           `https://localhost:7007/api/Itinerario/${id}`
         );
         const data = await response.json();
+        // Se l'API restituisce l'id come idItinerario, lo mappiamo su id
+        if (data.idItinerario && !data.id) {
+          data.id = data.idItinerario;
+        }
         setDettagli(data);
         console.log(data);
       } catch (error) {
@@ -29,7 +31,6 @@ const ItinerarioDettagli = () => {
       }
     };
     console.log("Dettagli passati al modal:", dettagli);
-
     fetchDettagli();
   }, [id]);
 

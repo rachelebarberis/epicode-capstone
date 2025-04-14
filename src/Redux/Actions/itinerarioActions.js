@@ -31,11 +31,21 @@ export const createItinerario = async (itinerarioData) => {
 };
 
 // PUT - Aggiorna un itinerario
-export const updateItinerario = async (id, itinerarioData) => {
-  return fetchWithAuth(`${API}/${id}`, {
+export const updateItinerario = async (id, payload) => {
+  const response = await fetch(`https://localhost:7007/api/Itinerario/${id}`, {
     method: "PUT",
-    body: JSON.stringify({ itinerarioUpdateRequestDto: itinerarioData })
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
   });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Errore nella richiesta PUT: ${errText}`);
+  }
+
+  return response.json();
 };
 
 

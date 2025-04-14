@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { createItinerario } from "../../Redux/Actions/itinerarioActions";
 
 const CreateItinerarioModal = ({ show, handleClose, onCreated }) => {
   const [formData, setFormData] = useState({
     nomeItinerario: "",
-
     durata: 1,
     immagineUrl: "",
-    paese: { idPaese: 1, nome: "Giappone" }, // Oggetto paese invece di paeseId
+    paese: { idPaese: 1, nome: "Giappone" }, // Imposta un valore predefinito
   });
 
+  const [paesi, setPaesi] = useState([]); // Stato per memorizzare i paesi
   const [giorni, setGiorni] = useState([]);
   const [partenze, setPartenze] = useState([]);
   const [fascePrezzo, setFascePrezzo] = useState([
@@ -19,17 +19,35 @@ const CreateItinerarioModal = ({ show, handleClose, onCreated }) => {
     { idFasciaDiPrezzo: 3, prezzo: "" },
   ]);
 
+  // Funzione per caricare i paesi dal back-end
+  const fetchPaesi = async () => {
+    try {
+      const response = await fetch("https://localhost:7007/api/Paese"); // Assicurati di sostituire l'URL con quello corretto
+      if (!response.ok) {
+        throw new Error("Errore durante il recupero dei paesi");
+      }
+      const data = await response.json();
+      setPaesi(data); // Memorizza i paesi
+    } catch (error) {
+      console.error("Errore:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchPaesi(); // Carica i paesi quando il componente è montato
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "paeseId") {
       setFormData((prev) => ({
         ...prev,
-        paese: { ...prev.paese, idPaese: parseInt(value) }, // Modifica solo idPaese
+        paese: { ...prev.paese, idPaese: parseInt(value) },
       }));
     } else if (name === "paeseNome") {
       setFormData((prev) => ({
         ...prev,
-        paese: { ...prev.paese, nome: value }, // Modifica nome del paese
+        paese: { ...prev.paese, nome: value },
       }));
     } else {
       setFormData((prev) => ({
@@ -67,7 +85,7 @@ const CreateItinerarioModal = ({ show, handleClose, onCreated }) => {
   const addPartenza = () => {
     setPartenze((prev) => [
       ...prev,
-      { dataPartenza: "", stato: "Disponibile" }, // Rimosso il campo "postiDisponibili"
+      { dataPartenza: "", stato: "Disponibile" },
     ]);
   };
 
@@ -78,7 +96,6 @@ const CreateItinerarioModal = ({ show, handleClose, onCreated }) => {
       itinerarioGiorni: giorni,
       partenze: partenze.map((p) => ({
         ...p,
-        // "postiDisponibili" è stato rimosso, quindi non è più incluso nel payload
       })),
       itinerarioFascePrezzo: fascePrezzo.map((f) => ({
         ...f,
@@ -86,7 +103,7 @@ const CreateItinerarioModal = ({ show, handleClose, onCreated }) => {
       })),
       paese: formData.paese, // Usa l'oggetto paese completo nel payload
     };
-    console.log("Payload:", payload);
+
     try {
       await createItinerario(payload);
       alert("Itinerario creato con successo!");
@@ -140,26 +157,21 @@ const CreateItinerarioModal = ({ show, handleClose, onCreated }) => {
             </Col>
           </Row>
 
-          {/* Campo per ID Paese */}
+          {/* Selezione Paese */}
           <Form.Group className="mt-3">
-            <Form.Label>ID Paese</Form.Label>
+            <Form.Label>Seleziona Paese</Form.Label>
             <Form.Control
-              type="number"
+              as="select"
               name="paeseId"
-              value={formData.paese.idPaese} // Usa formData.paese.idPaese
+              value={formData.paese.idPaese}
               onChange={handleChange}
-            />
-          </Form.Group>
-
-          {/* Campo per Nome Paese */}
-          <Form.Group className="mt-3">
-            <Form.Label>Nome Paese</Form.Label>
-            <Form.Control
-              type="text"
-              name="paeseNome"
-              value={formData.paese.nome} // Usa formData.paese.nome
-              onChange={handleChange}
-            />
+            >
+              {paesi.map((paese) => (
+                <option key={paese.idPaese} value={paese.idPaese}>
+                  {paese.nome}
+                </option>
+              ))}
+            </Form.Control>
           </Form.Group>
 
           {/* GIORNI */}
