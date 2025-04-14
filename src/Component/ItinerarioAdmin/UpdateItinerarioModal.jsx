@@ -10,7 +10,6 @@ const UpdateItinerarioModal = ({
 }) => {
   const [formData, setFormData] = useState({
     nomeItinerario: "",
-    descrizione: "",
     durata: 1,
     immagineUrl: "",
     paeseId: 1,
@@ -27,16 +26,24 @@ const UpdateItinerarioModal = ({
 
   // Quando l'itinerario viene passato, imposta i valori nei campi
   useEffect(() => {
+    console.log("Itinerario passato:", itinerario); // Log per verificare il valore di itinerario
     if (itinerario) {
       setFormData({
         nomeItinerario: itinerario.nomeItinerario || "",
-        descrizione: itinerario.descrizione || "",
         durata: itinerario.durata || 1,
         immagineUrl: itinerario.immagineUrl || "",
         paeseId: itinerario.paese.idPaese || 1, // Assicurati che paeseId venga passato correttamente
         paeseNome: itinerario.paese.nome || "", // Assicurati che nome venga passato correttamente
       });
-      setGiorni(itinerario.itinerarioGiorni || []);
+
+      const giorniFormattati = (itinerario.giorni || []).map((g, i) => ({
+        idItinerarioGiorno: g.idItinerarioGiorno ?? 0,
+        giorno: g.giorno ?? i + 1,
+        titolo: g.titolo ?? "",
+        descrizione: g.descrizione ?? "",
+      }));
+
+      setGiorni(giorniFormattati);
       setPartenze(itinerario.partenze || []);
       setFascePrezzo(
         itinerario.itinerarioFascePrezzo || [
@@ -55,24 +62,28 @@ const UpdateItinerarioModal = ({
       ...prev,
       [name]: value,
     }));
+    console.log("Campo modificato:", name, "Nuovo valore:", value); // Log per tracciare le modifiche ai campi
   };
 
   const handleGiorniChange = (index, field, value) => {
     const updated = [...giorni];
     updated[index][field] = value;
     setGiorni(updated);
+    console.log("Modifica giorno:", index, field, value); // Log per tracciare le modifiche sui giorni
   };
 
   const handlePartenzeChange = (index, field, value) => {
     const updated = [...partenze];
     updated[index][field] = value;
     setPartenze(updated);
+    console.log("Modifica partenza:", index, field, value); // Log per tracciare le modifiche sulle partenze
   };
 
   const handleFascePrezzoChange = (index, value) => {
     const updated = [...fascePrezzo];
     updated[index].prezzo = value;
     setFascePrezzo(updated);
+    console.log("Modifica fascia prezzo:", index, value); // Log per tracciare le modifiche sui prezzi
   };
 
   const addGiorno = () => {
@@ -80,6 +91,7 @@ const UpdateItinerarioModal = ({
       ...prev,
       { giorno: prev.length + 1, titolo: "", descrizione: "" },
     ]);
+    console.log("Aggiunto giorno:", giorni.length + 1); // Log per tracciare l'aggiunta di un giorno
   };
 
   const addPartenza = () => {
@@ -87,6 +99,7 @@ const UpdateItinerarioModal = ({
       ...prev,
       { dataPartenza: "", stato: "Disponibile" },
     ]);
+    console.log("Aggiunta partenza:", partenze.length + 1); // Log per tracciare l'aggiunta di una partenza
   };
 
   // Quando l'utente invia il modulo, creiamo il payload
@@ -94,7 +107,7 @@ const UpdateItinerarioModal = ({
     const payload = {
       ...formData,
       durata: parseInt(formData.durata), // Assicurati che la durata sia un numero
-      itinerarioGiorni: giorni,
+      giorni: giorni, // Usa il campo "giorni"
       partenze: partenze.map((p) => ({
         ...p,
         // "postiDisponibili" non è incluso, quindi non lo passiamo
@@ -105,10 +118,14 @@ const UpdateItinerarioModal = ({
       })),
       paese: { idPaese: formData.paeseId, nome: formData.paeseNome }, // Passiamo correttamente l'oggetto paese
     };
-    console.log("Payload:", payload);
+
+    console.log("Payload prima dell'invio:", payload); // Log per tracciare il payload
+
+    // Aggiungi log per verificare l'ID dell'itinerario prima di inviare la richiesta
+    console.log("ID itinerario:", itinerario.id);
 
     try {
-      await updateItinerario(itinerario.id, payload);
+      await updateItinerario(itinerario.id, payload); // Passa l'ID dell'itinerario da aggiornare
       alert("Itinerario aggiornato con successo!");
       handleClose();
       if (onUpdated) onUpdated();
@@ -131,17 +148,6 @@ const UpdateItinerarioModal = ({
               type="text"
               name="nomeItinerario"
               value={formData.nomeItinerario}
-              onChange={handleChange}
-            />
-          </Form.Group>
-
-          <Form.Group className="mt-3">
-            <Form.Label>Descrizione</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="descrizione"
-              value={formData.descrizione}
-              rows={3}
               onChange={handleChange}
             />
           </Form.Group>
@@ -193,13 +199,13 @@ const UpdateItinerarioModal = ({
 
           {/* GIORNI */}
           <h5 className="mt-4">Giorni del Tour</h5>
-          {giorni.map((giorno, index) => (
+          {giorni.map((g, index) => (
             <div key={index} className="border p-2 mb-2 rounded">
               <Form.Label>Giorno {index + 1}</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Titolo"
-                value={giorno.titolo}
+                value={g.titolo}
                 onChange={(e) =>
                   handleGiorniChange(index, "titolo", e.target.value)
                 }
@@ -208,7 +214,7 @@ const UpdateItinerarioModal = ({
                 as="textarea"
                 placeholder="Descrizione"
                 className="mt-2"
-                value={giorno.descrizione}
+                value={g.descrizione}
                 onChange={(e) =>
                   handleGiorniChange(index, "descrizione", e.target.value)
                 }

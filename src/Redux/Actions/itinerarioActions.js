@@ -34,7 +34,7 @@ export const createItinerario = async (itinerarioData) => {
 export const updateItinerario = async (id, itinerarioData) => {
   return fetchWithAuth(`${API}/${id}`, {
     method: "PUT",
-    body: JSON.stringify(itinerarioData),
+    body: JSON.stringify({ itinerarioUpdateRequestDto: itinerarioData })
   });
 };
 

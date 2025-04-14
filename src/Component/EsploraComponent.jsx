@@ -12,25 +12,27 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CreateItinerarioModal from "./ItinerarioAdmin/CreateItinerarioModal";
+
 const EsploraComponent = () => {
   const [itinerari, setItinerari] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  useEffect(() => {
-    const fetchItinerari = async () => {
-      try {
-        const response = await fetch("https://localhost:7007/api/Itinerario");
-        if (!response.ok) {
-          throw new Error("Errore durante il recupero degli itinerari");
-        }
-        const data = await response.json();
-        console.log(data);
-        setItinerari(data);
-      } catch (error) {
-        console.error("Errore:", error.message);
+  // Spostato fuori da useEffect per riutilizzarlo anche dopo la creazione
+  const fetchItinerari = async () => {
+    try {
+      const response = await fetch("https://localhost:7007/api/Itinerario");
+      if (!response.ok) {
+        throw new Error("Errore durante il recupero degli itinerari");
       }
-    };
+      const data = await response.json();
+      console.log(data);
+      setItinerari(data);
+    } catch (error) {
+      console.error("Errore:", error.message);
+    }
+  };
 
+  useEffect(() => {
     fetchItinerari();
   }, []);
 
@@ -55,8 +57,18 @@ const EsploraComponent = () => {
         <Button variant="success" onClick={() => setShowCreateModal(true)}>
           Aggiungi Itinerario
         </Button>
-        <CreateItinerarioModal show={showCreateModal} />
+
+        {/* MODAL CORRETTO */}
+        <CreateItinerarioModal
+          show={showCreateModal}
+          handleClose={() => setShowCreateModal(false)}
+          onCreated={() => {
+            fetchItinerari(); // aggiorna la lista
+            setShowCreateModal(false); // chiude il modal
+          }}
+        />
       </Row>
+
       {itinerari.map((itinerario, index) => {
         const prezzoBase = itinerario.itinerarioFascePrezzo.find(
           (f) => f.idFasciaDiPrezzo === 1
@@ -128,7 +140,7 @@ const EsploraComponent = () => {
                           {itinerario.paese.nome}.
                         </p>
                         <p>Prezzo: {prezzoMedio}</p>
-                        <p>Durata: {itinerario.durata}giorni</p>
+                        <p>Durata: {itinerario.durata} giorni</p>
                         <Link to={`/itinerario/${itinerario.idItinerario}`}>
                           Scopri di più
                         </Link>
@@ -144,7 +156,7 @@ const EsploraComponent = () => {
                           {itinerario.paese.nome}.
                         </p>
                         <p>Prezzo: {prezzoTop}</p>
-                        <p>Durata: {itinerario.durata}giorni</p>
+                        <p>Durata: {itinerario.durata} giorni</p>
                         <Link to={`/itinerario/${itinerario.idItinerario}`}>
                           Scopri di più
                         </Link>
@@ -160,4 +172,5 @@ const EsploraComponent = () => {
     </Container>
   );
 };
+
 export default EsploraComponent;

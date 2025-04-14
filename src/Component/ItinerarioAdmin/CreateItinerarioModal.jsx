@@ -5,7 +5,7 @@ import { createItinerario } from "../../Redux/Actions/itinerarioActions";
 const CreateItinerarioModal = ({ show, handleClose, onCreated }) => {
   const [formData, setFormData] = useState({
     nomeItinerario: "",
-    descrizione: "",
+
     durata: 1,
     immagineUrl: "",
     paese: { idPaese: 1, nome: "Giappone" }, // Oggetto paese invece di paeseId
@@ -111,17 +111,6 @@ const CreateItinerarioModal = ({ show, handleClose, onCreated }) => {
               type="text"
               name="nomeItinerario"
               value={formData.nomeItinerario}
-              onChange={handleChange}
-            />
-          </Form.Group>
-
-          <Form.Group className="mt-3">
-            <Form.Label>Descrizione</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="descrizione"
-              value={formData.descrizione}
-              rows={3}
               onChange={handleChange}
             />
           </Form.Group>
