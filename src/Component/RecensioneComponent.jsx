@@ -14,7 +14,6 @@ const RecensioneComponent = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Chiamata della funzione getRecensione per recuperare le recensioni
     const fetchRecensioni = async () => {
       try {
         const data = await getRecensione();
