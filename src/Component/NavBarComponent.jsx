@@ -45,23 +45,23 @@ const NavBarComponent = () => {
 
           <Nav>
             {!isAuthenticated && (
+              <Link
+                to="/Login"
+                onClick={() => dispatch(logout())}
+                className="nav-link text-danger"
+              >
+                Login
+              </Link>
+            )}
+            {isAuthenticated && (
               <>
                 <Link to="/Carrello" className=" nav-link">
                   <i className="bi bi-cart"></i>
                 </Link>
-                <Link to="/Login" className=" nav-link">
-                  Login
+                <Link to="/" className=" nav-link">
+                  Logout
                 </Link>
               </>
-            )}
-            {isAuthenticated && (
-              <Link
-                to="/"
-                onClick={() => dispatch(logout())}
-                className="nav-link text-danger"
-              >
-                Logout
-              </Link>
             )}
           </Nav>
         </Navbar.Collapse>
