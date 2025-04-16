@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  ListGroup,
+  Button,
+  Spinner,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import {
   fetchCarrello,
@@ -8,47 +15,53 @@ import {
 
 const CartComponent = () => {
   const [carrello, setCarrello] = useState([]);
-  const [loading, setLoading] = useState(true); // Stato di caricamento
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Funzione per recuperare il carrello dall'API
   const loadCarrello = async () => {
     setLoading(true);
+    setError(null);
 
-    // Ottieni l'email dell'utente dal localStorage o dallo stato
-    const email = localStorage.getItem("email"); // Assicurati che l'email sia memorizzata al login
+    const email = localStorage.getItem("email");
+    console.log("Email nel localStorage:", email);
 
     if (!email) {
       console.error("Email mancante. Impossibile recuperare il carrello.");
       setLoading(false);
+      setError("Per visualizzare il carrello, devi essere loggato.");
+      navigate("/login");
       return;
     }
 
     try {
-      const carrelloSalvato = await fetchCarrello(email); // Passa l'email invece dell'ID
+      const carrelloSalvato = await fetchCarrello(email);
+      console.log("Carrello recuperato:", carrelloSalvato);
 
-      if (carrelloSalvato) {
-        setCarrello(carrelloSalvato);
+      if (carrelloSalvato && carrelloSalvato.carrelloItems) {
+        setCarrello(carrelloSalvato.carrelloItems); // Imposta solo gli articoli del carrello
       } else {
         console.error("Carrello vuoto o errore nel recupero");
+        setError("Non è stato possibile recuperare il carrello.");
       }
     } catch (error) {
       console.error("Errore nel recupero del carrello:", error);
+      setError("Errore nel recupero del carrello. Riprova più tardi.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadCarrello(); // Carica il carrello all'inizio
+    loadCarrello();
   }, []);
 
-  // Funzione per rimuovere un item dal carrello
   const rimuoviDalCarrello = async (itemId) => {
-    const risultato = await removeCarrelloItem(itemId); // Rimuovi l'item tramite API
+    const risultato = await removeCarrelloItem(itemId);
     if (risultato) {
-      setCarrello((prevCarrello) =>
-        prevCarrello.filter((item) => item.id !== itemId)
+      setCarrello(
+        (prevCarrello) =>
+          prevCarrello.filter((item) => item.idCarrelloItem !== itemId) // Filtra per idCarrelloItem
       );
     }
   };
@@ -57,10 +70,17 @@ const CartComponent = () => {
     <Container className="mt-5">
       <h2 className="text-center">Il tuo Carrello</h2>
 
+      {error && (
+        <div className="alert alert-danger text-center">
+          <strong>{error}</strong>
+        </div>
+      )}
+
       <Row>
         <Col>
           {loading ? (
             <div className="text-center">
+              <Spinner animation="border" role="status" />
               <h4>Caricamento...</h4>
             </div>
           ) : carrello.length === 0 ? (
@@ -74,12 +94,15 @@ const CartComponent = () => {
                 <ListGroup.Item key={index}>
                   <Row>
                     <Col md={8}>
-                      <h5>{item.itinerario.nomeItinerario}</h5>
+                      <h5>
+                        {item.itinerario?.nomeItinerario ||
+                          "Nome itinerario non disponibile"}
+                      </h5>
                       <p>
-                        <strong>Fascia di Prezzo:</strong> {item.fascia}
+                        <strong>Fascia di Prezzo:</strong> {item.fasciadiPrezzo}
                       </p>
                       <p>
-                        <strong>Data di Partenza:</strong> {item.partenza}
+                        <strong>Data di Partenza:</strong> {item.datapartenza}
                       </p>
                     </Col>
                     <Col
@@ -88,7 +111,7 @@ const CartComponent = () => {
                     >
                       <Button
                         variant="danger"
-                        onClick={() => rimuoviDalCarrello(item.id)} // Passa l'ID dell'item
+                        onClick={() => rimuoviDalCarrello(item.idCarrelloItem)} // Usa idCarrelloItem
                       >
                         Rimuovi
                       </Button>
