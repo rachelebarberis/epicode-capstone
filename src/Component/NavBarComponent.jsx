@@ -55,7 +55,7 @@ const NavBarComponent = () => {
             )}
             {isAuthenticated && (
               <>
-                <Link to="/Carrello" className=" nav-link">
+                <Link to="/Carrello/:email" className=" nav-link">
                   <i className="bi bi-cart"></i>
                 </Link>
                 <Link to="/" className=" nav-link">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Container,
   Row,
@@ -10,16 +10,20 @@ import {
   Badge,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
+
 import DeleteItinerarioModal from "./ItinerarioAdmin/DeleteItinerarioModal";
 import UpdateItinerarioModal from "./ItinerarioAdmin/UpdateItinerarioModal";
 
 const ItinerarioDettagli = () => {
   const { id } = useParams();
   const [dettagli, setDettagli] = useState(null);
+  const [selectedFascia, setSelectedFascia] = useState(null); // Fascia selezionata
+  const [selectedPartenza, setSelectedPartenza] = useState(null); // Partenza selezionata
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const userRole = useSelector((state) => state.auth.role);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const navigate = useNavigate(); // Navigazione
 
   useEffect(() => {
     const fetchDettagli = async () => {
@@ -38,6 +42,33 @@ const ItinerarioDettagli = () => {
   }, [id]);
 
   if (!dettagli) return <div className="text-center mt-5">Caricamento...</div>;
+
+  // Funzione per aggiungere al carrello
+  const aggiungiAlCarrello = () => {
+    if (selectedFascia && selectedPartenza) {
+      const itinerarioSelezionato = {
+        nomeItinerario: dettagli.nomeItinerario,
+        immagineUrl: dettagli.immagineUrl,
+        durata: dettagli.durata,
+      };
+
+      const carrelloItem = {
+        itinerario: itinerarioSelezionato,
+        fascia: selectedFascia,
+        partenza: selectedPartenza,
+      };
+
+      // Aggiungi al carrello (localStorage)
+      const carrelloSalvato =
+        JSON.parse(localStorage.getItem("carrello")) || [];
+      carrelloSalvato.push(carrelloItem);
+      localStorage.setItem("carrello", JSON.stringify(carrelloSalvato));
+
+      navigate("/carrello/"); //erroreeeeeeee da vedere
+    } else {
+      alert("Seleziona fascia di prezzo e data di partenza");
+    }
+  };
 
   return (
     <Container className="mt-5 pt-5 pb-5">
@@ -60,45 +91,62 @@ const ItinerarioDettagli = () => {
             </p>
 
             <h5 className="mt-4"> Prezzi:</h5>
-            {dettagli.itinerarioFascePrezzo.map((fascia) => (
-              <Card
-                className="mb-2 border-0 bg-transparent"
-                key={fascia.idItinerarioFasciaPrezzo}
-              >
-                <Card.Body className="py-2 px-3">
-                  {fascia.idFasciaDiPrezzo === 1 && (
-                    <>
-                      <strong>Base</strong>: sistemazioni semplici ed
-                      economiche, spostamenti con mezzi pubblici e possibilità
-                      di voli con scali o più lunghi.
-                    </>
-                  )}
-                  {fascia.idFasciaDiPrezzo === 2 && (
-                    <>
-                      <strong>Medio</strong>: un buon compromesso tra comfort e
-                      prezzo, con hotel di livello medio e spostamenti più
-                      agevoli.
-                    </>
-                  )}
-                  {fascia.idFasciaDiPrezzo === 3 && (
-                    <>
-                      <strong>Top</strong>: alloggi di alta qualità,
-                      trasferimenti comodi e voli diretti o brevi per il massimo
-                      del comfort.
-                    </>
-                  )}
-                  <div className="mt-1 text-muted">
-                    Prezzo: <strong>€{fascia.prezzo.toFixed(2)}</strong>
+            <p className="text-danger">
+              {selectedFascia ? "" : "Seleziona una fascia di prezzo"}{" "}
+              {/* Messaggio di selezione fascia */}
+            </p>
+            <ListGroup>
+              {dettagli.itinerarioFascePrezzo.map((fascia) => (
+                <ListGroup.Item
+                  key={fascia.idItinerarioFasciaPrezzo}
+                  style={{
+                    cursor: "pointer",
+                    backgroundColor:
+                      selectedFascia?.idItinerarioFasciaPrezzo ===
+                      fascia.idItinerarioFasciaPrezzo
+                        ? "#e7f1ff" // Evidenzia la fascia selezionata
+                        : "transparent",
+                    border:
+                      selectedFascia?.idItinerarioFasciaPrezzo ===
+                      fascia.idItinerarioFasciaPrezzo
+                        ? "2px solid #007bff" // Aggiungi bordo alla fascia selezionata
+                        : "1px solid #ccc",
+                  }}
+                  onClick={() => setSelectedFascia(fascia)} // Seleziona fascia
+                >
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      {fascia.idFasciaDiPrezzo === 1 && <strong>Base</strong>}
+                      {fascia.idFasciaDiPrezzo === 2 && <strong>Medio</strong>}
+                      {fascia.idFasciaDiPrezzo === 3 && (
+                        <strong>Top</strong>
+                      )}: {fascia.prezzo.toFixed(2)}€
+                    </div>
+                    {selectedFascia?.idItinerarioFasciaPrezzo ===
+                      fascia.idItinerarioFasciaPrezzo && (
+                      <i className="bi bi-check" />
+                    )}
                   </div>
-                </Card.Body>
-              </Card>
-            ))}
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
 
+            {/* Selezione Partenza */}
             <h5 className="mt-4"> Partenze disponibili:</h5>
+            <p className="text-danger">
+              {selectedPartenza ? "" : "Seleziona una data di partenza"}{" "}
+              {/* Messaggio di selezione partenza */}
+            </p>
             {dettagli.partenze.map((partenza) => (
               <Card
-                className="mb-2 border-0 bg-light"
+                className={`mb-2 border-0 bg-light ${
+                  selectedPartenza === partenza.dataPartenza
+                    ? "border-primary"
+                    : ""
+                }`}
                 key={partenza.idPartenza}
+                style={{ cursor: "pointer" }}
+                onClick={() => setSelectedPartenza(partenza.dataPartenza)} // Seleziona partenza
               >
                 <Card.Body className="py-2 px-3 d-flex justify-content-between">
                   <span>
@@ -109,9 +157,21 @@ const ItinerarioDettagli = () => {
                   >
                     {partenza.stato}
                   </Badge>
+                  {selectedPartenza === partenza.dataPartenza && (
+                    <i className="bi bi-check" />
+                  )}
                 </Card.Body>
               </Card>
             ))}
+
+            <Button
+              variant="primary"
+              className="mt-3"
+              onClick={aggiungiAlCarrello}
+              // Aggiungi al carrello
+            >
+              Aggiungi al carrello
+            </Button>
           </Col>
         </Row>
 

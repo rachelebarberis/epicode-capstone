@@ -3,6 +3,7 @@ const API_USER = "https://localhost:7007/Api/Account/userinfo";
 // Funzione generica per fare fetch con token JWT
 const fetchWithAuth = async (url, options = {}) => {
   const token = localStorage.getItem("token");
+  
 
   const defaultOptions = {
     headers: {

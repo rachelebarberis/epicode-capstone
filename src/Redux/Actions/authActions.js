@@ -25,7 +25,9 @@ export const login = (email, password) => {
       const isAuthenticated = true;
       const role = getRoleFromToken(data.token);
 
+      // Salva il token e l'email nel localStorage
       localStorage.setItem('token', data.token);
+      localStorage.setItem('email', email); // Salva l'email
       localStorage.setItem('role', role);
 
       dispatch(loginSuccess(email, data.token, isAuthenticated, role));
@@ -37,6 +39,9 @@ export const login = (email, password) => {
     }
   };
 };
+
+
+
 
 export const logout = () => {
   return (dispatch) => {

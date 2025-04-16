@@ -29,7 +29,7 @@ const App = () => {
           <Route path="/Recensioni" element={<RecensioneComponent />} />
           <Route path="/Paese" element={<PaeseComponent />} />
           <Route path="/Login" element={<LoginComponent />} />
-          <Route path="/Carrello" element={<CartComponent />} />
+          <Route path="/Carrello/:email" element={<CartComponent />} />
           <Route path="/Register" element={<RegisterComponent />} />
         </Routes>
         <FooterComponent />
