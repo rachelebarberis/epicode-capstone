@@ -47,7 +47,9 @@ html, body {
 
 
 /*home*/
-
+.hover-card:hover {
+  transform: scale(1.05); /* Effetto di ingrandimento quando il mouse è sopra */
+}
 #recensioni {
   background-color:#ffffe8; 
 }
