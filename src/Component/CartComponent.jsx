@@ -6,6 +6,7 @@ import {
   ListGroup,
   Button,
   Spinner,
+  Modal,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import {
@@ -18,6 +19,8 @@ const CartComponent = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState(null);
 
   const loadCarrello = async () => {
     setLoading(true);
@@ -56,14 +59,26 @@ const CartComponent = () => {
     loadCarrello();
   }, []);
 
-  const rimuoviDalCarrello = async (itemId) => {
-    const risultato = await removeCarrelloItem(itemId);
+  const confermaRimozione = (itemId) => {
+    setItemToRemove(itemId);
+    setShowModal(true);
+  };
+
+  const rimuoviDalCarrello = async () => {
+    if (!itemToRemove) return;
+
+    const risultato = await removeCarrelloItem(itemToRemove);
     if (risultato) {
-      setCarrello(
-        (prevCarrello) =>
-          prevCarrello.filter((item) => item.idCarrelloItem !== itemId) // Filtra per idCarrelloItem
+      setCarrello((prevCarrello) =>
+        prevCarrello.filter((item) => item.idCarrelloItem !== itemToRemove)
       );
     }
+
+    setShowModal(false);
+    setItemToRemove(null);
+  };
+  const calcolaTotale = () => {
+    return carrello.reduce((acc, item) => acc + item.prezzo * item.quantita, 0);
   };
 
   return (
@@ -89,37 +104,57 @@ const CartComponent = () => {
               <p>Aggiungi un itinerario per continuare.</p>
             </div>
           ) : (
-            <ListGroup>
-              {carrello.map((item, index) => (
-                <ListGroup.Item key={index}>
-                  <Row>
-                    <Col md={8}>
-                      <h5>
-                        {item.itinerario?.nomeItinerario ||
-                          "Nome itinerario non disponibile"}
-                      </h5>
-                      <p>
-                        <strong>Fascia di Prezzo:</strong> {item.fasciadiPrezzo}
-                      </p>
-                      <p>
-                        <strong>Data di Partenza:</strong> {item.datapartenza}
-                      </p>
-                    </Col>
-                    <Col
-                      md={4}
-                      className="d-flex justify-content-end align-items-center"
-                    >
-                      <Button
-                        variant="danger"
-                        onClick={() => rimuoviDalCarrello(item.idCarrelloItem)} // Usa idCarrelloItem
-                      >
-                        Rimuovi
-                      </Button>
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
+            <>
+              <div className="d-flex justify-content-center mt-4">
+                <Button
+                  variant="primary"
+                  className="px-4"
+                  onClick={() => navigate("/Esplora")}
+                >
+                  Aggiungi Itinerario
+                </Button>
+              </div>
+              <ListGroup>
+                {carrello.map((item, index) => (
+                  <ListGroup.Item key={index}>
+                    <Row>
+                      <Col md={4}>
+                        <img
+                          src={item.immagineUrl}
+                          alt="Itinerario"
+                          className="img-fluid rounded"
+                        />
+                      </Col>
+                      <Col md={8}>
+                        <h5>
+                          {item.nomeItinerario ||
+                            "Nome itinerario non disponibile"}
+                        </h5>
+                        <p>
+                          <strong>Prezzo:</strong> €{item.prezzo}
+                        </p>
+                        <p>
+                          <strong>Quantità:</strong> {item.quantita}
+                        </p>
+                        <p>
+                          <strong>Data di Partenza:</strong> {item.dataPartenza}
+                        </p>
+                        <Button
+                          variant="danger"
+                          onClick={() => confermaRimozione(item.idCarrelloItem)}
+                          className="mt-2"
+                        >
+                          Rimuovi
+                        </Button>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+              <div className="mt-4 p-3 bg-light rounded shadow-sm text-center">
+                <h4>Totale Carrello: €{calcolaTotale().toFixed(2)}</h4>
+              </div>
+            </>
           )}
         </Col>
       </Row>
@@ -135,6 +170,23 @@ const CartComponent = () => {
           </Button>
         </div>
       )}
+
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Conferma Rimozione</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Sei sicuro di voler rimuovere questo itinerario dal carrello?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Annulla
+          </Button>
+          <Button variant="danger" onClick={rimuoviDalCarrello}>
+            Rimuovi
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

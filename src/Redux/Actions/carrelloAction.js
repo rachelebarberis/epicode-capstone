@@ -1,7 +1,8 @@
-const token = localStorage.getItem("token");
+
 export const fetchCarrello = async (email) => {
   try {
-
+    const token = localStorage.getItem("token");
+    console.log(token)
     const response = await fetch(`https://localhost:7007/api/Carrello/${email}`, {
       method: 'GET',
       headers: {
@@ -24,6 +25,7 @@ export const fetchCarrello = async (email) => {
 };
 export const createCarrello = async (carrelloData) => {
   try {
+    const token = localStorage.getItem("token");
     const response = await fetch('https://localhost:7007/api/Carrello', {
       method: 'POST',
       headers: {
@@ -46,6 +48,7 @@ export const createCarrello = async (carrelloData) => {
 };
 export const updateCarrelloItem = async (itemId, itemData) => {
   try {
+    const token = localStorage.getItem("token");
     const response = await fetch(`https://localhost:7007/api/Carrello/item/${itemId}`, {
       method: 'PUT',
       headers: {
@@ -68,6 +71,7 @@ export const updateCarrelloItem = async (itemId, itemData) => {
 };
 export const removeCarrelloItem = async (itemId) => {
   try {
+    const token = localStorage.getItem("token");
     const response = await fetch(`https://localhost:7007/api/Carrello/item/${itemId}`, {
       method: 'DELETE',
       headers: {
@@ -88,6 +92,7 @@ export const removeCarrelloItem = async (itemId) => {
 };
 export const clearCarrello = async (email) => {
   try {
+    const token = localStorage.getItem("token");
     const response = await fetch(`https://localhost:7007/api/Carrello/clear/${email}`, {
       method: 'DELETE',
       headers: {
