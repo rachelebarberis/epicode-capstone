@@ -1,26 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-, body {
-  background-color: whitesmoke;
-  color: #033d10; /* Verde scuro per il testo principale */
-  background-image: url('path/to/your/image.jpg'); /* Sostituisci con il percorso dell'immagine */
-  background-size: cover; /* L'immagine coprirà tutto lo schermo */
+html, body {
+  background-color: whitesmoke; /* Colore di sfondo di base */
+  color: #033d10; /* Colore principale del testo */
+  background-image: url('/images/sfondoop.jpg'); /* Percorso dell'immagine di sfondo */
+  background-size: cover; /* L'immagine copre tutto lo schermo */
   background-position: center; /* Posiziona l'immagine al centro */
-  background-repeat: no-repeat; /* Evita la ripetizione dell'immagine */
+  background-repeat: no-repeat; /* Evita che l'immagine si ripeta */
   background-attachment: fixed; /* L'immagine rimane fissa durante lo scroll */
-  position: relative; /* Necessario per la gestione della sovrapposizione */
+  position: relative; /* Necessario per la gestione dell'overlay */
 }
 
-body::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.3); /* Sovrapposizione nera con opacità (30%) */
-  z-index: -1; /* Fa in modo che la sovrapposizione sia sotto il contenuto */
-}
+
+
 
 #root {
   margin: 0;
