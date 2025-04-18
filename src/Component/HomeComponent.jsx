@@ -51,7 +51,7 @@ const HomeComponent = () => {
     <>
       <div
         style={{
-          backgroundImage: "url('/images/banner.jpg')",
+          backgroundImage: "url('/images/heroimg.jpg')",
           backgroundSize: "cover",
           backgroundRepeat: "repeat",
           minHeight: "180px",
@@ -169,8 +169,6 @@ const HomeComponent = () => {
                           style={{
                             height: "200px",
                             objectFit: "cover",
-                            borderTopLeftRadius: "10px",
-                            borderTopRightRadius: "10px",
                           }}
                         />
                         <Card.Body>
@@ -201,7 +199,7 @@ const HomeComponent = () => {
           <div className="d-flex justify-content-between align-items-center">
             <h4
               style={{
-                color: "#05264a", // blu
+                color: "#05264a",
                 fontWeight: "bold",
               }}
             >
@@ -259,7 +257,7 @@ const HomeComponent = () => {
                               width: "90px",
                               height: "90px",
                               borderRadius: "50%",
-                              border: "3px solid #7A3E1F",
+
                               overflow: "hidden",
                             }}
                           >

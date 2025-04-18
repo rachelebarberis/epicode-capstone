@@ -46,7 +46,7 @@ html, body {
 }
 
 #navbar .nav-link:hover {
-  color: #7A3E1F !important; /* Colore verde scuro più chiaro al passaggio del mouse */
+  color: #033d10  !important; /* Colore verde scuro più chiaro al passaggio del mouse */
 }
 
 /*home*/
@@ -71,60 +71,90 @@ html, body {
 }
 
 /*login*/
+/* Sfondo pagina */
 #login-page {
-  padding: 100px; 
-  min-height: 100vh;
+  background-color: whitesmoke;
 }
 
-#login-header h1 {
-  color: #532c09;
-  font-weight: bold;
+/* Colori */
+.text-primary {
+  color: #05264a !important; /* Blu soft */
 }
 
-#login-header p {
-  color: #7A3E1F;
-  font-size: 1.2rem;
-  max-width: 500px;
-  margin: 0 auto;
+.text-success {
+  color: #033d10 !important; /* Verde scuro */
 }
 
+/* Input minimal underline style */
+.underline-input {
+  border: none;
+  border-bottom: 2px solid #05264a;
+  border-radius: 0;
+  background-color: transparent;
+  color: #033d10;
+}
+
+.underline-input:focus {
+  box-shadow: none;
+  border-bottom: 2px solid #033d10;
+}
+
+/* Bottone personalizzato */
 #login-button {
-  background-color: #7A3E1F;
+  background-color: #033d10;
   border: none;
 }
 
-#register-link a {
-  color: #7A3E1F;
-  text-decoration: none;
+#login-button:hover {
+  background-color: #05264a;
 }
 
-/*register*/
+/* Link registrazione */
+#register-link .navlink {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+
 #register-page {
-  padding: 100px; 
-  min-height: 100vh;
+  background-color: whitesmoke;
 }
 
-#register-header h1 {
-  color: #532c09;
-  font-weight: bold;
+.text-primary {
+  color: #05264a !important;
 }
 
-#register-header p {
-  color: #7A3E1F;
-  font-size: 1.2rem;
-  max-width: 500px;
-  margin: 0 auto;
+.text-success {
+  color: #033d10 !important;
+}
+
+.underline-input {
+  border: none;
+  border-bottom: 2px solid #295e8c;
+  border-radius: 0;
+  background-color: transparent;
+  color: #033d10;
+}
+
+.underline-input:focus {
+  box-shadow: none;
+  border-bottom: 2px solid #033d10;
 }
 
 #register-button {
-  background-color: #7A3E1F;
+  background-color: #033d10;
   border: none;
 }
 
-#login-link a {
-  color: #7A3E1F;
-  text-decoration: none;
+#register-button:hover {
+  background-color: #05264a;
 }
+
+#login-link .navlink {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 
 /*Area Personale*/
 .profile-img {

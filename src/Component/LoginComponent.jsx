@@ -21,54 +21,74 @@ const LoginComponent = () => {
       alert("Login fallito");
     }
   };
+
   return (
-    <Container fluid id="login-page">
-      <Row className="justify-content-center align-items-center ">
-        <Col xs={10} sm={8} md={6} lg={4}>
-          <div id="login-header" className="text-center mb-4">
-            <h1>WanderLOst</h1>
-            <p>“Ogni viaggio inizia con un passo… il tuo inizia qui.”</p>
-          </div>
-
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Inserisci la tua email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Inserisci la tua password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-
-            <div className="d-grid mb-3">
-              <Button variant="primary" type="submit" id="login-button">
-                Entra nel mondo
-              </Button>
+    <>
+      <Container
+        fluid
+        id="login-page"
+        className="d-flex justify-content-center align-items-center mt-5 pt-5"
+      >
+        <Row className="w-100 justify-content-center">
+          <Col xs={10} sm={8} md={6} lg={4}>
+            <div id="login-header" className="text-center mb-5">
+              <h1 className="text-primary  fw-bolder">WanderLOst</h1>
+              <p className="text-success">
+                “Ogni viaggio inizia con un passo… il tuo inizia qui.”
+              </p>
             </div>
 
-            <p className="text-center" id="register-link">
-              Non hai un account?{" "}
-              <Link to="/Register" className="navlink">
-                Registrati!
-              </Link>
-            </p>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+            <Form onSubmit={handleSubmit} className="login-form">
+              <Form.Group className="mb-4" controlId="formEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Inserisci la tua email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="underline-input"
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-4" controlId="formPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Inserisci la tua password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="underline-input"
+                />
+              </Form.Group>
+
+              <div className="d-grid mb-4">
+                <Button variant="success" type="submit" id="login-button">
+                  Entra nel mondo
+                </Button>
+              </div>
+
+              <p className="text-center" id="register-link">
+                Non hai un account?{" "}
+                <Link to="/Register" className="navlink text-primary">
+                  Registrati!
+                </Link>
+              </p>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+      <div
+        style={{
+          backgroundImage: "url('/images/heroimg.jpg')",
+          backgroundSize: "cover",
+          backgroundRepeat: "repeat",
+          minHeight: "130px",
+          width: "100%",
+        }}
+      ></div>
+    </>
   );
 };
 
