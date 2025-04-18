@@ -2,13 +2,9 @@
 
 html, body {
   background-color: whitesmoke; /* Colore di sfondo di base */
+ 
   color: #033d10; /* Colore principale del testo */
-  background-image: url('/images/sfondoop.jpg'); /* Percorso dell'immagine di sfondo */
-  background-size: cover; /* L'immagine copre tutto lo schermo */
-  background-position: center; /* Posiziona l'immagine al centro */
-  background-repeat: no-repeat; /* Evita che l'immagine si ripeta */
-  background-attachment: fixed; /* L'immagine rimane fissa durante lo scroll */
-  position: relative; /* Necessario per la gestione dell'overlay */
+
 }
 
 
