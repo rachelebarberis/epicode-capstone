@@ -10,10 +10,13 @@ import {
   Tab,
   Nav,
 } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CreateItinerarioModal from "./ItinerarioAdmin/CreateItinerarioModal";
 
 const EsploraComponent = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userRole = useSelector((state) => state.auth.role);
   const [itinerari, setItinerari] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -69,12 +72,13 @@ const EsploraComponent = () => {
             </InputGroup>
           </Form>
         </Col>
-
-        <Col xs="auto" className="mt-3 mt-md-0">
-          <Button variant="success" onClick={() => setShowCreateModal(true)}>
-            + Aggiungi Itinerario
-          </Button>
-        </Col>
+        {isAuthenticated && userRole === "Admin" && (
+          <Col xs="auto" className="mt-3 mt-md-0">
+            <Button variant="success" onClick={() => setShowCreateModal(true)}>
+              + Aggiungi Itinerario
+            </Button>
+          </Col>
+        )}
       </Row>
 
       <CreateItinerarioModal

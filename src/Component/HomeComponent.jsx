@@ -59,63 +59,79 @@ const HomeComponent = () => {
         }}
       ></div>
       <Container className="mb-5 pb-5">
-        <div className="d-flex flex-column justify-content-center align-items-center mt-lg-5 text-center p-5">
-          <h1
-            className="mb-3 mt-3"
+        <div
+          style={{
+            backgroundImage: "url('/images/adventure-hero.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            minHeight: "600px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "80px 20px",
+            textAlign: "center",
+            color: "#fff",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          {/* Overlay trasparente sopra l'immagine */}
+          <div
             style={{
-              fontWeight: "800",
-              color: "#05264a", // blu
-              fontSize: "3rem",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0,0,0,0.4)",
+              zIndex: 1,
             }}
-          >
-            WanderLOst
-          </h1>
-          <h2
-            style={{
-              color: "#033d10", // verde
-              fontWeight: "600",
-              fontSize: "1.8rem",
-            }}
-          >
-            Perditi nelle meraviglie del mondo!
-          </h2>
+          ></div>
 
-          <hr
-            className="w-25 my-4"
-            style={{
-              borderTop: "3px solid #033d10", // verde
-            }}
-          />
-
-          <blockquote className="blockquote text-center">
-            <p
-              className="mb-0"
+          <div style={{ position: "relative", zIndex: 2 }}>
+            <h1
               style={{
-                fontStyle: "italic",
-                fontSize: "1.2rem",
-                color: "#05264a", // blu
+                fontFamily: "'Bebas Neue', cursive",
+                fontSize: "5rem",
+                letterSpacing: "2px",
+                marginBottom: "10px",
+                textTransform: "uppercase",
               }}
             >
-              "Viaggiare ti lascia senza parole, poi ti trasforma in un
-              narratore."
-            </p>
-            <footer
-              className="blockquote-footer pt-3"
+              WanderLOst
+            </h1>
+
+            <h2
               style={{
-                color: "#05264a", // blu
-                fontWeight: "bold",
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: "1.8rem",
+                fontWeight: "300",
+                marginBottom: "30px",
               }}
             >
-              Ibn Battuta
-            </footer>
-          </blockquote>
+              Scopri terre inesplorate. Vivi l'avventura.
+            </h2>
 
-          <hr
-            className="w-50 my-4"
-            style={{
-              borderTop: "2px solid #033d10", // verde
-            }}
-          />
+            <button
+              style={{
+                padding: "15px 30px",
+                border: "none",
+                borderRadius: "30px",
+                backgroundColor: "#00A86B", // verde avventura
+                color: "#fff",
+                fontWeight: "600",
+                fontSize: "1.1rem",
+                cursor: "pointer",
+                transition: "background 0.3s",
+              }}
+              onMouseEnter={(e) => (e.target.style.backgroundColor = "#008C5A")}
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "#00A86B")}
+            >
+              Inizia l'esplorazione
+            </button>
+          </div>
         </div>
 
         <section className="mt-5">
