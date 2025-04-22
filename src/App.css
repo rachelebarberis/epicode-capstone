@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 html, body {
-  background-color: whitesmoke; /* Colore di sfondo di base */
+  background-color: #F0E5D8; /* Colore di sfondo di base */
  
   color: #033d10; /* Colore principale del testo */
 
@@ -20,7 +20,7 @@ html, body {
 
 /*navbar*/
 #navbar {
-  background-color: whitesmoke; 
+  background-color: #F0E5D8; 
   position: fixed;
   top: 0;
   right: 0;
@@ -55,7 +55,7 @@ html, body {
 }
 
 #recensioni {
-  background-color: whitesmoke; 
+  background-color:#F0E5D8; 
 }
 
 #imgrecensioni {
@@ -73,7 +73,7 @@ html, body {
 /*login*/
 /* Sfondo pagina */
 #login-page {
-  background-color: whitesmoke;
+  background-color: #F0E5D8;
 }
 
 /* Colori */
@@ -117,7 +117,7 @@ html, body {
 
 
 #register-page {
-  background-color: whitesmoke;
+  background-color:#F0E5D8;
 }
 
 .text-primary {
@@ -248,7 +248,7 @@ h4, h5 {
 
 /*footer*/
 #footer {
-  background-color: whitesmoke; 
+  background-color: #F0E5D8; 
   position: fixed;
   bottom: 0;
   right: 0;

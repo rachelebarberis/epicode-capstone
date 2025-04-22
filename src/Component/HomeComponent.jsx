@@ -49,19 +49,10 @@ const HomeComponent = () => {
 
   return (
     <>
-      <div
-        style={{
-          backgroundImage: "url('/images/heroimg.jpg')",
-          backgroundSize: "cover",
-          backgroundRepeat: "repeat",
-          minHeight: "180px",
-          width: "100%",
-        }}
-      ></div>
       <Container className="mb-5 pb-5">
         <div
           style={{
-            backgroundImage: "url('/images/adventure-hero.jpg')",
+            backgroundImage: "url('/images/hero.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
