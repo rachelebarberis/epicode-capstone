@@ -52,7 +52,7 @@ const HomeComponent = () => {
       <Container className="mb-5 pb-5">
         <div
           style={{
-            backgroundImage: "url('/images/hero.jpg')",
+            backgroundImage: "url('/images/home.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -84,11 +84,9 @@ const HomeComponent = () => {
           <div style={{ position: "relative", zIndex: 2 }}>
             <h1
               style={{
-                fontFamily: "'Bebas Neue', cursive",
                 fontSize: "5rem",
                 letterSpacing: "2px",
                 marginBottom: "10px",
-                textTransform: "uppercase",
               }}
             >
               WanderLOst
