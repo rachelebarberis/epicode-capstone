@@ -124,82 +124,107 @@ const AreaPersonaleComponent = () => {
     : "/images/default-avatar.jpg";
 
   return (
-    <Container className="mt-5 pt-5">
-      <h4 className="text-center pb-5">
-        Benvenuto {user.firstName} nella tua Area Personale!
+    <Container className="mt-5 pt-5  mb-5">
+      <h4
+        className="text-center pb-4"
+        style={{ fontWeight: "bold", letterSpacing: "1px", color: "orangered" }}
+      >
+        Area Personale - Documento di Viaggio
       </h4>
 
-      <Row className="mb-4">
-        <Col className="text-end">
-          <Button
-            variant="outline-secondary"
-            onClick={openModal}
-            className="custom-btn"
+      <Row className="justify-content-center">
+        <Col xs={12} md={8}>
+          <div
+            className="border rounded-4 p-4 shadow"
+            style={{
+              backgroundColor: "#fff5f0",
+              borderColor: "orangered",
+              borderWidth: "2px",
+              borderStyle: "solid",
+            }}
           >
-            Modifica
-          </Button>
+            <Row className="align-items-center mb-4">
+              <Col
+                xs={12}
+                md={4}
+                className="d-flex flex-column align-items-center"
+              >
+                <img
+                  src={imageUrl}
+                  alt="Foto Profilo"
+                  className="rounded border"
+                  style={{
+                    width: "150px",
+                    height: "200px",
+                    objectFit: "cover",
+                    backgroundColor: "#ffffff",
+                    border: "2px solid orangered",
+                  }}
+                />
+                <Form.Group controlId="formFile" className="mt-3">
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e.target.files[0])}
+                    disabled={uploading}
+                  />
+                </Form.Group>
+
+                {uploading && (
+                  <div className="text-muted mt-2">Caricamento...</div>
+                )}
+
+                {selectedFile && (
+                  <Button
+                    variant="outline-warning"
+                    onClick={saveProfileImage}
+                    disabled={uploading}
+                    className="mt-2"
+                    size="sm"
+                    style={{ borderColor: "orangered", color: "orangered" }}
+                  >
+                    {uploading ? "Salvataggio..." : "Salva immagine"}
+                  </Button>
+                )}
+              </Col>
+
+              <Col xs={12} md={8} className="pt-4 pt-md-0">
+                <div className="mb-3" style={{ color: "#7A3E1F" }}>
+                  <strong>Nome:</strong>{" "}
+                  <span className="ms-2">{user.firstName}</span>
+                </div>
+                <div className="mb-3" style={{ color: "#7A3E1F" }}>
+                  <strong>Cognome:</strong>{" "}
+                  <span className="ms-2">{user.lastName}</span>
+                </div>
+                <div className="mb-3" style={{ color: "#7A3E1F" }}>
+                  <strong>Email:</strong>{" "}
+                  <span className="ms-2">{user.email}</span>
+                </div>
+                <Button
+                  variant="outline-warning"
+                  onClick={openModal}
+                  className="mt-3"
+                  style={{ borderColor: "orangered", color: "orangered" }}
+                >
+                  Modifica Dati
+                </Button>
+              </Col>
+            </Row>
+          </div>
         </Col>
       </Row>
 
-      <Row className="align-items-center">
-        <Col xs={12} md={4} className="d-flex flex-column align-items-center">
-          <img
-            src={imageUrl}
-            alt="Profilo"
-            className="rounded-circle profile-img mb-3"
-            style={{ width: "150px", height: "150px", objectFit: "cover" }}
-          />
-          <Form.Group controlId="formFile">
-            <Form.Control
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageUpload(e.target.files[0])}
-              disabled={uploading}
-            />
-          </Form.Group>
-
-          {uploading && <div className="text-muted mt-2">Caricamento...</div>}
-
-          {selectedFile && (
-            <Button
-              variant="primary"
-              onClick={saveProfileImage}
-              disabled={uploading}
-              className="mt-3"
-            >
-              {uploading ? "Salvataggio..." : "Salva immagine"}
-            </Button>
-          )}
-        </Col>
-
-        <Col xs={12} md={8} className="pt-3">
-          <h4>Informazioni personali</h4>
-          <p>
-            <strong>Nome:</strong> {user.firstName}
-          </p>
-          <p>
-            <strong>Cognome:</strong> {user.lastName}
-          </p>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
-
-          <hr className="w-100 my-4" style={{ color: "#7A3E1F" }} />
-
-          <h5 className="text-center">
-            <i className="bi bi-heart"></i> Lista preferiti
-          </h5>
-        </Col>
-      </Row>
-
-      {/* Modale per modificare i dati dell'utente */}
+      {/* Modale per modificare i dati */}
       <Modal show={showModal} onHide={closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Modifica Informazioni</Modal.Title>
+          <Modal.Title style={{ color: "orangered" }}>
+            Modifica Informazioni
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formFirstName">
+            <Form.Group controlId="formFirstName" className="mb-3">
               <Form.Label>Nome</Form.Label>
               <Form.Control
                 type="text"
@@ -209,7 +234,7 @@ const AreaPersonaleComponent = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formLastName">
+            <Form.Group controlId="formLastName" className="mb-3">
               <Form.Label>Cognome</Form.Label>
               <Form.Control
                 type="text"
@@ -219,7 +244,7 @@ const AreaPersonaleComponent = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formEmail">
+            <Form.Group controlId="formEmail" className="mb-3">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
@@ -234,7 +259,11 @@ const AreaPersonaleComponent = () => {
           <Button variant="secondary" onClick={closeModal}>
             Annulla
           </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
+          <Button
+            variant="warning"
+            onClick={handleSaveChanges}
+            style={{ backgroundColor: "orangered", borderColor: "orangered" }}
+          >
             Salva Modifiche
           </Button>
         </Modal.Footer>
