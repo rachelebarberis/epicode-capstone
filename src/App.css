@@ -33,7 +33,7 @@ html, body {
 }
 
 #navbar .nav-link {
-  font-weight: 550;
+  font-weight: 500;
   color: black;
 }
 
@@ -218,22 +218,21 @@ html, body {
   margin-bottom: 30px;
 }
 /*FINE HOME*/
-/*login*/
-/* Sfondo pagina */
+/*----------------------*/
+/*INIZIO LOGIN E REGISTRAZIONE*/
 
-
-#login-header h1 {
+#login-header h1, #register-header h1 {
   font-size: 3rem;
   color: orangered !important; /* Un arancione più scuro */
 }
 
-#login-header p {
+#login-header p, #register-header p {
   font-style: italic;
   color: black !important;
   font-size: 1.2rem;
 }
 
-.login-form {
+.login-form, .register-form {
   background: rgba(255, 255, 255, 0.9); /* Fondo bianco semi-trasparente */
   padding: 2rem;
   border-radius: 15px;
@@ -251,7 +250,7 @@ html, body {
   box-shadow: 0 0 5px rgba(255, 87, 34, 0.5); /* Leggera ombra arancione */
 }
 
-#login-button {
+#login-button, #register-button {
   border-radius: 25px;
   background-color: orangered; /* Arancione scuro */
   border: none;
@@ -260,25 +259,26 @@ html, body {
   transition: background-color 0.3s ease;
 }
 
-#login-button:hover {
+#login-button:hover, #register-button:hover {
   background-color: orangered; /* Arancione più scuro al passaggio del mouse */
 }
 
-#register-link {
+#login-link, #register-link {
   margin-top: 10px;
 }
 
-#register-link .navlink {
+#login-link .navlink, #register-link .navlink {
   font-weight: bold;
   text-decoration: none;
   color: orangered; /* Colore arancione per il link */
 }
 
-#register-link .navlink:hover {
+#login-link .navlink:hover, #register-link .navlink:hover {
   text-decoration: underline;
-  color:orangered; /* Arancione più scuro al passaggio del mouse */
+  color: orangered; /* Arancione più scuro al passaggio del mouse */
 }
 
+/*FINE LOGIN E REGISTRAZIONE*/
 
 
 /*Area Personale*/
