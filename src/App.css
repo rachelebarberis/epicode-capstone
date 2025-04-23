@@ -221,7 +221,11 @@ html, body {
 /*login*/
 /* Sfondo pagina */
 #login-page {
-  background-color: #F0E5D8;
+  background-image: url('/images/aereo.jpg');
+  background-size: cover; /* Per farlo coprire tutto lo schermo */
+  background-repeat: no-repeat; /* Per non ripetere l'immagine */
+  background-position: center; /* Per centrarla */
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Colori */

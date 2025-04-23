@@ -79,15 +79,6 @@ const LoginComponent = () => {
           </Col>
         </Row>
       </Container>
-      <div
-        style={{
-          backgroundImage: "url('/images/heroimg.jpg')",
-          backgroundSize: "cover",
-          backgroundRepeat: "repeat",
-          minHeight: "130px",
-          width: "100%",
-        }}
-      ></div>
     </>
   );
 };
