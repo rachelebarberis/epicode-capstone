@@ -1,6 +1,6 @@
-import { Container } from "react-bootstrap";
+import { Container, Carousel, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { getRecensione } from "../Redux/Actions/recensioneAction";
 import ReactPageFlip from "react-pageflip";
 
@@ -35,6 +35,15 @@ const HomeComponent = () => {
     fetchItinerari();
     fetchRecensioni();
   }, []);
+
+  const chunkedRecensioni = useMemo(() => {
+    const chunks = [];
+    const chunkSize = 4;
+    for (let i = 0; i < recensioni.length; i += chunkSize) {
+      chunks.push(recensioni.slice(i, i + chunkSize));
+    }
+    return chunks;
+  }, [recensioni]);
 
   const handleNextPage = () => {
     if (bookRef.current) {
@@ -84,76 +93,145 @@ const HomeComponent = () => {
           </ReactPageFlip>
         </div>
 
-        <div className=" d-flex justify-content-between mt-1">
+        <div className="d-flex justify-content-between mt-1">
           <button id="itinerario-btn" onClick={handlePrevPage}>
-            <i class="bi bi-arrow-left"></i>
+            <i className="bi bi-arrow-left"></i>
           </button>
           <button id="itinerario-btn" onClick={handleNextPage}>
-            <i class="bi bi-arrow-right"></i>
+            <i className="bi bi-arrow-right"></i>
           </button>
         </div>
       </section>
 
-      {/* SEZIONE RECENSIONI */}
       <section className="mt-5">
-        <div className="d-flex justify-content-between align-items-center">
-          <h4 style={{ color: "#05264a", fontWeight: "bold" }}>Recensioni</h4>
-          <div id="link-home">
+        <div className="d-flex flex-column align-items-center">
+          <h4 className="text-center fw-bold text-black">Recensioni</h4>
+          <div>
             <Link to="/Recensioni" className="text-decoration-none">
-              <span>Scopri di più</span>
-              <i className="bi bi-chevron-right"></i>
+              <p id="p-recensioni">Leggi tutte le recensioni</p>
             </Link>
           </div>
         </div>
 
-        <div>
-          {recensioni.map((recensione, index) => (
-            <div key={index} style={{ marginBottom: "20px" }}>
-              <h5>{recensione.nomeUtente}</h5>
-              <p>{recensione.commento}</p>
-            </div>
+        {/* Carosello delle recensioni */}
+        <Carousel indicators={false}>
+          {chunkedRecensioni.map((chunk, index) => (
+            <Carousel.Item key={index}>
+              <Row className="d-flex justify-content-center">
+                {chunk.map((recensione, idx) => (
+                  <Col xs={12} sm={6} md={4} lg={3} className="p-3" key={idx}>
+                    <Card
+                      id="card-recensioni"
+                      className="hover-card p-1 pt-5"
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = "translateY(-8px)";
+                        e.currentTarget.style.boxShadow =
+                          "0 12px 32px rgba(0,0,0,0.15)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = "translateY(0)";
+                        e.currentTarget.style.boxShadow =
+                          "0 8px 24px rgba(0,0,0,0.08)";
+                      }}
+                    >
+                      <div className="d-flex justify-content-center mb-3">
+                        <div
+                          style={{
+                            width: "90px",
+                            height: "90px",
+                            borderRadius: "50%",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {recensione.imgUserPath ? (
+                            <img
+                              id="img-recensioni"
+                              src={`https://localhost:7007/${recensione.imgUserPath}`}
+                              alt={recensione.nomeUtente}
+                            />
+                          ) : (
+                            <div
+                              id="img-recensioni"
+                              className="bg-secondary text-white d-flex align-items-center justify-content-center"
+                            >
+                              N/A
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <Card.Body className="text-center p-0">
+                        <h5 id="titolo-recensioni" className="fw-bold mb-1">
+                          {recensione.nomeUtente}
+                        </h5>
+
+                        <h6 className="text-black mb-2">
+                          {recensione.titoloItinerario}
+                        </h6>
+
+                        <p
+                          className="text-secondary small mb-0 p-0"
+                          style={{ minHeight: "50px" }}
+                        >
+                          {recensione.commento.length > 100
+                            ? `${recensione.commento.substring(0, 100)}...`
+                            : recensione.commento}
+                        </p>
+
+                        <div className="pb-3" id="stelle-recensioni">
+                          {[...Array(5)].map((_, i) => (
+                            <i
+                              key={i}
+                              className={
+                                i < Math.round(recensione.valutazione)
+                                  ? "bi bi-star-fill"
+                                  : "bi bi-star"
+                              }
+                              style={{ marginRight: "2px", fontSize: "1.2rem" }}
+                            ></i>
+                          ))}
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </Carousel.Item>
           ))}
-        </div>
+        </Carousel>
       </section>
 
-      {/* SEPARATORE */}
-      <hr className="w-100 my-4" style={{ borderTop: "3px solid #033d10" }} />
-
-      {/* SEZIONE ABOUT US */}
       <section id="about-us" className="mt-5">
-        <div className="d-flex flex-column justify-content-center align-items-center">
-          <h4 className="mb-4" style={{ color: "#05264a", fontWeight: "bold" }}>
+        <div className="d-flex flex-column justify-content-center align-items-center text-center p-4">
+          <h4 id="titolo-about" className="mb-3">
             About Us
           </h4>
-          <p
-            className="text-center"
-            style={{
-              color: "#033d10",
-              fontSize: "1.1rem",
-              maxWidth: "700px",
-              lineHeight: "1.6",
-              marginBottom: "20px",
-            }}
-          >
+          <p id="p-about">
             Siamo un team di appassionati viaggiatori pronti a guidarti verso le
             migliori esperienze del mondo.
             <br />
             Scopri di più sulla nostra missione e sul nostro team!
           </p>
-          <Link
-            to="/AboutUs"
-            className="nav-link"
-            style={{ textDecoration: "none" }}
-          >
+          <Link to="/AboutUs" className="text-decoration-none">
             <div
-              className="custom-btn"
               style={{
                 padding: "12px 30px",
                 borderRadius: "30px",
-                backgroundColor: "#033d10",
+                backgroundColor: "orangered",
                 color: "white",
-                fontWeight: "600",
-                transition: "background-color 0.3s ease",
+                fontWeight: "700",
+                letterSpacing: "1px",
+                fontSize: "1rem",
+                transition: "background-color 0.3s ease, transform 0.3s ease",
+              }}
+              className="d-inline-block"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#e55300";
+                e.currentTarget.style.transform = "translateY(-3px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "orangered";
+                e.currentTarget.style.transform = "translateY(0)";
               }}
             >
               Scopri di più
@@ -162,9 +240,6 @@ const HomeComponent = () => {
           </Link>
         </div>
       </section>
-
-      {/* SEPARATORE */}
-      <hr className="w-100 my-4" style={{ borderTop: "3px solid #033d10" }} />
     </Container>
   );
 };

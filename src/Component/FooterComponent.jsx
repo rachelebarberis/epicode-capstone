@@ -4,7 +4,8 @@ const FooterComponent = () => (
   <Container fluid={true} className="p-0" id="footer">
     <footer className="mt-2">
       <span className="d-flex justify-content-center">
-        <strong>WanderLOst</strong> - Viaggia senza limiti, sogna senza confini
+        <strong id="strong-footer">WanderLOst</strong> - Viaggia senza limiti,
+        sogna senza confini
       </span>
 
       <div className="d-flex justify-content-center pb-2">
