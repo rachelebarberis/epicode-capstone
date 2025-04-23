@@ -10,7 +10,6 @@ import {
   Badge,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
-
 import DeleteItinerarioModal from "./ItinerarioAdmin/DeleteItinerarioModal";
 import UpdateItinerarioModal from "./ItinerarioAdmin/UpdateItinerarioModal";
 
@@ -19,11 +18,11 @@ const ItinerarioDettagli = () => {
   const [dettagli, setDettagli] = useState(null);
   const [selectedFascia, setSelectedFascia] = useState(null);
   const [selectedPartenza, setSelectedPartenza] = useState(null);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const userRole = useSelector((state) => state.auth.role);
-  const userEmail = useSelector((state) => state.auth.user); // email da Redux
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userRole = useSelector((state) => state.auth.role);
+  const userEmail = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +30,6 @@ const ItinerarioDettagli = () => {
       try {
         const res = await fetch(`https://localhost:7007/api/Itinerario/${id}`);
         const data = await res.json();
-        data.id = data.id ?? data.idItinerario; // fallback
         setDettagli(data);
       } catch (error) {
         console.error("Errore nel caricamento del dettaglio:", error);
@@ -39,20 +37,17 @@ const ItinerarioDettagli = () => {
     };
     fetchDettagli();
   }, [id]);
-  const auth = useSelector((state) => state.auth);
-  console.log("Stato auth:", auth);
+
   const aggiungiAlCarrello = async () => {
     if (!selectedFascia || !selectedPartenza) {
       alert("Seleziona fascia di prezzo e data di partenza");
       return;
     }
-
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("Devi essere loggato per aggiungere l'itinerario al carrello.");
+      alert("Devi essere loggato per aggiungere al carrello.");
       return;
     }
-
     const itinerarioSelezionato = {
       idItinerario: dettagli.idItinerario,
       idItinerarioFasciaPrezzo: selectedFascia.idItinerarioFasciaPrezzo,
@@ -60,20 +55,6 @@ const ItinerarioDettagli = () => {
       prezzo: selectedFascia.prezzo,
       quantita: 1,
     };
-
-    // Qui inizializziamo la variabile request
-    const request = JSON.stringify({
-      userEmail, // L'email dell'utente deve essere correttamente valorizzata
-      carrelloItems: [itinerarioSelezionato],
-    });
-
-    console.log("Dati inviati:", {
-      userEmail,
-      carrelloItems: [itinerarioSelezionato],
-    });
-
-    console.log("Richiesta JSON:", request); // Ora viene loggato dopo che è stato inizializzato
-
     try {
       const response = await fetch("https://localhost:7007/api/carrello", {
         method: "POST",
@@ -81,16 +62,15 @@ const ItinerarioDettagli = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: request,
+        body: JSON.stringify({
+          userEmail,
+          carrelloItems: [itinerarioSelezionato],
+        }),
       });
-
-      if (response.ok) {
-        navigate("/carrello");
-      } else {
-        alert("Errore nell'aggiungere l'itinerario al carrello.");
-      }
+      if (response.ok) navigate("/carrello");
+      else alert("Errore nell'aggiungere al carrello.");
     } catch (error) {
-      console.error("Errore nell'invio della richiesta:", error);
+      console.error("Errore:", error);
       alert("Errore nell'invio della richiesta.");
     }
   };
@@ -99,133 +79,163 @@ const ItinerarioDettagli = () => {
 
   return (
     <Container className="mt-5 pt-5 pb-5">
-      <Card className="p-4 mb-5 bg-transparent border-0">
+      <Card className="border border-0 pb-5">
         <Row>
-          <Col md={5}>
+          <Col lg={5} className="pt-3 pb-sm-2 pb-lg-0">
             <Card.Img
-              src={dettagli.immagineUrl}
+              src={dettagli.immagineUrl || "/images/default-tour.jpg"}
               alt={dettagli.nomeItinerario}
-              className="rounded w-100"
+              className="rounded-4 w-100"
               style={{ maxHeight: "400px", objectFit: "cover" }}
             />
           </Col>
 
-          <Col md={7}>
-            <h2 className="mb-3">{dettagli.nomeItinerario}</h2>
-            <p className="text-muted">{dettagli.descrizione}</p>
-            <p>
+          <Col lg={7} className="text-center text-lg-start">
+            <h2 className="fw-bold" style={{ color: "#FF4500" }}>
+              {dettagli.nomeItinerario}
+            </h2>
+
+            <p className="fw-medium">
               <strong>Durata:</strong> {dettagli.durata} giorni
             </p>
-
-            <h5 className="mt-4">Prezzi:</h5>
-            <p className="text-danger">
-              {!selectedFascia && "Seleziona una fascia di prezzo"}
-            </p>
-            <ListGroup>
+            <h5 className="text-center" style={{ color: "#FF4500" }}>
+              Fasce di Prezzo
+            </h5>
+            {isAuthenticated && userRole === "User" && (
+              <h5 className="mt-4" style={{ color: "#FF5722" }}>
+                Scegli la fascia di prezzo:
+              </h5>
+            )}
+            <ListGroup className="mb-3">
               {dettagli.itinerarioFascePrezzo?.map((fascia) => (
                 <ListGroup.Item
                   key={fascia.idItinerarioFasciaPrezzo}
-                  style={{
-                    cursor: "pointer",
-                    backgroundColor:
-                      selectedFascia?.idItinerarioFasciaPrezzo ===
-                      fascia.idItinerarioFasciaPrezzo
-                        ? "#e7f1ff"
-                        : "transparent",
-                    border:
-                      selectedFascia?.idItinerarioFasciaPrezzo ===
-                      fascia.idItinerarioFasciaPrezzo
-                        ? "2px solid #007bff"
-                        : "1px solid #ccc",
-                  }}
                   onClick={() => setSelectedFascia(fascia)}
+                  className={`rounded-3 mb-2 border-2 ${
+                    selectedFascia?.idItinerarioFasciaPrezzo ===
+                    fascia.idItinerarioFasciaPrezzo
+                      ? "border-warning"
+                      : "border-light"
+                  }`}
+                  style={{ cursor: "pointer", backgroundColor: "#fff7f0" }}
                 >
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>
-                        {fascia.idFasciaDiPrezzo === 1
-                          ? "Base"
-                          : fascia.idFasciaDiPrezzo === 2
-                          ? "Medio"
-                          : "Top"}
-                      </strong>
-                      : {fascia.prezzo.toFixed(2)}€
+                  <div className="d-flex flex-column mb-3">
+                    <small className="text-muted mb-1">
+                      {fascia.idFasciaDiPrezzo === 1
+                        ? "Sistemazioni economiche. Pernottamenti presso ostelli o hotel economici, voli con possibili scali lunghi e spostamenti durante il viaggio tramite mezzi di trasporto pubblico"
+                        : fascia.idFasciaDiPrezzo === 2
+                        ? "Hotel 3 stelle, voli discreti, comfort moderato per rapporto qualità prezzo"
+                        : "Hotel premium, voli diretti o ottimali, transfer inclusi"}
+                    </small>
+
+                    <div className="d-flex justify-content-between">
+                      <span>
+                        <strong>
+                          {fascia.idFasciaDiPrezzo === 1
+                            ? "Base"
+                            : fascia.idFasciaDiPrezzo === 2
+                            ? "Medio"
+                            : "Top"}
+                        </strong>
+                        : {fascia.prezzo.toFixed(2)}€
+                      </span>
+                      {selectedFascia?.idItinerarioFasciaPrezzo ===
+                        fascia.idItinerarioFasciaPrezzo && (
+                        <i className="bi bi-check-circle-fill text-success" />
+                      )}
                     </div>
-                    {selectedFascia?.idItinerarioFasciaPrezzo ===
-                      fascia.idItinerarioFasciaPrezzo && (
-                      <i className="bi bi-check" />
-                    )}
                   </div>
                 </ListGroup.Item>
               ))}
             </ListGroup>
-
-            <h5 className="mt-4">Partenze disponibili:</h5>
-            <p className="text-danger">
-              {!selectedPartenza && "Seleziona una data di partenza"}
-            </p>
-            {dettagli.partenze?.map((partenza) => (
-              <Card
-                key={partenza.idPartenza}
-                className={`mb-2 border-0 bg-light ${
-                  selectedPartenza?.idPartenza === partenza.idPartenza
-                    ? "border-primary"
-                    : ""
-                }`}
-                style={{ cursor: "pointer" }}
-                onClick={() => setSelectedPartenza(partenza)}
-              >
-                <Card.Body className="py-2 px-3 d-flex justify-content-between">
-                  <span>
-                    <strong>Data:</strong> {partenza.dataPartenza}
-                  </span>
-                  <Badge
-                    bg={partenza.stato === "Disponibile" ? "success" : "danger"}
+            <h5 className="text-center" style={{ color: "#FF4500" }}>
+              Partenze:
+            </h5>
+            {isAuthenticated && userRole === "User" && (
+              <h5 className="mt-4" style={{ color: "#FF5722" }}>
+                Seleziona una partenza:
+              </h5>
+            )}
+            <Row>
+              {dettagli.partenze?.map((partenza) => (
+                <Col xs={12} md={6} key={partenza.idPartenza}>
+                  <Card
+                    onClick={() => setSelectedPartenza(partenza)}
+                    className={`rounded-3 mt-2   ${
+                      selectedPartenza?.idPartenza === partenza.idPartenza
+                        ? "border-warning border-2"
+                        : "border-light"
+                    }`}
+                    style={{ cursor: "pointer", backgroundColor: "#fff7f0" }}
                   >
-                    {partenza.stato}
-                  </Badge>
-                  {selectedPartenza?.idPartenza === partenza.idPartenza && (
-                    <i className="bi bi-check" />
-                  )}
-                </Card.Body>
-              </Card>
-            ))}
-
-            <Button
-              variant="primary"
-              className="mt-3"
-              onClick={aggiungiAlCarrello}
-            >
-              Aggiungi al carrello
-            </Button>
+                    <Card.Body className="d-flex justify-content-between align-items-center p-1">
+                      <span>
+                        <strong>{partenza.dataPartenza}</strong>
+                      </span>
+                      <Badge
+                        bg={
+                          partenza.stato === "Disponibile"
+                            ? "success"
+                            : "danger"
+                        }
+                      >
+                        {partenza.stato}
+                      </Badge>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+            {isAuthenticated && userRole === "User" && (
+              <div className="d-flex justify-content-center">
+                <Button
+                  variant="warning"
+                  className="rounded-pill mt-4 px-4 fw-bold text-white"
+                  onClick={aggiungiAlCarrello}
+                  style={{ backgroundColor: "#FF4500", border: "none" }}
+                >
+                  <i className="bi bi-cart-plus me-2"></i> Aggiungi al Carrello
+                </Button>
+              </div>
+            )}
           </Col>
         </Row>
-
-        <h4 className="mt-5 mb-3 text-center">Dettagli del tour:</h4>
-        <ListGroup className="mb-4">
-          {dettagli.giorni?.map((giorno, index) => (
-            <ListGroup.Item key={index} className="mt-1 mb-1">
-              <h5 className="mb-1">
+        <hr
+          className="w-100 mt-5"
+          style={{ color: "#FF5722", border: "2px solid" }}
+        ></hr>
+        <h4 className="text-center mt-5 fw-bold" style={{ color: "#FF5722" }}>
+          Programma Giornaliero
+        </h4>
+        <ListGroup className="mt-3">
+          {dettagli.giorni?.map((giorno, idx) => (
+            <ListGroup.Item key={idx} className="rounded-3 my-2 shadow-sm">
+              <h5 className="fw-bold mb-1" style={{ color: "#FF4500" }}>
                 Giorno {giorno.giorno}: {giorno.titolo}
               </h5>
-              <p className="mb-0 text-muted">{giorno.descrizione}</p>
+              <p className="text-muted mb-0">{giorno.descrizione}</p>
             </ListGroup.Item>
           ))}
         </ListGroup>
 
         {isAuthenticated && userRole === "Admin" && (
-          <div className="d-flex gap-3">
-            <Button variant="warning" onClick={() => setShowUpdateModal(true)}>
+          <div className="d-flex justify-content-center gap-3 mt-4">
+            <Button
+              variant="outline-warning"
+              onClick={() => setShowUpdateModal(true)}
+            >
               Modifica
             </Button>
-            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
+            <Button
+              variant="outline-danger"
+              onClick={() => setShowDeleteModal(true)}
+            >
               Elimina
             </Button>
           </div>
         )}
       </Card>
 
-      {/* Modali */}
       <DeleteItinerarioModal
         show={showDeleteModal}
         handleClose={() => setShowDeleteModal(false)}
