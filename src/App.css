@@ -220,92 +220,65 @@ html, body {
 /*FINE HOME*/
 /*login*/
 /* Sfondo pagina */
-#login-page {
-  background-image: url('/images/aereo.jpg');
-  background-size: cover; /* Per farlo coprire tutto lo schermo */
-  background-repeat: no-repeat; /* Per non ripetere l'immagine */
-  background-position: center; /* Per centrarla */
-  background-color: rgba(0, 0, 0, 0.5);
+
+
+#login-header h1 {
+  font-size: 3rem;
+  color: orangered !important; /* Un arancione più scuro */
 }
 
-/* Colori */
-.text-primary {
-  color: #05264a !important; /* Blu soft */
+#login-header p {
+  font-style: italic;
+  color: black !important;
+  font-size: 1.2rem;
 }
 
-.text-success {
-  color: #033d10 !important; /* Verde scuro */
+.login-form {
+  background: rgba(255, 255, 255, 0.9); /* Fondo bianco semi-trasparente */
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Input minimal underline style */
 .underline-input {
-  border: none;
-  border-bottom: 2px solid #05264a;
-  border-radius: 0;
-  background-color: transparent;
-  color: #033d10;
+  border-radius: 25px;
+  border: 2px solid orangered; /* Arancione scuro */
+  transition: border-color 0.3s ease;
 }
 
 .underline-input:focus {
-  box-shadow: none;
-  border-bottom: 2px solid #033d10;
+  border-color: orangered; /* Arancione più intenso quando l'input è attivo */
+  box-shadow: 0 0 5px rgba(255, 87, 34, 0.5); /* Leggera ombra arancione */
 }
 
-/* Bottone personalizzato */
 #login-button {
-  background-color: #033d10;
+  border-radius: 25px;
+  background-color: orangered; /* Arancione scuro */
   border: none;
+  padding: 12px;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
 }
 
 #login-button:hover {
-  background-color: #05264a;
+  background-color: orangered; /* Arancione più scuro al passaggio del mouse */
 }
 
-/* Link registrazione */
+#register-link {
+  margin-top: 10px;
+}
+
 #register-link .navlink {
-  font-weight: 600;
+  font-weight: bold;
+  text-decoration: none;
+  color: orangered; /* Colore arancione per il link */
+}
+
+#register-link .navlink:hover {
   text-decoration: underline;
+  color:orangered; /* Arancione più scuro al passaggio del mouse */
 }
 
-
-#register-page {
-  background-color:#F0E5D8;
-}
-
-.text-primary {
-  color: #05264a !important;
-}
-
-.text-success {
-  color: #033d10 !important;
-}
-
-.underline-input {
-  border: none;
-  border-bottom: 2px solid #295e8c;
-  border-radius: 0;
-  background-color: transparent;
-  color: #033d10;
-}
-
-.underline-input:focus {
-  box-shadow: none;
-  border-bottom: 2px solid #033d10;
-}
-
-#register-button {
-  background-color: #033d10;
-  border: none;
-}
-
-#register-button:hover {
-  background-color: #05264a;
-}
-
-#login-link .navlink {
-  font-weight: 600;
-  text-decoration: underline;
-}
 
 
 /*Area Personale*/

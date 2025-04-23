@@ -25,17 +25,14 @@ const LoginComponent = () => {
   return (
     <>
       <Container
-        fluid
         id="login-page"
-        className="d-flex justify-content-center align-items-center mt-5 pt-5"
+        className="d-flex justify-content-center align-items-center mt-5 pt-5 mb-5 pb-5"
       >
-        <Row className="w-100 justify-content-center">
+        <Row className="w-100 justify-content-center pt-5 pb-5">
           <Col xs={10} sm={8} md={6} lg={4}>
             <div id="login-header" className="text-center mb-5">
-              <h1 className="text-primary  fw-bolder">WanderLOst</h1>
-              <p className="text-success">
-                “Ogni viaggio inizia con un passo… il tuo inizia qui.”
-              </p>
+              <h1 className=" fw-bolder">WanderLOst</h1>
+              <p>“Ogni viaggio inizia con un passo… il tuo inizia qui.”</p>
             </div>
 
             <Form onSubmit={handleSubmit} className="login-form">
@@ -71,7 +68,7 @@ const LoginComponent = () => {
 
               <p className="text-center" id="register-link">
                 Non hai un account?{" "}
-                <Link to="/Register" className="navlink text-primary">
+                <Link to="/Register" className="navlink ">
                   Registrati!
                 </Link>
               </p>
