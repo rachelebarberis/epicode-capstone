@@ -1,15 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 html, body {
-  background-color: 		#EFE1C6; /* Colore di sfondo di base */
- 
-  color: #033d10; /* Colore principale del testo */
+  background-color:white; 
+  color: black; /* Colore principale del testo */
 
 }
-
-
-
-
 #root {
   margin: 0;
   padding: 0;
@@ -20,40 +15,162 @@ html, body {
 
 /*navbar*/
 #navbar {
-  background-color: #F0E5D8; 
+  background-color: white; 
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   z-index: 1000;
+  border-bottom: 2px solid orangered;
 }
 
 #imglogo {
-  max-width: 100px;
-  max-height: 80px;
+  max-width: 90px;
+  max-height: 70px;
   padding: 0px;
   padding-top: 12px;
   margin: 0px;
 }
 
 #navbar .nav-link {
-  color:  #05264a !important; /* Blu scuro per il testo dei link */
+  font-weight: 550;
+  color: black;
 }
 
 #navbar .nav-link.active,
 #navbar .nav-link:focus {
-  color: #033d10 !important; /* Verde scuro per il link attivo */
+  color: orangered !important; 
+  text-decoration: underline;
 }
 
 #navbar .nav-link:hover {
-  color: #033d10  !important; /* Colore verde scuro più chiaro al passaggio del mouse */
+  color: orangered !important; 
+  transform: scale(1.1); /* ingrandisce del 20% */
+  transition: transform 0.3s; /* aggiunge una transizione morbida */
 }
 
 /*home*/
-.hover-card:hover {
-  transform: scale(1.05); /* Effetto di ingrandimento quando il mouse è sopra */
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/*hero*/
+#hero-div {
+  background-image: url('/images/home.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 2s ease forwards;
 }
 
+#hero-p {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+#h1-home {
+  font-weight: 900;
+  font-size: 5rem;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 0.5s;
+}
+
+#h2-home {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 1s;
+}
+
+#btn-hero {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 30px;
+  background-color: orangered;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 1.5s;
+}
+
+#btn-hero:hover {
+  background-color: rgb(227, 227, 0);
+  transform: scale(1.05);
+}
+
+/*tour*/
+#tour-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  border: 2px solid whitesmoke;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4) ;
+  border-radius: 15px;
+}
+#itinerario {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+#itinerario-img {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+#itinerario-nome {
+  color: orangered;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 10px;
+}
+
+#itinerario-btn {
+
+ padding: 10px ;
+ background-color: transparent;
+ color: orangered;
+ border: none;
+
+ font-size: 1.2rem; 
+ cursor: pointer;
+}
 #recensioni {
   background-color:#F0E5D8; 
 }

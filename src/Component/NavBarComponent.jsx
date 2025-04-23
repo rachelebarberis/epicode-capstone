@@ -10,7 +10,7 @@ const NavBarComponent = () => {
 
   const dispatch = useDispatch();
   return (
-    <Navbar expand="md" className=" pt-0" id="navbar">
+    <Navbar expand="md" className=" p-0" id="navbar">
       <Container fluid={true}>
         <Link to="/" className="m-0 p-0 nav-link">
           <img src="/public/images/logo.jpg" id="imglogo" />
@@ -35,6 +35,9 @@ const NavBarComponent = () => {
             <Link to="/Paese" className="nav-link">
               Paesi
             </Link>
+            <Link to="/Contatti" className="nav-link">
+              Contatti
+            </Link>
 
             {isAuthenticated && userRole === "User" && (
               <Link to="/AreaPersonale" className=" nav-link">
@@ -48,7 +51,7 @@ const NavBarComponent = () => {
               <Link
                 to="/Login"
                 onClick={() => dispatch(logout())}
-                className="nav-link text-danger"
+                className="nav-link"
               >
                 Login
               </Link>
