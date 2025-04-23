@@ -56,10 +56,10 @@ const EsploraComponent = () => {
 
   return (
     <Container fluid className="pt-5 mt-5 px-4">
-      <Row className="justify-content-between align-items-center mb-4">
+      <Row className="justify-content-end mb-4">
         <Col xs={12} md={6} lg={4}>
           <Form>
-            <InputGroup>
+            <InputGroup className="search-bar">
               <Form.Control
                 type="text"
                 placeholder="Cerca per paese..."
@@ -72,14 +72,17 @@ const EsploraComponent = () => {
             </InputGroup>
           </Form>
         </Col>
-        {isAuthenticated && userRole === "Admin" && (
+      </Row>
+
+      {isAuthenticated && userRole === "Admin" && (
+        <Row className="justify-content-center">
           <Col xs="auto" className="mt-3 mt-md-0">
             <Button variant="success" onClick={() => setShowCreateModal(true)}>
-              + Aggiungi Itinerario
+              <i className="bi bi-plus"></i>
             </Button>
           </Col>
-        )}
-      </Row>
+        </Row>
+      )}
 
       <CreateItinerarioModal
         show={showCreateModal}
@@ -90,17 +93,27 @@ const EsploraComponent = () => {
         }}
       />
 
+      {/* Mostra itinerari o messaggio quando non ci sono risultati */}
       {Object.keys(filteredItinerari).length === 0 ? (
         <p className="text-muted text-center">Nessun itinerario trovato.</p>
       ) : (
         Object.entries(filteredItinerari).map(([paese, lista], index) => (
           <div key={index} className="mb-5">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h4 className="fw-bold mb-0">{paese}</h4>
-              <div className="text-success cursor-pointer">
-                <span>Scopri di più</span>
-                <i className="bi bi-chevron-right ms-1"></i>
-              </div>
+            <div className="d-flex justify-content-center align-items-center mb-2">
+              <h4
+                className="fw-bold mb-0"
+                style={{ textAlign: "center", color: "#FF5722" }}
+              >
+                {paese}
+              </h4>
+            </div>
+            <div className="d-flex justify-content-center mt-0 mb-3">
+              <Link
+                to={`/paese/${paese}`}
+                className="text-dark text-decoration-none"
+              >
+                Vai agli itinerari
+              </Link>
             </div>
 
             <Row>
@@ -126,6 +139,7 @@ const EsploraComponent = () => {
                             style={{ height: "180px", objectFit: "cover" }}
                           />
 
+                          {/* Tab per i prezzi */}
                           <Nav
                             variant="pills"
                             className="justify-content-center mt-2"
@@ -141,47 +155,140 @@ const EsploraComponent = () => {
                             </Nav.Item>
                           </Nav>
 
-                          <Tab.Content className="p-3">
+                          <Tab.Content>
                             <Tab.Pane eventKey="first">
-                              <Card.Title>
-                                {itinerario.nomeItinerario}
-                              </Card.Title>
-                              <p>Prezzo: {prezzoBase ?? "N/D"}</p>
-                              <p>Durata: {itinerario.durata} giorni</p>
-                              <Link
-                                to={`/itinerario/${itinerario.idItinerario}`}
-                                className="btn btn-outline-success btn-sm"
-                              >
-                                Scopri di più
-                              </Link>
+                              <Card.Body className="text-center">
+                                <Card.Title
+                                  className="fw-bold mb-2"
+                                  style={{
+                                    fontSize: "1.3rem",
+                                    color: "#FF5722",
+                                  }}
+                                >
+                                  {itinerario.nomeItinerario}
+                                </Card.Title>
+                                <p
+                                  className="mb-1"
+                                  style={{
+                                    fontSize: "1rem",
+                                    fontWeight: "500",
+                                    color: "orangered",
+                                  }}
+                                >
+                                  Prezzo: {prezzoBase ?? "N/D"}
+                                </p>
+                                <p
+                                  className="text-muted mb-3"
+                                  style={{ fontSize: "0.9rem" }}
+                                >
+                                  Durata: {itinerario.durata} giorni
+                                </p>
+                                <Link
+                                  to={`/itinerario/${itinerario.idItinerario}`}
+                                  className="btn rounded-pill fw-bold px-4"
+                                  style={{
+                                    background:
+                                      "linear-gradient(135deg, orangered, #FF5722)",
+                                    color: "white",
+                                    border: "none",
+                                    boxShadow: "0 4px 10px rgba(255,87,34,0.4)",
+                                    transition: "all 0.3s ease-in-out",
+                                  }}
+                                >
+                                  <i className="bi bi-compass-fill me-2"></i>
+                                  Scopri di più
+                                </Link>
+                              </Card.Body>
                             </Tab.Pane>
 
                             <Tab.Pane eventKey="second">
-                              <Card.Title>
-                                {itinerario.nomeItinerario}
-                              </Card.Title>
-                              <p>Prezzo: {prezzoMedio ?? "N/D"}</p>
-                              <p>Durata: {itinerario.durata} giorni</p>
-                              <Link
-                                to={`/itinerario/${itinerario.idItinerario}`}
-                                className="btn btn-outline-success btn-sm"
-                              >
-                                Scopri di più
-                              </Link>
+                              <Card.Body className="text-center">
+                                <Card.Title
+                                  className="fw-bold mb-2"
+                                  style={{
+                                    fontSize: "1.3rem",
+                                    color: "#FF5722",
+                                  }}
+                                >
+                                  {itinerario.nomeItinerario}
+                                </Card.Title>
+                                <p
+                                  className="mb-1"
+                                  style={{
+                                    fontSize: "1rem",
+                                    fontWeight: "500",
+                                    color: "orangered",
+                                  }}
+                                >
+                                  Prezzo: {prezzoMedio ?? "N/D"}
+                                </p>
+                                <p
+                                  className="text-muted mb-3"
+                                  style={{ fontSize: "0.9rem" }}
+                                >
+                                  Durata: {itinerario.durata} giorni
+                                </p>
+                                <Link
+                                  to={`/itinerario/${itinerario.idItinerario}`}
+                                  className="btn rounded-pill fw-bold px-4"
+                                  style={{
+                                    background:
+                                      "linear-gradient(135deg, orangered, #FF5722)",
+                                    color: "white",
+                                    border: "none",
+                                    boxShadow: "0 4px 10px rgba(255,87,34,0.4)",
+                                    transition: "all 0.3s ease-in-out",
+                                  }}
+                                >
+                                  <i className="bi bi-compass-fill me-2"></i>
+                                  Scopri di più
+                                </Link>
+                              </Card.Body>
                             </Tab.Pane>
 
                             <Tab.Pane eventKey="third">
-                              <Card.Title>
-                                {itinerario.nomeItinerario}
-                              </Card.Title>
-                              <p>Prezzo: {prezzoTop ?? "N/D"}</p>
-                              <p>Durata: {itinerario.durata} giorni</p>
-                              <Link
-                                to={`/itinerario/${itinerario.idItinerario}`}
-                                className="btn btn-outline-success btn-sm"
-                              >
-                                Scopri di più
-                              </Link>
+                              <Card.Body className="text-center">
+                                <Card.Title
+                                  className="fw-bold mb-2"
+                                  style={{
+                                    fontSize: "1.3rem",
+                                    color: "#FF5722",
+                                  }}
+                                >
+                                  {itinerario.nomeItinerario}
+                                </Card.Title>
+                                <p
+                                  className="mb-1"
+                                  style={{
+                                    fontSize: "1rem",
+                                    fontWeight: "500",
+                                    color: "orangered",
+                                  }}
+                                >
+                                  Prezzo: {prezzoTop ?? "N/D"}
+                                </p>
+                                <p
+                                  className="text-muted mb-3"
+                                  style={{ fontSize: "0.9rem" }}
+                                >
+                                  Durata: {itinerario.durata} giorni
+                                </p>
+                                <Link
+                                  to={`/itinerario/${itinerario.idItinerario}`}
+                                  className="btn rounded-pill fw-bold px-4"
+                                  style={{
+                                    background:
+                                      "linear-gradient(135deg, orangered, #FF5722)",
+                                    color: "white",
+                                    border: "none",
+                                    boxShadow: "0 4px 10px rgba(255,87,34,0.4)",
+                                    transition: "all 0.3s ease-in-out",
+                                  }}
+                                >
+                                  <i className="bi bi-compass-fill me-2"></i>
+                                  Scopri di più
+                                </Link>
+                              </Card.Body>
                             </Tab.Pane>
                           </Tab.Content>
                         </>
