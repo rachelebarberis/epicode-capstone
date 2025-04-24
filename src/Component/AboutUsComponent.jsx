@@ -19,8 +19,12 @@ const AboutUsComponent = () => {
           md={6}
           className="d-flex justify-content-center align-items-center"
         >
-          <Card className="about-card shadow">
-            <Card.Img variant="top" src="" className="about-image" />
+          <Card className="about-card">
+            <Card.Img
+              variant="top"
+              src="/images/about.jpg"
+              className="about-image"
+            />
           </Card>
         </Col>
 

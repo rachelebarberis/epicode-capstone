@@ -185,10 +185,10 @@ const CartComponent = () => {
               </div>
 
               {/* Bottone Procedi */}
-              <div className="d-flex justify-content-center mt-4">
+              <div className="d-flex justify-content-center mt-3">
                 <Button
                   variant="warning"
-                  onClick={() => navigate("/Pagamento")}
+                  onClick={() => setShowModal(true)}
                   style={{
                     backgroundColor: "orangered",
                     borderColor: "orangered",
@@ -224,6 +224,76 @@ const CartComponent = () => {
             Rimuovi
           </Button>
         </Modal.Footer>
+      </Modal>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title style={{ color: "orangered" }}>
+            Inserisci i dati della carta
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              alert("Pagamento simulato completato!");
+              setShowModal(false);
+            }}
+          >
+            <div className="mb-3">
+              <label className="form-label">Numero Carta</label>
+              <input
+                type="text"
+                className="form-control"
+                maxLength="16"
+                required
+                placeholder="1234 5678 9876 5432"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Nome Intestatario</label>
+              <input
+                type="text"
+                className="form-control"
+                required
+                placeholder="Mario Rossi"
+              />
+            </div>
+            <div className="row">
+              <div className="col-6 mb-3">
+                <label className="form-label">Scadenza</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="MM/YY"
+                  required
+                />
+              </div>
+              <div className="col-6 mb-3">
+                <label className="form-label">CVV</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  maxLength="3"
+                  placeholder="123"
+                  required
+                />
+              </div>
+            </div>
+            <div className="text-center mt-4">
+              <Button
+                type="submit"
+                style={{
+                  backgroundColor: "orangered",
+                  borderColor: "orangered",
+                  fontWeight: "bold",
+                }}
+              >
+                Conferma Pagamento
+              </Button>
+            </div>
+          </form>
+        </Modal.Body>
       </Modal>
     </Container>
   );

@@ -442,6 +442,17 @@ h4, h5 {
   font-weight: 600;
 }
 
+/*CONTATTI COMPONENT*/
+textarea::placeholder,
+input::placeholder {
+  color: #b0542c;
+  opacity: 0.8;
+}
+
+button:hover {
+  background-color: #e65100 !important;
+  border-color: #e65100 !important;
+}
 
 /*footer*/
 #footer {
