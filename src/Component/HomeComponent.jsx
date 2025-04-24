@@ -69,7 +69,10 @@ const HomeComponent = () => {
       </div>
 
       <section className="mt-5">
-        <h4 className="text-center fw-bold text-black">Guarda i tour</h4>
+        <h4 className="text-center fw-bold text-black">I nostri itinerari</h4>
+        <p className="text-center" id="p-recensioni">
+          Sfoglia il catalogo
+        </p>
 
         <div id="tour-div">
           <ReactPageFlip

@@ -14,6 +14,7 @@ import ItinerarioDettagli from "./Component/ItinerarioDettagli";
 import PaeseComponent from "./Component/PaeseComponent";
 import RecensioneComponent from "./Component/RecensioneComponent";
 import CartComponent from "./Component/CartComponent";
+import PagamentoComponent from "./Component/PagamentoComponent";
 const App = () => {
   return (
     <>
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/Paese" element={<PaeseComponent />} />
           <Route path="/Login" element={<LoginComponent />} />
           <Route path="/Carrello" element={<CartComponent />} />
+          <Route path="/Pagamento" element={<PagamentoComponent />} />
           <Route path="/Register" element={<RegisterComponent />} />
         </Routes>
         <FooterComponent />

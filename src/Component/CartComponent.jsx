@@ -27,10 +27,7 @@ const CartComponent = () => {
     setError(null);
 
     const email = localStorage.getItem("email");
-    console.log("Email nel localStorage:", email);
-
     if (!email) {
-      console.error("Email mancante. Impossibile recuperare il carrello.");
       setLoading(false);
       setError("Per visualizzare il carrello, devi essere loggato.");
       navigate("/login");
@@ -39,16 +36,12 @@ const CartComponent = () => {
 
     try {
       const carrelloSalvato = await fetchCarrello(email);
-      console.log("Carrello recuperato:", carrelloSalvato);
-
       if (carrelloSalvato && carrelloSalvato.carrelloItems) {
-        setCarrello(carrelloSalvato.carrelloItems); // Imposta solo gli articoli del carrello
+        setCarrello(carrelloSalvato.carrelloItems);
       } else {
-        console.error("Carrello vuoto o errore nel recupero");
         setError("Non è stato possibile recuperare il carrello.");
       }
-    } catch (error) {
-      console.error("Errore nel recupero del carrello:", error);
+    } catch {
       setError("Errore nel recupero del carrello. Riprova più tardi.");
     } finally {
       setLoading(false);
@@ -77,13 +70,16 @@ const CartComponent = () => {
     setShowModal(false);
     setItemToRemove(null);
   };
+
   const calcolaTotale = () => {
     return carrello.reduce((acc, item) => acc + item.prezzo * item.quantita, 0);
   };
 
   return (
-    <Container className="mt-5">
-      <h2 className="text-center">Il tuo Carrello</h2>
+    <Container className="mt-5 mb-5 pt-5 pb-5">
+      <h4 className="text-center mb-4" style={{ color: "orangered" }}>
+        Il Tuo Carrello
+      </h4>
 
       {error && (
         <div className="alert alert-danger text-center">
@@ -91,92 +87,134 @@ const CartComponent = () => {
         </div>
       )}
 
-      <Row>
-        <Col>
+      <Row className="justify-content-center">
+        <Col xs={12} md={10}>
           {loading ? (
             <div className="text-center">
               <Spinner animation="border" role="status" />
-              <h4>Caricamento...</h4>
+              <p className="mt-3" style={{ color: "orangered" }}>
+                Caricamento...
+              </p>
             </div>
           ) : carrello.length === 0 ? (
             <div className="text-center">
-              <h4>Il tuo carrello è vuoto.</h4>
-              <p>Aggiungi un itinerario per continuare.</p>
+              <h5>Il tuo carrello è vuoto.</h5>
+              <p style={{ color: "#7A3E1F" }}>
+                Aggiungi un itinerario per continuare.
+              </p>
             </div>
           ) : (
             <>
-              <div className="d-flex justify-content-center mt-4">
-                <Button
-                  variant="primary"
-                  className="px-4"
-                  onClick={() => navigate("/Esplora")}
-                >
-                  Aggiungi Itinerario
-                </Button>
-              </div>
-              <ListGroup>
+              <ListGroup variant="flush">
                 {carrello.map((item, index) => (
-                  <ListGroup.Item key={index}>
-                    <Row>
-                      <Col md={4}>
+                  <ListGroup.Item
+                    key={index}
+                    className="py-3 border-bottom"
+                    style={{ backgroundColor: "#fffaf7" }}
+                  >
+                    <Row className="align-items-center">
+                      <Col xs={3} md={2}>
                         <img
                           src={item.immagineUrl}
                           alt="Itinerario"
                           className="img-fluid rounded"
+                          style={{
+                            width: "80px",
+                            height: "80px",
+                            objectFit: "cover",
+                          }}
                         />
                       </Col>
-                      <Col md={8}>
-                        <h5>
-                          {item.nomeItinerario ||
-                            "Nome itinerario non disponibile"}
-                        </h5>
-                        <p>
-                          <strong>Prezzo:</strong> €{item.prezzo}
-                        </p>
-                        <p>
-                          <strong>Quantità:</strong> {item.quantita}
-                        </p>
-                        <p>
-                          <strong>Data di Partenza:</strong> {item.dataPartenza}
-                        </p>
+                      <Col xs={7} md={8}>
+                        <h6 style={{ color: "#7A3E1F", marginBottom: "0" }}>
+                          {item.nomeItinerario}
+                        </h6>
+                        <small style={{ color: "gray" }}>
+                          Partenza: {item.dataPartenza}
+                        </small>
+                        <br></br>
+                        <small style={{ color: "gray" }}>
+                          Prezzo: {item.prezzo}€
+                        </small>
+                      </Col>
+                      <Col xs={2} className="text-end">
                         <Button
-                          variant="danger"
+                          variant="outline-danger"
+                          size="sm"
                           onClick={() => confermaRimozione(item.idCarrelloItem)}
-                          className="mt-2"
                         >
-                          Rimuovi
+                          X
                         </Button>
                       </Col>
                     </Row>
                   </ListGroup.Item>
                 ))}
               </ListGroup>
-              <div className="mt-4 p-3 bg-light rounded shadow-sm text-center">
-                <h4>Totale Carrello: €{calcolaTotale().toFixed(2)}</h4>
+
+              <div className="mt-5">
+                <h5 style={{ color: "orangered" }}>Riepilogo Ordine:</h5>
+                <ListGroup variant="flush" className="mb-3">
+                  {carrello.map((item, index) => (
+                    <ListGroup.Item
+                      key={index}
+                      className="d-flex justify-content-between align-items-center py-2"
+                    >
+                      <div>
+                        <span
+                          style={{ fontWeight: "bold", color: "orangered" }}
+                        >
+                          x {item.quantita}
+                        </span>
+                        <span style={{ color: "#7A3E1F" }} className="ms-2">
+                          {item.nomeItinerario}
+                        </span>
+                      </div>
+                      <span style={{ color: "#7A3E1F" }}>{item.prezzo}€</span>{" "}
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+
+                <div
+                  className="p-3 rounded"
+                  style={{ backgroundColor: "#fff0e6", color: "orangered" }}
+                >
+                  <h5 className="mb-0 text-end" style={{ color: "orangered" }}>
+                    Totale da pagare: €{calcolaTotale().toFixed(2)}
+                  </h5>
+                </div>
+              </div>
+
+              {/* Bottone Procedi */}
+              <div className="d-flex justify-content-center mt-4">
+                <Button
+                  variant="warning"
+                  onClick={() => navigate("/Pagamento")}
+                  style={{
+                    backgroundColor: "orangered",
+                    borderColor: "orangered",
+                    fontWeight: "600",
+                    fontSize: "1rem",
+                    padding: "0.6rem 2rem",
+                    color: "white",
+                  }}
+                >
+                  Procedi al Pagamento
+                </Button>
               </div>
             </>
           )}
         </Col>
       </Row>
 
-      {carrello.length > 0 && (
-        <div className="d-flex justify-content-center mt-4">
-          <Button
-            variant="success"
-            className="px-4"
-            onClick={() => navigate("/checkout")}
-          >
-            Procedi al pagamento
-          </Button>
-        </div>
-      )}
-
+      {/* Modale Conferma Rimozione */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Conferma Rimozione</Modal.Title>
+          <Modal.Title style={{ color: "orangered" }}>
+            Conferma Rimozione
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Sei sicuro di voler rimuovere questo itinerario dal carrello?
+          Sei sicuro di voler rimuovere questo itinerario?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
