@@ -15,6 +15,8 @@ import PaeseComponent from "./Component/PaeseComponent";
 import RecensioneComponent from "./Component/RecensioneComponent";
 import CartComponent from "./Component/CartComponent";
 import ContattiComponent from "./Component/ContattiComponent";
+import ItinerariPaese from "./Component/ItinerariPaese";
+import ConfermaOrdineComponent from "./Component/ConfermaOrdineComponent";
 const App = () => {
   return (
     <>
@@ -33,6 +35,11 @@ const App = () => {
           <Route path="/Carrello" element={<CartComponent />} />
           <Route path="/Contatti" element={<ContattiComponent />} />
           <Route path="/Register" element={<RegisterComponent />} />
+          <Route path="/paese/:nomePaese" element={<ItinerariPaese />} />
+          <Route
+            path="/conferma-ordine"
+            element={<ConfermaOrdineComponent />}
+          />
         </Routes>
         <FooterComponent />
       </BrowserRouter>

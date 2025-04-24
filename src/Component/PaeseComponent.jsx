@@ -6,6 +6,7 @@ import {
 } from "../Redux/Actions/paeseAction";
 import { Container, Button, Modal, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const PaeseComponent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -66,9 +67,19 @@ const PaeseComponent = () => {
   return (
     <Container className="mt-5 pt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Lista dei Paesi</h2>
+        <h2 style={{ color: "orangered", fontWeight: "bold" }}>
+          Lista dei Paesi
+        </h2>
         {isAuthenticated && userRole === "Admin" && (
-          <Button variant="success" onClick={() => setShowAddModal(true)}>
+          <Button
+            style={{
+              background: "linear-gradient(135deg, orangered, #FF5722)",
+              border: "none",
+              fontWeight: "bold",
+              boxShadow: "0 4px 10px rgba(255,87,34,0.4)",
+            }}
+            onClick={() => setShowAddModal(true)}
+          >
             + Aggiungi Paese
           </Button>
         )}
@@ -79,9 +90,31 @@ const PaeseComponent = () => {
           <li
             key={paese.idPaese}
             className="list-group-item d-flex justify-content-between align-items-center"
+            style={{
+              borderLeft: "5px solid orangered",
+              borderRadius: "0.5rem",
+              marginBottom: "10px",
+            }}
           >
-            <span>{paese.nome}</span>
-            <div>
+            <span style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+              {paese.nome}
+            </span>
+            <div className="d-flex gap-2 align-items-center">
+              {isAuthenticated && userRole === "User" && (
+                <Link
+                  to={`/paese/${paese.nome}`}
+                  className="btn btn-sm fw-bold"
+                  style={{
+                    background: "linear-gradient(135deg, orangered, #FF5722)",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "20px",
+                    padding: "0.3rem 1rem",
+                  }}
+                >
+                  Vai agli itinerari
+                </Link>
+              )}
               {isAuthenticated && userRole === "Admin" && (
                 <Button
                   variant="outline-danger"
@@ -90,8 +123,15 @@ const PaeseComponent = () => {
                     setPaeseToDelete(paese.idPaese);
                     setShowDeleteModal(true);
                   }}
+                  style={{
+                    background: "linear-gradient(135deg, orangered, #FF5722)",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "20px",
+                    padding: "0.3rem 1rem",
+                  }}
                 >
-                  Elimina
+                  <i className="bi bi-trash"></i>
                 </Button>
               )}
             </div>

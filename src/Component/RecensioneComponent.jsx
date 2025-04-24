@@ -1,4 +1,15 @@
 import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Modal,
+  Form,
+  Image,
+} from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const RecensioniComponent = () => {
   const [recensioni, setRecensioni] = useState([]);
@@ -9,20 +20,29 @@ const RecensioniComponent = () => {
   const [commento, setCommento] = useState("");
   const [valutazione, setValutazione] = useState(5);
   const [imgUser, setImgUser] = useState(null);
-  const [idItinerario, setIdItinerario] = useState(1);
-
-  const [showModal, setShowModal] = useState(false); // <-- Stato per aprire/chiudere la modale
+  const [idItinerario, setIdItinerario] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const API_URL = "https://localhost:7007/api/Recensioni";
 
   useEffect(() => {
-    const fetchRecensioni = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(API_URL);
-        if (!response.ok)
-          throw new Error("Errore nel recupero delle recensioni");
-        const data = await response.json();
-        setRecensioni(data);
+        const [recRes, itiRes] = await Promise.all([
+          fetch(API_URL),
+          fetch("https://localhost:7007/api/Itinerario"),
+        ]);
+
+        if (!recRes.ok || !itiRes.ok) throw new Error("Errore nei fetch");
+
+        const [recData, itiData] = await Promise.all([
+          recRes.json(),
+          itiRes.json(),
+        ]);
+
+        setRecensioni(recData);
+        setItinerari(itiData);
+        setUserEmail(localStorage.getItem("email"));
       } catch (err) {
         setError(err.message);
       } finally {
@@ -30,38 +50,20 @@ const RecensioniComponent = () => {
       }
     };
 
-    const fetchItinerari = async () => {
-      try {
-        const response = await fetch("https://localhost:7007/api/Itinerario"); // <-- il tuo endpoint corretto
-        if (!response.ok)
-          throw new Error("Errore nel recupero degli itinerari");
-        const data = await response.json();
-        console.log("Itinerari caricati:", data); // <-- debug importantissimo
-        setItinerari(data);
-      } catch (err) {
-        console.error("Errore durante il fetch degli itinerari:", err);
-      }
-    };
-
-    const storedEmail = localStorage.getItem("email");
-    setUserEmail(storedEmail);
-
-    fetchItinerari();
-    fetchRecensioni();
+    fetchData();
   }, []);
 
   const handleDelete = async (id) => {
     if (window.confirm("Sei sicuro di voler eliminare questa recensione?")) {
       try {
         const token = localStorage.getItem("token");
-        const email = userEmail;
         const response = await fetch(`${API_URL}/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email: userEmail }),
         });
 
         if (!response.ok)
@@ -90,195 +92,220 @@ const RecensioniComponent = () => {
       formData.append("NomeUtente", nomeUtente);
       formData.append("ImgUserPath", imgUserPath);
 
-      if (imgUser) {
-        formData.append("ImgUser", imgUser);
-      }
+      if (imgUser) formData.append("ImgUser", imgUser);
 
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Errore nella risposta del server:", errorText);
-        throw new Error(`Errore durante la creazione: ${errorText}`);
-      }
+      if (!response.ok) throw new Error(await response.text());
 
       const nuovaRecensione = await response.json();
-
-      // **Aggiungi direttamente la recensione a 'recensioni' senza ricaricare**
       setRecensioni((prev) => [...prev, nuovaRecensione]);
-
       setCommento("");
       setValutazione(5);
       setImgUser(null);
-      setShowModal(false); // <-- Chiudi la modale dopo aver postato
+      setIdItinerario("");
+      setShowModal(false);
     } catch (err) {
       alert(err.message);
-      console.error("Errore durante l'invio della recensione:", err);
     }
   };
 
-  if (loading) return <div>Caricamento...</div>;
-  if (error) return <div>Errore: {error}</div>;
+  if (loading) return <div className="text-center mt-5">Caricamento...</div>;
+  if (error) return <div className="text-danger text-center mt-5">{error}</div>;
 
   return (
-    <div className="mt-5 mb-5 container">
-      <h2 className="mb-4 text-center">Recensioni</h2>
+    <div
+      style={{
+        backgroundColor: "white",
+      }}
+    >
+      <Container className="mt-5 mb-5 pt-5 pb-5">
+        <h2
+          className="text-center mb-4"
+          style={{ color: "orangered", fontWeight: "bold" }}
+        >
+          Recensioni
+        </h2>
 
-      {/* Bottone per aprire la modale */}
-      <div className="text-center mb-5">
-        <button className="btn btn-success" onClick={() => setShowModal(true)}>
-          + Aggiungi Recensione
-        </button>
-      </div>
-
-      {/* MODALE */}
-      {showModal && (
-        <div className="modal show fade d-block" tabIndex="-1" role="dialog">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <form onSubmit={handlePost}>
-                <div className="modal-header">
-                  <h5 className="modal-title">Nuova Recensione</h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    onClick={() => setShowModal(false)}
-                  ></button>
-                </div>
-                <div className="modal-body">
-                  <div className="mb-3">
-                    <label className="form-label">Commento</label>
-                    <textarea
-                      className="form-control"
-                      value={commento}
-                      onChange={(e) => setCommento(e.target.value)}
-                      required
-                    ></textarea>
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Valutazione (1-5)</label>
-                    <input
-                      type="number"
-                      min="1"
-                      max="5"
-                      className="form-control"
-                      value={valutazione}
-                      onChange={(e) => setValutazione(parseInt(e.target.value))}
-                      required
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Seleziona Itinerario</label>
-                    <select
-                      className="form-select"
-                      value={idItinerario}
-                      onChange={(e) =>
-                        setIdItinerario(parseInt(e.target.value))
-                      }
-                      required
-                    >
-                      <option value="">-- Seleziona un itinerario --</option>
-                      {itinerari.map((itinerario) => (
-                        <option
-                          key={itinerario.idItinerario}
-                          value={itinerario.idItinerario}
-                        >
-                          {itinerario.nomeItinerario}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Annulla
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Invia
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+        <div className="text-center mb-4">
+          <Button
+            onClick={() => setShowModal(true)}
+            style={{
+              backgroundColor: "orangered",
+              borderColor: "orangered",
+              fontWeight: "bold",
+            }}
+          >
+            + Aggiungi Recensione
+          </Button>
         </div>
-      )}
 
-      {/* LISTA RECENSIONI */}
-      <div className="row g-4">
-        {recensioni.map((recensione) => (
-          <div className="col-md-6 col-lg-4" key={recensione.idRecensione}>
-            <div className="card h-100 p-3 shadow-sm border-0">
-              <div className="d-flex align-items-center mb-3">
-                {recensione.imgUserPath ? (
-                  <img
-                    src={`https://localhost:7007/${recensione.imgUserPath}`}
-                    alt={recensione.nomeUtente}
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      objectFit: "cover",
-                      borderRadius: "50%",
-                      marginRight: "15px",
-                    }}
-                  />
-                ) : (
-                  <div
-                    className="bg-secondary text-white d-flex align-items-center justify-content-center rounded-circle"
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <span style={{ fontSize: "1.2rem" }}>N/A</span>
+        {/* MODAL */}
+        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+          <Modal.Header closeButton style={{ borderBottomColor: "orangered" }}>
+            <Modal.Title style={{ color: "orangered" }}>
+              Nuova Recensione
+            </Modal.Title>
+          </Modal.Header>
+          <Form onSubmit={handlePost}>
+            <Modal.Body>
+              <Form.Group className="mb-3">
+                <Form.Label style={{ fontWeight: 500 }}>Commento</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={commento}
+                  onChange={(e) => setCommento(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label style={{ fontWeight: 500 }}>
+                  Valutazione (1-5)
+                </Form.Label>
+                <Form.Control
+                  type="number"
+                  min={1}
+                  max={5}
+                  value={valutazione}
+                  onChange={(e) => setValutazione(parseInt(e.target.value))}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label style={{ fontWeight: 500 }}>
+                  Seleziona Itinerario
+                </Form.Label>
+                <Form.Select
+                  value={idItinerario}
+                  onChange={(e) => setIdItinerario(parseInt(e.target.value))}
+                  required
+                >
+                  <option value="">-- Seleziona un itinerario --</option>
+                  {itinerari.map((itinerario) => (
+                    <option
+                      key={itinerario.idItinerario}
+                      value={itinerario.idItinerario}
+                    >
+                      {itinerario.nomeItinerario}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer style={{ borderTopColor: "orangered" }}>
+              <Button variant="secondary" onClick={() => setShowModal(false)}>
+                Annulla
+              </Button>
+              <Button
+                type="submit"
+                style={{
+                  backgroundColor: "orangered",
+                  borderColor: "orangered",
+                }}
+              >
+                Invia
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Modal>
+
+        <Row className="g-4">
+          {recensioni.map((recensione) => (
+            <Col key={recensione.idRecensione} md={6} lg={4}>
+              <Card
+                style={{
+                  borderColor: "transparent",
+                  borderRadius: "16px",
+                  boxShadow: "0 4px 12px rgba(255, 69, 0, 0.1)",
+                }}
+              >
+                <Card.Body>
+                  <div className="d-flex align-items-center mb-3">
+                    {recensione.imgUserPath ? (
+                      <Image
+                        src={`https://localhost:7007/${recensione.imgUserPath}`}
+                        roundedCircle
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          marginRight: "15px",
+                          objectFit: "cover",
+                        }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          marginRight: "15px",
+                          borderRadius: "50%",
+                          backgroundColor: "#ffccbc",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontWeight: "bold",
+                          color: "#fff",
+                        }}
+                      >
+                        N/A
+                      </div>
+                    )}
+                    <div>
+                      <h5 className="mb-0" style={{ color: "orangered" }}>
+                        {recensione.nomeUtente}
+                      </h5>
+                      <small className="text-muted">
+                        {recensione.createdAt
+                          ? new Date(recensione.createdAt).toLocaleDateString()
+                          : "Data non disponibile"}
+                      </small>
+                    </div>
                   </div>
-                )}
-                <div>
-                  <h5 className="mb-0">{recensione.nomeUtente}</h5>
-                  <small className="text-muted">
-                    {recensione.createdAt
-                      ? new Date(recensione.createdAt).toLocaleDateString()
-                      : "Data non disponibile"}
-                  </small>
-                </div>
-              </div>
-              <h6 className="text-primary">{recensione.titoloItinerario}</h6>
-              <p className="mb-2">{recensione.commento}</p>
-              <p className="mb-1">
-                <strong>Valutazione:</strong> {recensione.valutazione} / 5
-              </p>
-              {userEmail === recensione.email && (
-                <div className="d-flex gap-2 mt-3">
-                  <button
-                    className="btn btn-warning btn-sm w-50"
-                    onClick={() =>
-                      alert("Funzionalità modifica non ancora implementata")
-                    }
-                  >
-                    Modifica
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm w-50"
-                    onClick={() => handleDelete(recensione.idRecensione)}
-                  >
-                    Elimina
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+
+                  <Card.Title style={{ fontWeight: "bold" }}>
+                    <Link
+                      to={`/itinerario/${recensione.idItinerario}`}
+                      style={{ color: "orangered", textDecoration: "none" }}
+                    >
+                      {recensione.titoloItinerario}
+                    </Link>
+                  </Card.Title>
+                  <Card.Text>{recensione.commento}</Card.Text>
+                  <div className="fw-bold">
+                    valutazione: {recensione.valutazione} / 5
+                  </div>
+
+                  {userEmail === recensione.email && (
+                    <div className="d-flex gap-2 mt-3">
+                      <Button
+                        variant="outline-warning"
+                        className="w-50"
+                        onClick={() =>
+                          alert("Funzionalità modifica non ancora implementata")
+                        }
+                      >
+                        <i className="bi bi-pencil"></i>
+                      </Button>
+                      <Button
+                        variant="outline-danger"
+                        className="w-50"
+                        onClick={() => handleDelete(recensione.idRecensione)}
+                      >
+                        <i className="bi bi-trash"></i>
+                      </Button>
+                    </div>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </div>
   );
 };

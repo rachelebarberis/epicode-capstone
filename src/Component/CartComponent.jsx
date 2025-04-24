@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import {
   fetchCarrello,
   removeCarrelloItem,
+  clearCarrello,
 } from "../Redux/Actions/carrelloAction";
 
 const CartComponent = () => {
@@ -73,6 +74,25 @@ const CartComponent = () => {
 
   const calcolaTotale = () => {
     return carrello.reduce((acc, item) => acc + item.prezzo * item.quantita, 0);
+  };
+  const handlePagamento = async () => {
+    const email = localStorage.getItem("email");
+
+    const risultato = await clearCarrello(email);
+
+    if (risultato) {
+      setCarrello([]); // svuota carrello nel frontend
+      setShowModal(false); // chiudi modale pagamento
+
+      navigate("/conferma-ordine", {
+        state: {
+          totale: calcolaTotale().toFixed(2),
+          data: new Date().toLocaleString(),
+        },
+      });
+    } else {
+      alert("Errore durante il pagamento. Riprova più tardi.");
+    }
   };
 
   return (
@@ -236,8 +256,7 @@ const CartComponent = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              alert("Pagamento simulato completato!");
-              setShowModal(false);
+              handlePagamento();
             }}
           >
             <div className="mb-3">
