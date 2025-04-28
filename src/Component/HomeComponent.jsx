@@ -90,7 +90,7 @@ const HomeComponent = () => {
                   src={itinerario.immagineUrl || "/public/images/default.jpg"}
                   alt={itinerario.nomeItinerario}
                 />
-                <h3 id="itinerario-nome">{itinerario.nomeItinerario}</h3>
+                <p id="itinerario-nome">{itinerario.nomeItinerario}</p>
               </div>
             ))}
           </ReactPageFlip>

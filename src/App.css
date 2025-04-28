@@ -454,7 +454,58 @@ button:hover {
   border-color: #e65100 !important;
 }
 
-/*RECENSIONI*/
+/*alfabeto- paese*/
+.alphabet-bar {
+  gap: 6px;
+}
+
+.alphabet-button {
+  background: transparent;
+  border: 1px solid orangered;
+  color: orangered;
+  font-weight: bold;
+  font-size: 0.85rem;
+  padding: 5px 10px;
+  border-radius: 20px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.alphabet-button:hover,
+.alphabet-button.active {
+  background: orangered;
+  color: white;
+}
+
+.search-box input {
+  border: 2px solid orangered;
+  border-radius: 20px;
+  padding: 8px;
+  width: 200px;
+  transition: box-shadow 0.3s;
+}
+
+.search-box input:focus {
+  border-color: #ff5722;
+  box-shadow: 0 0 5px rgba(255, 87, 34, 0.4);
+}
+
+.reset-button {
+  background: transparent;
+  border: 2px solid #ff9800;
+  color: #ff9800;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.reset-button:hover {
+  background: #ff9800;
+  color: white;
+}
+
+
 
 
 

@@ -4,22 +4,28 @@ import {
   createPaese,
   deletePaese,
 } from "../Redux/Actions/paeseAction";
-import { Container, Button, Modal, Form } from "react-bootstrap";
+import { Container, Button, Modal, Form, InputGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const PaeseComponent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const userRole = useSelector((state) => state.auth.role);
+
   const [paesi, setPaesi] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errore, setErrore] = useState(null);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedLetter, setSelectedLetter] = useState("");
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [newPaese, setNewPaese] = useState("");
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [paeseToDelete, setPaeseToDelete] = useState(null);
+
+  const alphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 
   const fetchPaesi = async () => {
     setLoading(true);
@@ -59,6 +65,18 @@ const PaeseComponent = () => {
     }
   };
 
+  const filteredAndSortedPaesi = paesi
+    .filter((paese) => {
+      const nameLower = paese.nome.toLowerCase();
+      const searchLower = searchTerm.toLowerCase();
+      const matchesSearch = nameLower.includes(searchLower);
+      const matchesLetter = selectedLetter
+        ? paese.nome.toUpperCase().startsWith(selectedLetter)
+        : true;
+      return matchesSearch && matchesLetter;
+    })
+    .sort((a, b) => a.nome.localeCompare(b.nome));
+
   if (loading)
     return <div className="text-center mt-5">Caricamento in corso...</div>;
   if (errore)
@@ -85,59 +103,109 @@ const PaeseComponent = () => {
         )}
       </div>
 
-      <ul className="list-group">
-        {paesi.map((paese) => (
-          <li
-            key={paese.idPaese}
-            className="list-group-item d-flex justify-content-between align-items-center"
-            style={{
-              borderLeft: "5px solid orangered",
-              borderRadius: "0.5rem",
-              marginBottom: "10px",
+      {/* Barra Alfabeto */}
+      <div className="d-flex justify-content-between align-items-center flex-wrap mb-4">
+        <div className="alphabet-bar d-flex flex-wrap">
+          {alphabet.map((letter) => (
+            <button
+              key={letter}
+              className={`alphabet-button ${
+                selectedLetter === letter ? "active" : ""
+              }`}
+              onClick={() =>
+                setSelectedLetter(letter === selectedLetter ? "" : letter)
+              }
+            >
+              {letter}
+            </button>
+          ))}
+        </div>
+        {(selectedLetter || searchTerm) && (
+          <Button
+            variant="outline-warning"
+            className="reset-button"
+            onClick={() => {
+              setSelectedLetter("");
+              setSearchTerm("");
             }}
           >
-            <span style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
-              {paese.nome}
-            </span>
-            <div className="d-flex gap-2 align-items-center">
-              {isAuthenticated && userRole === "User" && (
-                <Link
-                  to={`/paese/${paese.nome}`}
-                  className="btn btn-sm fw-bold"
-                  style={{
-                    background: "linear-gradient(135deg, orangered, #FF5722)",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "20px",
-                    padding: "0.3rem 1rem",
-                  }}
-                >
-                  Vai agli itinerari
-                </Link>
-              )}
-              {isAuthenticated && userRole === "Admin" && (
-                <Button
-                  variant="outline-danger"
-                  size="sm"
-                  onClick={() => {
-                    setPaeseToDelete(paese.idPaese);
-                    setShowDeleteModal(true);
-                  }}
-                  style={{
-                    background: "linear-gradient(135deg, orangered, #FF5722)",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "20px",
-                    padding: "0.3rem 1rem",
-                  }}
-                >
-                  <i className="bi bi-trash"></i>
-                </Button>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
+            Tutti i Paesi
+          </Button>
+        )}
+      </div>
+      <div className="d-flex justify-content-end align-items-center mt-1 mb-3 ">
+        <InputGroup className="search-box" style={{ width: "300px" }}>
+          <Form.Control
+            placeholder="Cerca paese per nome..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              borderRadius: "20px",
+              border: "2px solid orangered",
+              padding: "8px 12px",
+            }}
+          />
+        </InputGroup>
+      </div>
+
+      {/* Lista Paesi */}
+      {filteredAndSortedPaesi.length > 0 ? (
+        <ul className="list-group">
+          {filteredAndSortedPaesi.map((paese) => (
+            <li
+              key={paese.idPaese}
+              className="list-group-item d-flex justify-content-between align-items-center"
+              style={{
+                borderLeft: "5px solid orangered",
+                borderRadius: "0.5rem",
+                marginBottom: "10px",
+              }}
+            >
+              <span style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+                {paese.nome}
+              </span>
+              <div className="d-flex gap-2 align-items-center">
+                {isAuthenticated && userRole === "User" && (
+                  <Link
+                    to={`/paese/${paese.nome}`}
+                    className="btn btn-sm fw-bold"
+                    style={{
+                      background: "linear-gradient(135deg, orangered, #FF5722)",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "20px",
+                      padding: "0.3rem 1rem",
+                    }}
+                  >
+                    Vai agli itinerari
+                  </Link>
+                )}
+                {isAuthenticated && userRole === "Admin" && (
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => {
+                      setPaeseToDelete(paese.idPaese);
+                      setShowDeleteModal(true);
+                    }}
+                    style={{
+                      background: "linear-gradient(135deg, orangered, #FF5722)",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "20px",
+                      padding: "0.3rem 1rem",
+                    }}
+                  >
+                    <i className="bi bi-trash"></i>
+                  </Button>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="text-center mt-4">Nessun paese trovato.</div>
+      )}
 
       {/* Modale Aggiunta */}
       <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
