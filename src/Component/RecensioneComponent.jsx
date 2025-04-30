@@ -147,9 +147,7 @@ const RecensioniComponent = () => {
         {/* MODAL */}
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton style={{ borderBottomColor: "orangered" }}>
-            <Modal.Title style={{ color: "orangered" }}>
-              Nuova Recensione
-            </Modal.Title>
+            <Modal.Title>Nuova Recensione</Modal.Title>
           </Modal.Header>
           <Form onSubmit={handlePost}>
             <Modal.Body>

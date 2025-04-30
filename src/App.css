@@ -506,7 +506,126 @@ button:hover {
 }
 
 
+#itinerario-form {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  color: #333;
+}
 
+#itinerario-form .modal-title {
+  color: #ff6f3c;
+}
+
+/* Titoli sezioni */
+#itinerario-form h5 {
+  color: #ff6f3c;
+  font-weight: 700;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}
+
+/* Input e Select */
+#info-base input,
+#selezione-paese select,
+#giorni-section textarea,
+#giorni-section input,
+#partenze-section input,
+#partenze-section select,
+#prezzi-section input {
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  margin-top: 6px;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#info-base input:focus,
+#selezione-paese select:focus,
+#giorni-section textarea:focus,
+#giorni-section input:focus,
+#partenze-section input:focus,
+#partenze-section select:focus,
+#prezzi-section input:focus {
+  border-color: #ff6f3c;
+  box-shadow: 0 0 5px rgba(255, 111, 60, 0.3);
+  outline: none;
+}
+
+/* Sezioni Giorni e Partenze */
+#giorni-section .giorno-item,
+#partenze-section .partenza-item {
+  background-color: #fff8f4;
+  border: 1px solid #ffe1d6;
+  border-left: 5px solid #ff6f3c;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* Pulsanti Aggiungi Giorno/Partenza */
+#giorni-section button,
+#partenze-section button {
+  margin-top: 10px;
+  background-color: transparent;
+  color: #ff6f3c;
+  font-weight: 600;
+  border: 2px solid #ff6f3c;
+  border-radius: 25px;
+  padding: 6px 14px;
+  transition: all 0.3s ease;
+}
+
+#giorni-section button:hover,
+#partenze-section button:hover {
+  background-color: #ff6f3c;
+  color: white;
+}
+
+/* Prezzi */
+#prezzi-section label {
+  font-weight: 600;
+  color: #444;
+}
+
+#prezzi-section input {
+  max-width: 220px;
+}
+
+/* Label generiche */
+#itinerario-form .form-label {
+  color: #222;
+  font-weight: 500;
+}
+
+/* Footer Buttons */
+#itinerario-form .modal-footer button {
+  font-size: 0.95rem;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+#itinerario-form .modal-footer .btn-success {
+  background-color: #ff6f3c;
+  border: none;
+}
+
+#itinerario-form .modal-footer .btn-success:hover {
+  background-color: #ff4d1a;
+}
+
+#itinerario-form .modal-footer .btn-secondary {
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+}
+
+#itinerario-form .modal-footer .btn-secondary:hover {
+  background-color: #d5d5d5;
+}
 
 
 /*footer*/
