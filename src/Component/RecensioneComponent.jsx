@@ -10,8 +10,11 @@ import {
   Image,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const RecensioniComponent = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userRole = useSelector((state) => state.auth.role);
   const [recensioni, setRecensioni] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -130,29 +133,34 @@ const RecensioniComponent = () => {
         >
           Recensioni
         </h2>
-
-        <div className="text-center mb-4">
-          <Button
-            onClick={() => setShowModal(true)}
-            style={{
-              backgroundColor: "orangered",
-              borderColor: "orangered",
-              fontWeight: "bold",
-            }}
-          >
-            + Aggiungi Recensione
-          </Button>
-        </div>
-
+        {isAuthenticated && userRole === "User" && (
+          <div className="text-center mb-4">
+            <Button
+              onClick={() => setShowModal(true)}
+              style={{
+                backgroundColor: "orangered",
+                borderColor: "orangered",
+                fontWeight: "bold",
+              }}
+            >
+              + Aggiungi Recensione
+            </Button>
+          </div>
+        )}
         {/* MODAL */}
-        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-          <Modal.Header closeButton style={{ borderBottomColor: "orangered" }}>
-            <Modal.Title>Nuova Recensione</Modal.Title>
+        <Modal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          centered
+          id="itinerario-form"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title className="modal-title">Nuova Recensione</Modal.Title>
           </Modal.Header>
           <Form onSubmit={handlePost}>
             <Modal.Body>
               <Form.Group className="mb-3">
-                <Form.Label style={{ fontWeight: 500 }}>Commento</Form.Label>
+                <Form.Label className="form-label">Commento</Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={3}
@@ -162,7 +170,7 @@ const RecensioniComponent = () => {
                 />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label style={{ fontWeight: 500 }}>
+                <Form.Label className="form-label">
                   Valutazione (1-5)
                 </Form.Label>
                 <Form.Control
@@ -175,7 +183,7 @@ const RecensioniComponent = () => {
                 />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label style={{ fontWeight: 500 }}>
+                <Form.Label className="form-label">
                   Seleziona Itinerario
                 </Form.Label>
                 <Form.Select
@@ -195,17 +203,11 @@ const RecensioniComponent = () => {
                 </Form.Select>
               </Form.Group>
             </Modal.Body>
-            <Modal.Footer style={{ borderTopColor: "orangered" }}>
+            <Modal.Footer>
               <Button variant="secondary" onClick={() => setShowModal(false)}>
                 Annulla
               </Button>
-              <Button
-                type="submit"
-                style={{
-                  backgroundColor: "orangered",
-                  borderColor: "orangered",
-                }}
-              >
+              <Button type="submit" variant="success">
                 Invia
               </Button>
             </Modal.Footer>
@@ -279,22 +281,13 @@ const RecensioniComponent = () => {
                   </div>
 
                   {userEmail === recensione.email && (
-                    <div className="d-flex gap-2 mt-3">
+                    <div className="d-flex justify-content-end  gap-2 mt-3">
                       <Button
-                        variant="outline-warning"
-                        className="w-50"
-                        onClick={() =>
-                          alert("Funzionalità modifica non ancora implementata")
-                        }
-                      >
-                        <i className="bi bi-pencil"></i>
-                      </Button>
-                      <Button
-                        variant="outline-danger"
+                        variant="outline-white"
                         className="w-50"
                         onClick={() => handleDelete(recensione.idRecensione)}
                       >
-                        <i className="bi bi-trash"></i>
+                        <i className="bi bi-trash text-danger"></i>
                       </Button>
                     </div>
                   )}

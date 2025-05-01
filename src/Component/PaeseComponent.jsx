@@ -208,13 +208,17 @@ const PaeseComponent = () => {
       )}
 
       {/* Modale Aggiunta */}
-      <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
+      <Modal
+        show={showAddModal}
+        onHide={() => setShowAddModal(false)}
+        id="itinerario-form"
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Aggiungi Paese</Modal.Title>
+          <Modal.Title className="modal-title">Aggiungi Paese</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group>
-            <Form.Label>Nome del Paese</Form.Label>
+            <Form.Label className="form-label">Nome del Paese</Form.Label>
             <Form.Control
               type="text"
               value={newPaese}
@@ -238,9 +242,15 @@ const PaeseComponent = () => {
       </Modal>
 
       {/* Modale Conferma Eliminazione */}
-      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+      <Modal
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+        id="itinerario-form"
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Conferma Eliminazione</Modal.Title>
+          <Modal.Title className="modal-title">
+            Conferma Eliminazione
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>Sei sicuro di voler eliminare questo paese?</Modal.Body>
         <Modal.Footer>

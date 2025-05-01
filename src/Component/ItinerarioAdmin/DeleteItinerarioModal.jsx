@@ -14,9 +14,9 @@ const DeleteItinerarioModal = ({ show, handleClose, id, onDeleted }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} id="itinerario-form">
       <Modal.Header closeButton>
-        <Modal.Title>Conferma eliminazione</Modal.Title>
+        <Modal.Title className="modal-title">Conferma eliminazione</Modal.Title>
       </Modal.Header>
       <Modal.Body>Sei sicuro di voler eliminare questo itinerario?</Modal.Body>
       <Modal.Footer>

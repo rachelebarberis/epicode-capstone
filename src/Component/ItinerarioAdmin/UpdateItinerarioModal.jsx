@@ -128,146 +128,158 @@ const UpdateItinerarioModal = ({
   };
 
   return (
-    <Modal show={show} onHide={handleClose} size="lg">
+    <Modal show={show} onHide={handleClose} size="lg" id="itinerario-form">
       <Modal.Header closeButton>
         <Modal.Title>Modifica Itinerario</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           {/* INFO BASE */}
-          <Form.Group>
-            <Form.Label>Nome Itinerario</Form.Label>
-            <Form.Control
-              type="text"
-              name="nomeItinerario"
-              value={formData.nomeItinerario}
-              onChange={handleChange}
-            />
-          </Form.Group>
-
-          <Row className="mt-3">
-            <Col>
-              <Form.Group>
-                <Form.Label>Durata (giorni)</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="durata"
-                  value={formData.durata}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group>
-                <Form.Label>Immagine URL</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="immagineUrl"
-                  value={formData.immagineUrl}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-
-          <Form.Group className="mt-3">
-            <Form.Label>ID Paese</Form.Label>
-            <Form.Control
-              type="number"
-              name="paeseId"
-              value={formData.paeseId} // Usa formData.paeseId
-              onChange={handleChange}
-            />
-          </Form.Group>
-
-          <Form.Group className="mt-3">
-            <Form.Label>Nome Paese</Form.Label>
-            <Form.Control
-              type="text"
-              name="paeseNome"
-              value={formData.paeseNome} // Usa formData.paeseNome
-              onChange={handleChange}
-            />
-          </Form.Group>
-
-          {/* GIORNI */}
-          <h5 className="mt-4">Giorni del Tour</h5>
-          {giorni.map((g, index) => (
-            <div key={index} className="border p-2 mb-2 rounded">
-              <Form.Label>Giorno {index + 1}</Form.Label>
+          <div id="info-base">
+            <Form.Group>
+              <Form.Label className="form-label">Nome Itinerario</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Titolo"
-                value={g.titolo}
-                onChange={(e) =>
-                  handleGiorniChange(index, "titolo", e.target.value)
-                }
-              />
-              <Form.Control
-                as="textarea"
-                placeholder="Descrizione"
-                className="mt-2"
-                value={g.descrizione}
-                onChange={(e) =>
-                  handleGiorniChange(index, "descrizione", e.target.value)
-                }
-              />
-            </div>
-          ))}
-          <Button variant="outline-secondary" size="sm" onClick={addGiorno}>
-            + Aggiungi Giorno
-          </Button>
-
-          {/* PARTENZE */}
-          <h5 className="mt-4">Partenze</h5>
-          {partenze.map((p, index) => (
-            <div key={index} className="border p-2 mb-2 rounded">
-              <Form.Control
-                type="date"
-                value={p.dataPartenza}
-                onChange={(e) =>
-                  handlePartenzeChange(index, "dataPartenza", e.target.value)
-                }
-              />
-              <Form.Select
-                className="mt-2"
-                value={p.stato}
-                onChange={(e) =>
-                  handlePartenzeChange(index, "stato", e.target.value)
-                }
-              >
-                <option value="Disponibile">Disponibile</option>
-                <option value="Sold Out">Sold Out</option>
-              </Form.Select>
-            </div>
-          ))}
-          <Button variant="outline-secondary" size="sm" onClick={addPartenza}>
-            + Aggiungi Partenza
-          </Button>
-
-          {/* FASCE DI PREZZO */}
-          <h5 className="mt-4">Prezzi per Fascia</h5>
-          {fascePrezzo.map((fascia, index) => (
-            <Form.Group key={index} className="mb-2">
-              <Form.Label>
-                {fascia.idFasciaDiPrezzo === 1 && "Economica"}
-                {fascia.idFasciaDiPrezzo === 2 && "Standard"}
-                {fascia.idFasciaDiPrezzo === 3 && "Lusso"}
-              </Form.Label>
-              <Form.Control
-                type="number"
-                value={fascia.prezzo}
-                onChange={(e) => handleFascePrezzoChange(index, e.target.value)}
+                name="nomeItinerario"
+                value={formData.nomeItinerario}
+                onChange={handleChange}
               />
             </Form.Group>
-          ))}
+
+            <Row className="mt-3">
+              <Col>
+                <Form.Group>
+                  <Form.Label className="form-label">
+                    Durata (giorni)
+                  </Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="durata"
+                    value={formData.durata}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group>
+                  <Form.Label className="form-label">Immagine URL</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="immagineUrl"
+                    value={formData.immagineUrl}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          </div>
+
+          <div id="selezione-paese" className="mt-3">
+            <Form.Group>
+              <Form.Label className="form-label">ID Paese</Form.Label>
+              <Form.Control
+                type="number"
+                name="paeseId"
+                value={formData.paeseId}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mt-3">
+              <Form.Label className="form-label">Nome Paese</Form.Label>
+              <Form.Control
+                type="text"
+                name="paeseNome"
+                value={formData.paeseNome}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </div>
+
+          {/* GIORNI */}
+          <div id="giorni-section">
+            <h5>Giorni del Tour</h5>
+            {giorni.map((g, index) => (
+              <div key={index} className="giorno-item">
+                <Form.Label className="form-label">
+                  Giorno {index + 1}
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Titolo"
+                  value={g.titolo}
+                  onChange={(e) =>
+                    handleGiorniChange(index, "titolo", e.target.value)
+                  }
+                />
+                <Form.Control
+                  as="textarea"
+                  placeholder="Descrizione"
+                  className="mt-2"
+                  value={g.descrizione}
+                  onChange={(e) =>
+                    handleGiorniChange(index, "descrizione", e.target.value)
+                  }
+                />
+              </div>
+            ))}
+            <Button onClick={addGiorno}>+ Aggiungi Giorno</Button>
+          </div>
+
+          {/* PARTENZE */}
+          <div id="partenze-section">
+            <h5>Partenze</h5>
+            {partenze.map((p, index) => (
+              <div key={index} className="partenza-item">
+                <Form.Control
+                  type="date"
+                  value={p.dataPartenza}
+                  onChange={(e) =>
+                    handlePartenzeChange(index, "dataPartenza", e.target.value)
+                  }
+                />
+                <Form.Select
+                  className="mt-2"
+                  value={p.stato}
+                  onChange={(e) =>
+                    handlePartenzeChange(index, "stato", e.target.value)
+                  }
+                >
+                  <option value="Disponibile">Disponibile</option>
+                  <option value="Sold Out">Sold Out</option>
+                </Form.Select>
+              </div>
+            ))}
+            <Button onClick={addPartenza}>+ Aggiungi Partenza</Button>
+          </div>
+
+          {/* PREZZI */}
+          <div id="prezzi-section" className="mt-4">
+            <h5>Prezzi per Fascia</h5>
+            {fascePrezzo.map((fascia, index) => (
+              <Form.Group key={index} className="mb-2">
+                <Form.Label>
+                  {fascia.idFasciaDiPrezzo === 1 && "Economica"}
+                  {fascia.idFasciaDiPrezzo === 2 && "Standard"}
+                  {fascia.idFasciaDiPrezzo === 3 && "Lusso"}
+                </Form.Label>
+                <Form.Control
+                  type="number"
+                  value={fascia.prezzo}
+                  onChange={(e) =>
+                    handleFascePrezzoChange(index, e.target.value)
+                  }
+                />
+              </Form.Group>
+            ))}
+          </div>
         </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Annulla
         </Button>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button variant="success" onClick={handleSubmit}>
           Salva
         </Button>
       </Modal.Footer>
