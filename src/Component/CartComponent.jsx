@@ -8,7 +8,8 @@ import {
   Spinner,
   Modal,
 } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 import {
   fetchCarrello,
   removeCarrelloItem,
@@ -20,7 +21,8 @@ const CartComponent = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [itemToRemove, setItemToRemove] = useState(null);
 
   const loadCarrello = async () => {
@@ -55,7 +57,7 @@ const CartComponent = () => {
 
   const confermaRimozione = (itemId) => {
     setItemToRemove(itemId);
-    setShowModal(true);
+    setShowDeleteModal(true);
   };
 
   const rimuoviDalCarrello = async () => {
@@ -68,22 +70,22 @@ const CartComponent = () => {
       );
     }
 
-    setShowModal(false);
+    setShowDeleteModal(false);
     setItemToRemove(null);
   };
 
   const calcolaTotale = () => {
     return carrello.reduce((acc, item) => acc + item.prezzo * item.quantita, 0);
   };
+
   const handlePagamento = async () => {
     const email = localStorage.getItem("email");
 
     const risultato = await clearCarrello(email);
 
     if (risultato) {
-      setCarrello([]); // svuota carrello nel frontend
-      setShowModal(false); // chiudi modale pagamento
-
+      setCarrello([]);
+      setShowPaymentModal(false);
       navigate("/conferma-ordine", {
         state: {
           totale: calcolaTotale().toFixed(2),
@@ -119,9 +121,9 @@ const CartComponent = () => {
           ) : carrello.length === 0 ? (
             <div className="text-center">
               <h5>Il tuo carrello è vuoto.</h5>
-              <p style={{ color: "#7A3E1F" }}>
-                Aggiungi un itinerario per continuare.
-              </p>
+              <Link to="/Esplora" style={{ color: "#7A3E1F" }}>
+                <p>Aggiungi un itinerario per continuare.</p>
+              </Link>
             </div>
           ) : (
             <>
@@ -189,7 +191,7 @@ const CartComponent = () => {
                           {item.nomeItinerario}
                         </span>
                       </div>
-                      <span style={{ color: "#7A3E1F" }}>{item.prezzo}€</span>{" "}
+                      <span style={{ color: "#7A3E1F" }}>{item.prezzo}€</span>
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
@@ -204,11 +206,10 @@ const CartComponent = () => {
                 </div>
               </div>
 
-              {/* Bottone Procedi */}
               <div className="d-flex justify-content-center mt-3">
                 <Button
                   variant="warning"
-                  onClick={() => setShowModal(true)}
+                  onClick={() => setShowPaymentModal(true)}
                   style={{
                     backgroundColor: "orangered",
                     borderColor: "orangered",
@@ -226,8 +227,11 @@ const CartComponent = () => {
         </Col>
       </Row>
 
-      {/* Modale Conferma Rimozione */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+      <Modal
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title style={{ color: "orangered" }}>
             Conferma Rimozione
@@ -237,7 +241,7 @@ const CartComponent = () => {
           Sei sicuro di voler rimuovere questo itinerario?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
             Annulla
           </Button>
           <Button variant="danger" onClick={rimuoviDalCarrello}>
@@ -246,7 +250,11 @@ const CartComponent = () => {
         </Modal.Footer>
       </Modal>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+      <Modal
+        show={showPaymentModal}
+        onHide={() => setShowPaymentModal(false)}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title style={{ color: "orangered" }}>
             Inserisci i dati della carta

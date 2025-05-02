@@ -49,8 +49,9 @@ const EsploraComponent = () => {
 
   const filteredItinerari = Object.keys(itinerariPerPaese)
     .filter((paese) => paese.toLowerCase().includes(searchQuery.toLowerCase()))
+    .sort((a, b) => a.localeCompare(b)) // Ordina i paesi alfabeticamente
     .reduce((acc, paese) => {
-      acc[paese] = itinerariPerPaese[paese];
+      acc[paese] = itinerariPerPaese[paese].slice(0, 4); // Mostra solo le prime 4 card
       return acc;
     }, {});
 
@@ -112,7 +113,7 @@ const EsploraComponent = () => {
                 to={`/paese/${paese}`}
                 className="text-dark text-decoration-none"
               >
-                Vai agli itinerari
+                Scopri tutti gli itinerari su: <strong>{paese}</strong>
               </Link>
             </div>
 
