@@ -121,33 +121,18 @@ const RecensioniComponent = () => {
   if (error) return <div className="text-danger text-center mt-5">{error}</div>;
 
   return (
-    <div
-      style={{
-        backgroundColor: "white",
-      }}
-    >
+    <div id="recensioni-wrapper">
       <Container className="mt-5 mb-5 pt-5 pb-5">
-        <h2
-          className="text-center mb-4"
-          style={{ color: "orangered", fontWeight: "bold" }}
-        >
-          Recensioni
-        </h2>
+        <h2 id="recensioni-titolo">Recensioni</h2>
+
         {isAuthenticated && userRole === "User" && (
           <div className="text-center mb-4">
-            <Button
-              onClick={() => setShowModal(true)}
-              style={{
-                backgroundColor: "orangered",
-                borderColor: "orangered",
-                fontWeight: "bold",
-              }}
-            >
+            <Button id="aggiungi-btn" onClick={() => setShowModal(true)}>
               + Aggiungi Recensione
             </Button>
           </div>
         )}
-        {/* MODAL */}
+
         <Modal
           show={showModal}
           onHide={() => setShowModal(false)}
@@ -217,46 +202,20 @@ const RecensioniComponent = () => {
         <Row className="g-4">
           {recensioni.map((recensione) => (
             <Col key={recensione.idRecensione} md={6} lg={4}>
-              <Card
-                style={{
-                  borderColor: "transparent",
-                  borderRadius: "16px",
-                  boxShadow: "0 4px 12px rgba(255, 69, 0, 0.1)",
-                }}
-              >
+              <Card className="card-recensione">
                 <Card.Body>
                   <div className="d-flex align-items-center mb-3">
                     {recensione.imgUserPath ? (
                       <Image
                         src={`https://localhost:7007/${recensione.imgUserPath}`}
                         roundedCircle
-                        style={{
-                          width: "60px",
-                          height: "60px",
-                          marginRight: "15px",
-                          objectFit: "cover",
-                        }}
+                        className="utente-immagine"
                       />
                     ) : (
-                      <div
-                        style={{
-                          width: "60px",
-                          height: "60px",
-                          marginRight: "15px",
-                          borderRadius: "50%",
-                          backgroundColor: "#ffccbc",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontWeight: "bold",
-                          color: "#fff",
-                        }}
-                      >
-                        N/A
-                      </div>
+                      <div className="utente-placeholder">N/A</div>
                     )}
                     <div>
-                      <h5 className="mb-0" style={{ color: "orangered" }}>
+                      <h5 className="mb-0 utente-nome">
                         {recensione.nomeUtente}
                       </h5>
                       <small className="text-muted">
@@ -267,10 +226,10 @@ const RecensioniComponent = () => {
                     </div>
                   </div>
 
-                  <Card.Title style={{ fontWeight: "bold" }}>
+                  <Card.Title>
                     <Link
                       to={`/itinerario/${recensione.idItinerario}`}
-                      style={{ color: "orangered", textDecoration: "none" }}
+                      className="itinerario-link"
                     >
                       {recensione.titoloItinerario}
                     </Link>
@@ -281,7 +240,7 @@ const RecensioniComponent = () => {
                   </div>
 
                   {userEmail === recensione.email && (
-                    <div className="d-flex justify-content-end  gap-2 mt-3">
+                    <div className="d-flex justify-content-end gap-2 mt-3">
                       <Button
                         variant="outline-white"
                         className="w-50"

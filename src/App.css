@@ -6,9 +6,9 @@ html, body {
 
 }
 #root {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
-  width: 100vw;
+ 
   height: 100%;
   font-family: 'Poppins', sans-serif;
 }
@@ -128,6 +128,18 @@ html, body {
   transform: scale(1.05);
 }
 
+
+#homeabout {
+  padding: 12px 30px;
+  border-radius: 30px;
+  background-color: orangered;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
 /*tour*/
 #tour-div {
   display: flex;
@@ -193,6 +205,7 @@ html, body {
   border: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease ;
 }
+
 
 #img-recensioni {
   width: 100%;
@@ -280,6 +293,115 @@ html, body {
 
 /*FINE LOGIN E REGISTRAZIONE*/
 
+/*Contatti*/
+#contatti-wrapper {
+  padding: 5rem 0;
+  margin: 5rem 0;
+}
+
+#contatti-titolo {
+  color: orangered;
+}
+
+#contatti-sottotitolo {
+  color: #6c757d;
+}
+
+#contatti-card {
+  background-color: #fff5f0;
+  border: none;
+  padding: 1.5rem;
+}
+
+#contatti-form .form-control {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s ease;
+}
+
+#contatti-form .form-control:focus {
+  border-color: orangered;
+  box-shadow: 0 0 0 0.2rem rgba(255, 69, 0, 0.25);
+}
+
+#contatti-invia-btn {
+  background-color: orangered;
+  border-color: orangered;
+  font-weight: bold;
+  padding: 10px 24px;
+  border-radius: 30px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#contatti-invia-btn:hover {
+  background-color: #e04b00;
+  transform: translateY(-2px);
+}
+
+/*itinerario dettagli */
+#btn-modifica,
+#btn-elimina,
+#btn-modifica-admin,
+#btn-elimina-admin {
+  border-radius: 50%;
+background-color: white;
+  color: orangered;
+  border-color: orangered;
+
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btn-modifica:hover,
+#btn-elimina:hover,
+#btn-modifica-admin:hover,
+#btn-elimina-admin:hover {
+  background-color: white;
+}
+
+#img-itinerario {
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.text-orange {
+  color: #FF4500;
+}
+
+.custom-fascia {
+  cursor: pointer;
+  background-color: #fff7f0;
+}
+
+.selected-fascia {
+  border-color: orange !important;
+}
+
+.custom-partenza {
+  cursor: pointer;
+  background-color: #fff7f0;
+}
+
+.selected-partenza {
+  border-color: orange !important;
+}
+
+#btn-carrello {
+  background-color: #FF4500;
+  border: none;
+}
+
+#btn-carrello:hover {
+  background-color: #e04000;
+}
+
+.custom-divider {
+  border: 2px solid #FF5722;
+}
+
 
 /*Area Personale*/
 .profile-img {
@@ -298,7 +420,7 @@ html, body {
 }
 
 .custom-btn:hover {
-  background-color: #033d10; /* Verde scuro per hover */
+  background-color: orangered; /* Verde scuro per hover */
   color: white;
 }
 
@@ -444,6 +566,83 @@ h4, h5 {
   font-weight: 600;
 }
 
+/*RECENSIONI*/
+#recensioni-wrapper {
+  background-color: white;
+}
+
+#recensioni-titolo {
+  color: orangered;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+#aggiungi-btn {
+  background-color: orangered;
+  border-color: orangered;
+  font-weight: bold;
+  padding: 12px 30px;
+  border-radius: 30px;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#aggiungi-btn:hover {
+  background-color: #e04b00;
+  transform: scale(1.05);
+}
+
+.card-recensione {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(255, 69, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-recensione:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 69, 0, 0.2);
+}
+
+.utente-immagine {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+  object-fit: cover;
+}
+
+.utente-placeholder {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+  border-radius: 50%;
+  background-color: #ffccbc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #fff;
+}
+
+.utente-nome {
+  color: orangered;
+}
+
+.itinerario-link {
+  color: orangered;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.itinerario-link:hover {
+  text-decoration: underline;
+}
+
+
 /*CONTATTI COMPONENT*/
 textarea::placeholder,
 input::placeholder {
@@ -506,6 +705,69 @@ button:hover {
   background: #ff9800;
   color: white;
 }
+/*itinerario paese*/
+/* Titolo pagina */
+.title {
+  color: orangered;
+  font-weight: bold;
+}
+
+/* Immagine della card */
+.card-img {
+  height: 180px;
+  object-fit: cover;
+}
+
+
+
+
+/* Link degli itinerari */
+.itinerario-link {
+  color: orangered;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* Hover sul link degli itinerari */
+.itinerario-link:hover {
+  color: #FF5722;
+}
+
+/* Titolo dell'itinerario */
+.itinerario-title {
+  font-size: 1.3rem;
+  color: #FF5722;
+}
+
+/* Prezzo */
+.prezzo {
+  font-size: 1rem;
+  font-weight: 500;
+  color: orangered;
+}
+
+/* Durata */
+.durata {
+  font-size: 0.9rem;
+}
+
+/* Pulsante "Scopri di più" */
+.discover-btn {
+  background: linear-gradient(135deg, orangered, #FF5722);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(255, 87, 34, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect per il pulsante "Scopri di più" */
+.discover-btn:hover {
+  background: linear-gradient(135deg, #FF5722, orangered);
+  box-shadow: 0 6px 15px rgba(255, 87, 34, 0.6);
+  transform: scale(1.05);
+}
+
+
 
 
 #itinerario-form {

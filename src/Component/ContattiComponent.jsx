@@ -20,22 +20,19 @@ const ContattiComponent = () => {
   };
 
   return (
-    <Container className="pt-5 pb-5 mb-5 mt-5">
-      <h2 className="text-center mb-4" style={{ color: "orangered" }}>
+    <Container className="ms-3" id="contatti-wrapper">
+      <h2 id="contatti-titolo" className="text-center fw-bold mb-4">
         Contattaci
       </h2>
-      <p className="text-center text-muted mb-5">
+      <p id="contatti-sottotitolo" className="text-center text-muted mb-5">
         Hai domande sui nostri itinerari o vuoi ricevere assistenza? Scrivici!
       </p>
 
       <Row>
         <Col md={6}>
-          <Card
-            className="mb-4"
-            style={{ backgroundColor: "#fff5f0", border: "none" }}
-          >
+          <Card id="contatti-card" className="mb-4">
             <Card.Body>
-              <h5 style={{ color: "orangered" }}>I nostri contatti</h5>
+              <h5 className="fw-bold">I nostri contatti</h5>
               <p>
                 <strong>Email:</strong> WanderLost@gmail.com
               </p>
@@ -54,7 +51,7 @@ const ContattiComponent = () => {
         </Col>
 
         <Col md={6}>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} id="contatti-form">
             <Form.Group className="mb-3">
               <Form.Label>Nome</Form.Label>
               <Form.Control
@@ -93,14 +90,7 @@ const ContattiComponent = () => {
             </Form.Group>
 
             <div className="text-end">
-              <Button
-                type="submit"
-                style={{
-                  backgroundColor: "orangered",
-                  borderColor: "orangered",
-                  fontWeight: "bold",
-                }}
-              >
+              <Button type="submit" id="contatti-invia-btn">
                 Invia Messaggio
               </Button>
             </div>

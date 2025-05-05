@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-
 import {
   Container,
   Row,
@@ -85,61 +84,51 @@ const ItinerarioDettagli = () => {
           <i className="bi bi-arrow-left fs-4 text-black"></i>
         </Link>
       </div>
-      <Card className="border border-0 pb-5">
+      <Card className="border border-0 pb-5 bg-transparent">
         <Row>
           {isAuthenticated && userRole === "Admin" && (
-            <div className="d-flex justify-content-end gap-1 mt-2">
+            <div className="d-flex justify-content-end gap-2 mt-2">
               <Button
-                variant="outline-warning"
+                id="btn-modifica"
                 onClick={() => setShowUpdateModal(true)}
               >
                 <i className="bi bi-pencil"></i>
               </Button>
-              <Button
-                variant="outline-danger"
-                onClick={() => setShowDeleteModal(true)}
-              >
+              <Button id="btn-elimina" onClick={() => setShowDeleteModal(true)}>
                 <i className="bi bi-trash"></i>
               </Button>
             </div>
           )}
           <Col lg={5} className="pt-3 pb-sm-2 pb-lg-0">
             <Card.Img
+              id="img-itinerario"
               src={dettagli.immagineUrl || "/images/default-tour.jpg"}
               alt={dettagli.nomeItinerario}
               className="rounded-4 w-100"
-              style={{ maxHeight: "400px", objectFit: "cover" }}
             />
           </Col>
 
           <Col lg={7} className="text-center text-lg-start">
-            <h2 className="fw-bold" style={{ color: "#FF4500" }}>
-              {dettagli.nomeItinerario}
-            </h2>
-
+            <h2 className="fw-bold text-orange">{dettagli.nomeItinerario}</h2>
             <p className="fw-medium text-center">
               <strong>Durata:</strong> {dettagli.durata} giorni
             </p>
-            <h5 className="text-center" style={{ color: "#FF4500" }}>
-              Fasce di Prezzo
-            </h5>
+
+            <h5 className="text-center text-orange">Fasce di Prezzo</h5>
             {isAuthenticated && userRole === "User" && (
-              <h5 className="mt-4" style={{ color: "#FF5722" }}>
-                Scegli la fascia di prezzo:
-              </h5>
+              <h5 className="mt-4 text-orange">Scegli la fascia di prezzo:</h5>
             )}
             <ListGroup className="mb-3">
               {dettagli.itinerarioFascePrezzo?.map((fascia) => (
                 <ListGroup.Item
                   key={fascia.idItinerarioFasciaPrezzo}
                   onClick={() => setSelectedFascia(fascia)}
-                  className={`rounded-3 mb-2 border-2 ${
+                  className={`rounded-3 mb-2 border-2 custom-fascia ${
                     selectedFascia?.idItinerarioFasciaPrezzo ===
                     fascia.idItinerarioFasciaPrezzo
-                      ? "border-warning"
-                      : "border-light"
+                      ? "selected-fascia"
+                      : ""
                   }`}
-                  style={{ cursor: "pointer", backgroundColor: "#fff7f0" }}
                 >
                   <div className="d-flex flex-column mb-3">
                     <small className="text-muted mb-1">
@@ -170,25 +159,21 @@ const ItinerarioDettagli = () => {
                 </ListGroup.Item>
               ))}
             </ListGroup>
-            <h5 className="text-center" style={{ color: "#FF4500" }}>
-              Partenze:
-            </h5>
+
+            <h5 className="text-center text-orange">Partenze:</h5>
             {isAuthenticated && userRole === "User" && (
-              <h5 className="mt-4" style={{ color: "#FF5722" }}>
-                Seleziona una partenza:
-              </h5>
+              <h5 className="mt-4 text-orange">Seleziona una partenza:</h5>
             )}
             <Row>
               {dettagli.partenze?.map((partenza) => (
                 <Col xs={12} md={6} key={partenza.idPartenza}>
                   <Card
                     onClick={() => setSelectedPartenza(partenza)}
-                    className={`rounded-3 mt-2   ${
+                    className={`rounded-3 mt-2 custom-partenza ${
                       selectedPartenza?.idPartenza === partenza.idPartenza
-                        ? "border-warning border-2"
-                        : "border-light"
+                        ? "selected-partenza"
+                        : ""
                     }`}
-                    style={{ cursor: "pointer", backgroundColor: "#fff7f0" }}
                   >
                     <Card.Body className="d-flex justify-content-between align-items-center p-1">
                       <span>
@@ -208,13 +193,13 @@ const ItinerarioDettagli = () => {
                 </Col>
               ))}
             </Row>
+
             {isAuthenticated && userRole === "User" && (
               <div className="d-flex justify-content-center">
                 <Button
-                  variant="warning"
                   className="rounded-pill mt-4 px-4 fw-bold text-white"
+                  id="btn-carrello"
                   onClick={aggiungiAlCarrello}
-                  style={{ backgroundColor: "#FF4500", border: "none" }}
                 >
                   <i className="bi bi-cart-plus me-2"></i> Aggiungi al Carrello
                 </Button>
@@ -222,40 +207,22 @@ const ItinerarioDettagli = () => {
             )}
           </Col>
         </Row>
-        <hr
-          className="w-100 mt-5"
-          style={{ color: "#FF5722", border: "2px solid" }}
-        ></hr>
-        <h4 className="text-center mt-5 fw-bold" style={{ color: "#FF5722" }}>
+
+        <hr className="w-100 mt-5 custom-divider" />
+
+        <h4 className="text-center mt-5 fw-bold text-orange">
           Programma Giornaliero
         </h4>
         <ListGroup className="mt-3">
           {dettagli.giorni?.map((giorno, idx) => (
             <ListGroup.Item key={idx} className="rounded-3 my-2 shadow-sm">
-              <h5 className="fw-bold mb-1" style={{ color: "#FF4500" }}>
+              <h5 className="fw-bold mb-1 text-orange">
                 Giorno {giorno.giorno}: {giorno.titolo}
               </h5>
               <p className="text-muted mb-0">{giorno.descrizione}</p>
             </ListGroup.Item>
           ))}
         </ListGroup>
-
-        {isAuthenticated && userRole === "Admin" && (
-          <div className="d-flex justify-content-center gap-3 mt-4">
-            <Button
-              variant="outline-warning"
-              onClick={() => setShowUpdateModal(true)}
-            >
-              Modifica
-            </Button>
-            <Button
-              variant="outline-danger"
-              onClick={() => setShowDeleteModal(true)}
-            >
-              Elimina
-            </Button>
-          </div>
-        )}
       </Card>
 
       <DeleteItinerarioModal

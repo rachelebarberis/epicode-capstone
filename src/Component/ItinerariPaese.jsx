@@ -24,10 +24,8 @@ const ItinerariPaese = () => {
   }, [nomePaese]);
 
   return (
-    <Container className="pt-5 mt-5">
-      <h2 className="text-center mb-4" style={{ color: "orangered" }}>
-        Itinerari in {nomePaese}
-      </h2>
+    <Container className="pt-5 pb-5 mb-5 mt-5">
+      <h2 className="text-center mb-4 title">{`Itinerari in ${nomePaese}`}</h2>
       <Row>
         {itinerari.length === 0 ? (
           <p className="text-muted text-center">
@@ -53,9 +51,8 @@ const ItinerariPaese = () => {
                       <Card.Img
                         variant="top"
                         src={itinerario.immagineUrl || "/images/thai.jpg"}
-                        style={{ height: "180px", objectFit: "cover" }}
+                        className="card-img"
                       />
-
                       <Nav
                         variant="pills"
                         className="justify-content-center mt-2"
@@ -82,50 +79,23 @@ const ItinerariPaese = () => {
                           return (
                             <Tab.Pane eventKey={key} key={key}>
                               <Card.Body className="text-center">
-                                <Card.Title
-                                  className="fw-bold mb-2"
-                                  style={{
-                                    fontSize: "1.3rem",
-                                    color: "#FF5722",
-                                  }}
-                                >
+                                <Card.Title className="fw-bold mb-2 itinerario-title">
                                   <Link
                                     to={`/itinerario/${itinerario.idItinerario}`}
-                                    style={{
-                                      color: "orangered",
-                                      textDecoration: "none",
-                                    }}
+                                    className="itinerario-link"
                                   >
                                     {itinerario.nomeItinerario}
                                   </Link>
                                 </Card.Title>
-                                <p
-                                  className="mb-1"
-                                  style={{
-                                    fontSize: "1rem",
-                                    fontWeight: "500",
-                                    color: "orangered",
-                                  }}
-                                >
+                                <p className="mb-1 prezzo">
                                   Prezzo: {prezzo ?? "N/D"}
                                 </p>
-                                <p
-                                  className="text-muted mb-3"
-                                  style={{ fontSize: "0.9rem" }}
-                                >
+                                <p className="text-muted mb-3 durata">
                                   Durata: {itinerario.durata} giorni
                                 </p>
                                 <Link
                                   to={`/itinerario/${itinerario.idItinerario}`}
-                                  className="btn rounded-pill fw-bold px-4"
-                                  style={{
-                                    background:
-                                      "linear-gradient(135deg, orangered, #FF5722)",
-                                    color: "white",
-                                    border: "none",
-                                    boxShadow: "0 4px 10px rgba(255,87,34,0.4)",
-                                    transition: "all 0.3s ease-in-out",
-                                  }}
+                                  className="btn rounded-pill fw-bold px-4 discover-btn"
                                 >
                                   <i className="bi bi-compass-fill me-2"></i>
                                   Scopri di più

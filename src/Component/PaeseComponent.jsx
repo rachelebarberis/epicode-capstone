@@ -83,21 +83,11 @@ const PaeseComponent = () => {
     return <div className="alert alert-danger mt-5">Errore: {errore}</div>;
 
   return (
-    <Container className="mt-5 pt-5">
+    <Container className="mt-5  pb-5 mb-5 pt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 style={{ color: "orangered", fontWeight: "bold" }}>
-          Lista dei Paesi
-        </h2>
+        <h2 className="fw-bold text-orange">Lista dei Paesi</h2>
         {isAuthenticated && userRole === "Admin" && (
-          <Button
-            style={{
-              background: "linear-gradient(135deg, orangered, #FF5722)",
-              border: "none",
-              fontWeight: "bold",
-              boxShadow: "0 4px 10px rgba(255,87,34,0.4)",
-            }}
-            onClick={() => setShowAddModal(true)}
-          >
+          <Button onClick={() => setShowAddModal(true)}>
             + Aggiungi Paese
           </Button>
         )}
@@ -153,6 +143,7 @@ const PaeseComponent = () => {
         <ul className="list-group">
           {filteredAndSortedPaesi.map((paese) => (
             <li
+              id="lista-paesi"
               key={paese.idPaese}
               className="list-group-item d-flex justify-content-between align-items-center"
               style={{
@@ -161,9 +152,7 @@ const PaeseComponent = () => {
                 marginBottom: "10px",
               }}
             >
-              <span style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
-                {paese.nome}
-              </span>
+              <span className="fw-bold">{paese.nome}</span>
               <div className="d-flex gap-2 align-items-center">
                 {isAuthenticated && userRole === "User" && (
                   <Link

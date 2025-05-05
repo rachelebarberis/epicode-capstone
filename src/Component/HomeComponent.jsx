@@ -118,7 +118,6 @@ const HomeComponent = () => {
           </div>
         </div>
 
-        {/* Carosello delle recensioni */}
         <Carousel indicators={false}>
           {chunkedRecensioni.map((chunk, index) => (
             <Carousel.Item key={index}>
@@ -219,16 +218,7 @@ const HomeComponent = () => {
           </p>
           <Link to="/AboutUs" className="text-decoration-none">
             <div
-              style={{
-                padding: "12px 30px",
-                borderRadius: "30px",
-                backgroundColor: "orangered",
-                color: "white",
-                fontWeight: "700",
-                letterSpacing: "1px",
-                fontSize: "1rem",
-                transition: "background-color 0.3s ease, transform 0.3s ease",
-              }}
+              id="homeabout"
               className="d-inline-block"
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = "#e55300";
