@@ -19,13 +19,10 @@ const AreaPersonaleComponent = () => {
     imgUserPath: "",
   });
 
-  // Recupera i dati utente
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        console.log("Inizio fetch dei dati utente...");
         const userData = await getUserInfo();
-        console.log("Dati utente ricevuti:", userData);
         setUser(userData);
         setFormData({
           firstName: userData.firstName,
@@ -33,78 +30,51 @@ const AreaPersonaleComponent = () => {
           email: userData.email,
           imgUserPath: userData.imgUserPath,
         });
-      } catch (err) {
+      } catch {
         setErrore("Errore nel recupero dati utente.");
-        console.error("Errore nel recupero dati utente:", err);
       }
     };
 
     fetchUser();
   }, []);
 
-  // Gestisce la selezione dell'immagine
   const handleImageUpload = (file) => {
-    console.log("File selezionato:", file);
     if (!file) return;
     setSelectedFile(file);
   };
 
-  // Salva l'immagine di profilo
   const saveProfileImage = async () => {
-    if (!selectedFile) {
-      console.log("Nessun file selezionato, uscita dalla funzione...");
-      return;
-    }
-
+    if (!selectedFile) return;
     try {
-      console.log("Inizio caricamento immagine...");
       setUploading(true);
       const updatedUser = await uploadProfileImage(selectedFile);
-      console.log("Risposta dal backend:", updatedUser);
-
       if (updatedUser && updatedUser.imgUserPath) {
-        console.log("Immagine aggiornata, aggiorno stato utente.");
         setUser(updatedUser);
         setSelectedFile(null);
       } else {
-        console.error("Errore: imgUserPath non presente nella risposta.");
         setErrore("Errore nel recupero dell'immagine aggiornata.");
       }
-    } catch (err) {
-      console.error("Errore nel caricamento immagine:", err);
+    } catch {
       setErrore("Errore nel caricamento immagine.");
     } finally {
       setUploading(false);
     }
   };
 
-  // Apre la modale per modificare i dati
-  const openModal = () => {
-    setShowModal(true);
-  };
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
-  // Chiude la modale
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  // Gestisce il cambiamento dei dati nel form
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Aggiorna le informazioni dell'utente
   const handleSaveChanges = async () => {
     try {
       const updatedUser = await updateUserInfo(formData);
       setUser(updatedUser);
       closeModal();
-    } catch (err) {
-      console.error("Errore nell'aggiornamento delle informazioni:", err);
+    } catch {
       setErrore("Errore nell'aggiornamento delle informazioni.");
     }
   };
@@ -114,35 +84,22 @@ const AreaPersonaleComponent = () => {
   }
 
   if (!user) {
-    console.log("Dati utente non ancora disponibili, mostra caricamento...");
     return <div className="text-center mt-5">Caricamento dati...</div>;
   }
 
-  // Se c'è un percorso immagine nel backend, lo compone con l'host
   const imageUrl = user.imgUserPath
     ? `https://localhost:7007${user.imgUserPath}`
     : "/images/default-avatar.jpg";
 
   return (
-    <Container className="mt-5 pt-5  mb-5">
-      <h4
-        className="text-center pb-4"
-        style={{ fontWeight: "bold", letterSpacing: "1px", color: "orangered" }}
-      >
+    <Container id="area-personale" className="mt-5 pt-5 mb-5">
+      <h4 id="area-personale-title" className="text-center pb-4">
         Area Personale - Documento di Viaggio
       </h4>
 
       <Row className="justify-content-center">
         <Col xs={12} md={8}>
-          <div
-            className="border rounded-4 p-4 shadow"
-            style={{
-              backgroundColor: "#fff5f0",
-              borderColor: "orangered",
-              borderWidth: "2px",
-              borderStyle: "solid",
-            }}
-          >
+          <div id="area-card" className="border rounded-4 p-4 shadow">
             <Row className="align-items-center mb-4">
               <Col
                 xs={12}
@@ -152,15 +109,10 @@ const AreaPersonaleComponent = () => {
                 <img
                   src={imageUrl}
                   alt="Foto Profilo"
-                  className="rounded border"
-                  style={{
-                    width: "150px",
-                    height: "200px",
-                    objectFit: "cover",
-                    backgroundColor: "#ffffff",
-                    border: "2px solid orangered",
-                  }}
+                  id="profile-img"
+                  className="profile-img rounded"
                 />
+
                 <Form.Group controlId="formFile" className="mt-3">
                   <Form.Control
                     type="file"
@@ -179,9 +131,8 @@ const AreaPersonaleComponent = () => {
                     variant="outline-warning"
                     onClick={saveProfileImage}
                     disabled={uploading}
-                    className="mt-2"
-                    size="sm"
-                    style={{ borderColor: "orangered", color: "orangered" }}
+                    className="mt-2 custom-btn btn-sm"
+                    id="save-img-btn"
                   >
                     {uploading ? "Salvataggio..." : "Salva immagine"}
                   </Button>
@@ -189,23 +140,23 @@ const AreaPersonaleComponent = () => {
               </Col>
 
               <Col xs={12} md={8} className="pt-4 pt-md-0">
-                <div className="mb-3" style={{ color: "#7A3E1F" }}>
+                <div className="mb-3 text-info-custom">
                   <strong>Nome:</strong>{" "}
                   <span className="ms-2">{user.firstName}</span>
                 </div>
-                <div className="mb-3" style={{ color: "#7A3E1F" }}>
+                <div className="mb-3 text-info-custom">
                   <strong>Cognome:</strong>{" "}
                   <span className="ms-2">{user.lastName}</span>
                 </div>
-                <div className="mb-3" style={{ color: "#7A3E1F" }}>
+                <div className="mb-3 text-info-custom">
                   <strong>Email:</strong>{" "}
                   <span className="ms-2">{user.email}</span>
                 </div>
                 <Button
                   variant="outline-warning"
                   onClick={openModal}
-                  className="mt-3"
-                  style={{ borderColor: "orangered", color: "orangered" }}
+                  className="mt-3 custom-btn"
+                  id="edit-data-btn"
                 >
                   Modifica Dati
                 </Button>
@@ -215,12 +166,9 @@ const AreaPersonaleComponent = () => {
         </Col>
       </Row>
 
-      {/* Modale per modificare i dati */}
       <Modal show={showModal} onHide={closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title style={{ color: "orangered" }}>
-            Modifica Informazioni
-          </Modal.Title>
+          <Modal.Title id="modal-title">Modifica Informazioni</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -262,7 +210,8 @@ const AreaPersonaleComponent = () => {
           <Button
             variant="warning"
             onClick={handleSaveChanges}
-            style={{ backgroundColor: "orangered", borderColor: "orangered" }}
+            className="custom-btn"
+            id="save-changes-btn"
           >
             Salva Modifiche
           </Button>

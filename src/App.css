@@ -403,13 +403,29 @@ background-color: white;
 }
 
 
+
 /*Area Personale*/
-.profile-img {
+#area-personale-title {
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: orangered;
+}
+
+#area-card {
+  background-color: #fff5f0;
+  border: 2px solid orangered;
+}
+
+#profile-img {
   width: 150px;
-  height: 150px;
+  height: 200px;
   object-fit: cover;
-  border: 3px solid #7A3E1F;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border: 2px solid orangered;
+}
+
+.text-info-custom {
+  color: #7A3E1F;
 }
 
 .custom-btn {
@@ -417,21 +433,20 @@ background-color: white;
   padding: 8px 20px;
   border-radius: 25px;
   transition: background-color 0.3s, color 0.3s;
+  border: 1px solid orangered;
+  color: orangered;
+  background-color: transparent;
 }
 
 .custom-btn:hover {
-  background-color: orangered; /* Verde scuro per hover */
+  background-color: orangered;
   color: white;
 }
 
-h4, h5 {
-  color: #05264a; /* Blu scuro per i titoli */
+#modal-title {
+  color: orangered;
 }
 
-.pt-3 p {
-  font-size: 1.1rem;
-  color: #333;
-}
 /*INIZIO ESPLORA*/
 /*barra di ricerca*/
 .search-bar {
@@ -568,6 +583,53 @@ h4, h5 {
   box-shadow: 0 6px 15px rgba(255, 87, 34, 0.6);
   transform: scale(1.05);
 }
+
+/*Conferma Ordine */
+
+
+#conferma-card {
+  max-width: 600px;
+  width: 100%;
+  padding: 2rem;
+
+}
+
+#conferma-titolo {
+  color: orangered;
+  font-weight: bold;
+}
+
+#conferma-info h5 {
+  font-weight: 600;
+}
+
+#conferma-dettagli {
+  color: #7A3E1F;
+}
+
+#link-contatti {
+  color: orangered;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+#link-contatti:hover {
+  color: #e04e00;
+}
+
+#btn-home {
+  background-color: orangered;
+  border: none;
+  font-size: 1.1rem;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+#btn-home:hover {
+  background-color: #e04e00;
+}
+
 
 
 /*ABOUT US COMPONENT*/

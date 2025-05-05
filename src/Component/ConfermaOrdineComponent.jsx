@@ -10,29 +10,33 @@ const ConfermaOrdineComponent = () => {
   const data = location.state?.data || new Date().toLocaleString();
 
   return (
-    <Container className="d-flex justify-content-center align-items-center mt-5 pt-5 mb-5 pb-5">
-      <Card className="border border-0">
+    <Container
+      fluid
+      className="d-flex justify-content-center align-items-center  pt-3 mb-5 pb-5"
+      id="conferma-container"
+    >
+      <Card className="border-0 " id="conferma-card">
         <Card.Body className="text-center">
-          <h2 style={{ color: "orangered", fontWeight: "bold" }}>
-            🎉 Grazie per il tuo ordine!
-          </h2>
+          <h2 id="conferma-titolo">Grazie per il tuo ordine!</h2>
+
           <p className="mt-3 fs-5 text-muted">
             Il tuo pagamento è andato a buon fine. Siamo felicissimi di poterti
             accompagnare in questa nuova avventura!
           </p>
 
-          <div className="my-4">
+          <div className="my-4" id="conferma-info">
             <h5 className="text-success">Totale pagato: €{totale}</h5>
             <p className="text-muted">Data ordine: {data}</p>
           </div>
 
-          <p style={{ color: "#7A3E1F" }} className="mb-4">
+          <p className="mb-4" id="conferma-dettagli">
             Riceverai a breve una conferma via email con tutti i dettagli. Se
             hai domande o bisogno di supporto, siamo sempre qui per aiutarti.
             Scopri come contattarci nella pagina{" "}
             <span
-              style={{ color: "orangered", cursor: "pointer", fontWeight: 600 }}
+              id="link-contatti"
               onClick={() => navigate("/Contatti")}
+              role="button"
             >
               Contatti
             </span>
@@ -40,16 +44,9 @@ const ConfermaOrdineComponent = () => {
           </p>
 
           <Button
-            variant="warning"
+            id="btn-home"
             onClick={() => navigate("/")}
-            style={{
-              backgroundColor: "orangered",
-              borderColor: "orangered",
-              fontWeight: "bold",
-              padding: "0.6rem 2rem",
-              fontSize: "1.1rem",
-              color: "white",
-            }}
+            className="fw-bold px-4 py-2"
           >
             Torna alla Home
           </Button>

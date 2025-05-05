@@ -22,7 +22,7 @@ const NavBarComponent = () => {
 
   return (
     <>
-      <Navbar expand="md" className=" p-0" id="navbar">
+      <Navbar expand="lg" className=" p-0" id="navbar">
         <Container fluid={true}>
           <Link to="/" className="m-0 p-0 nav-link">
             <img src="/public/images/WanderLost.png" id="imglogo" />
