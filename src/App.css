@@ -515,6 +515,60 @@ h4, h5 {
 .card-body {
   padding-top: 40px; /* Distanza tra l'immagine e il contenuto */
 }
+#titolo-paese {
+  color: #FF5722;
+}
+
+.link-itinerari {
+  text-decoration: none;
+  color: #343a40;
+  transition: color 0.3s ease;
+}
+.link-itinerari:hover {
+  color: #FF5722;
+}
+
+.card-itinerario {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-itinerario:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.img-itinerario {
+  height: 180px;
+  object-fit: cover;
+}
+
+.titolo-itinerario {
+  font-size: 1.3rem;
+  color: #FF5722;
+}
+
+.prezzo-itinerario {
+  font-size: 1rem;
+  font-weight: 500;
+  color: orangered;
+}
+
+.durata-itinerario {
+  font-size: 0.9rem;
+}
+
+.btn-scopri {
+  background: linear-gradient(135deg, orangered, #FF5722);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(255, 87, 34, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+.btn-scopri:hover {
+  background: linear-gradient(135deg, #FF5722, orangered);
+  box-shadow: 0 6px 15px rgba(255, 87, 34, 0.6);
+  transform: scale(1.05);
+}
+
 
 /*ABOUT US COMPONENT*/
 .about-container {
