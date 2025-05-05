@@ -76,10 +76,10 @@ const EsploraComponent = () => {
       </Row>
 
       {isAuthenticated && userRole === "Admin" && (
-        <Row className="justify-content-center">
+        <Row className="justify-content-end">
           <Col xs="auto" className="mt-3 mt-md-0">
             <Button variant="success" onClick={() => setShowCreateModal(true)}>
-              <i className="bi bi-plus"></i>
+              Aggiungi itinerario
             </Button>
           </Col>
         </Row>

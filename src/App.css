@@ -25,11 +25,12 @@ html, body {
 }
 
 #imglogo {
-  max-width:150px;
-  max-height: 80px;
+  max-width:120px;
+  max-height: 70px;
   padding: 0px;
   padding-top: 12px;
   margin: 0px;
+  padding-bottom: 10px;
 }
 
 #navbar .nav-link {
@@ -182,6 +183,7 @@ html, body {
 #p-recensioni {
   color: orangered !important;
   font-weight: 800 !important;
+  cursor: pointer;
 }
 #card-recensioni {
   width: 100%;

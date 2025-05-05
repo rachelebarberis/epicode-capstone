@@ -64,13 +64,15 @@ const HomeComponent = () => {
         <div style={{ position: "relative", zIndex: 2 }}>
           <h1 id="h1-home">WanderLOst</h1>
           <h2 id="h2-home">Perditi nelle meraviglie del mondo!</h2>
-          <button id="btn-hero">Inizia a Sognare!</button>
+          <Link to="/Esplora">
+            <button id="btn-hero">Inizia a Sognare!</button>
+          </Link>
         </div>
       </div>
 
       <section className="mt-5">
         <h4 className="text-center fw-bold text-black">I nostri itinerari</h4>
-        <p className="text-center" id="p-recensioni">
+        <p className="text-center" id="p-recensioni" onClick={handleNextPage}>
           Sfoglia il catalogo
         </p>
 

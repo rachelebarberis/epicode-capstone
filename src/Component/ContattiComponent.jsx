@@ -37,13 +37,13 @@ const ContattiComponent = () => {
             <Card.Body>
               <h5 style={{ color: "orangered" }}>I nostri contatti</h5>
               <p>
-                <strong>Email:</strong> support@viaggiintorno.it
+                <strong>Email:</strong> WanderLost@gmail.com
               </p>
               <p>
-                <strong>Telefono:</strong> +39 123 456 7890
+                <strong>Telefono:</strong> +39 015-9756558
               </p>
               <p>
-                <strong>Indirizzo:</strong> Via delle Vacanze 42, Roma, Italia
+                <strong>Indirizzo:</strong> Via Cantono n.34 Biella, Italia
               </p>
               <p className="text-muted mt-4">
                 Siamo sempre felici di aiutarti a pianificare la tua prossima

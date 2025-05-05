@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
+
 import {
   Container,
   Row,
@@ -79,8 +80,29 @@ const ItinerarioDettagli = () => {
 
   return (
     <Container className="mt-5 pt-5 pb-5">
+      <div>
+        <Link to="/Esplora">
+          <i className="bi bi-arrow-left fs-4 text-black"></i>
+        </Link>
+      </div>
       <Card className="border border-0 pb-5">
         <Row>
+          {isAuthenticated && userRole === "Admin" && (
+            <div className="d-flex justify-content-end gap-1 mt-2">
+              <Button
+                variant="outline-warning"
+                onClick={() => setShowUpdateModal(true)}
+              >
+                <i className="bi bi-pencil"></i>
+              </Button>
+              <Button
+                variant="outline-danger"
+                onClick={() => setShowDeleteModal(true)}
+              >
+                <i className="bi bi-trash"></i>
+              </Button>
+            </div>
+          )}
           <Col lg={5} className="pt-3 pb-sm-2 pb-lg-0">
             <Card.Img
               src={dettagli.immagineUrl || "/images/default-tour.jpg"}
@@ -95,7 +117,7 @@ const ItinerarioDettagli = () => {
               {dettagli.nomeItinerario}
             </h2>
 
-            <p className="fw-medium">
+            <p className="fw-medium text-center">
               <strong>Durata:</strong> {dettagli.durata} giorni
             </p>
             <h5 className="text-center" style={{ color: "#FF4500" }}>
