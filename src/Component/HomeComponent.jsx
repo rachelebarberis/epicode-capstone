@@ -2,6 +2,7 @@ import { Container, Carousel, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { getRecensione } from "../Redux/Actions/recensioneAction";
+import { getItinerari } from "../Redux/Actions/itinerarioActions";
 import ReactPageFlip from "react-pageflip";
 
 const HomeComponent = () => {
@@ -10,30 +11,23 @@ const HomeComponent = () => {
   const bookRef = useRef();
 
   useEffect(() => {
-    const fetchItinerari = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("https://localhost:7007/api/Itinerario");
-        if (!response.ok) {
-          throw new Error("Errore durante il recupero degli itinerari");
-        }
-        const data = await response.json();
-        setItinerari(data);
+        const itinerari = await getItinerari();
+        setItinerari(itinerari);
       } catch (error) {
-        console.error("Errore:", error.message);
+        console.error("Errore nel recupero degli itinerari:", error.message);
       }
-    };
 
-    const fetchRecensioni = async () => {
       try {
-        const data = await getRecensione();
-        setRecensioni(data);
+        const recensioni = await getRecensione();
+        setRecensioni(recensioni);
       } catch (error) {
         console.error("Errore nel recupero delle recensioni:", error.message);
       }
     };
 
-    fetchItinerari();
-    fetchRecensioni();
+    fetchData();
   }, []);
 
   const chunkedRecensioni = useMemo(() => {
@@ -123,7 +117,7 @@ const HomeComponent = () => {
             <Carousel.Item key={index}>
               <Row className="d-flex justify-content-center">
                 {chunk.map((recensione, idx) => (
-                  <Col xs={12} sm={6} md={4} lg={3} className="p-3" key={idx}>
+                  <Col xs={12} sm={6} lg={3} className="p-3" key={idx}>
                     <Card
                       id="card-recensioni"
                       className="hover-card p-1 pt-5"

@@ -30,13 +30,26 @@ export const updateRecensione = async (id, formData) => {
   return await response.json();
 };
 
-export const deleteRecensione = async (id) => {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "DELETE"
+export const deleteRecensione = async (id, email) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`https://localhost:7007/api/Recensioni/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
   });
-  if (!response.ok) throw new Error("Errore nella cancellazione della recensione");
-  return true;
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Errore nella cancellazione: ${text}`);
+  }
+
+  return { success: true };
 };
+
 
 
 

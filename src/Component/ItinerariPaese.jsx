@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Container, Row, Col, Card, Tab, Nav } from "react-bootstrap";
+import { getItinerari } from "../Redux/Actions/itinerarioActions";
 
 const ItinerariPaese = () => {
   const { nomePaese } = useParams();
   const [itinerari, setItinerari] = useState([]);
 
   useEffect(() => {
-    const fetchItinerari = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("https://localhost:7007/api/Itinerario");
-        const data = await response.json();
+        const data = await getItinerari();
         const filtrati = data.filter(
           (item) => item.paese.nome.toLowerCase() === nomePaese.toLowerCase()
         );
         setItinerari(filtrati);
       } catch (error) {
-        console.error("Errore:", error.message);
+        console.error("Errore nel recupero itinerari:", error.message);
       }
     };
 
-    fetchItinerari();
+    fetchData();
   }, [nomePaese]);
 
   return (
@@ -50,7 +50,7 @@ const ItinerariPaese = () => {
                     <>
                       <Card.Img
                         variant="top"
-                        src={itinerario.immagineUrl || "/images/thai.jpg"}
+                        src={itinerario.immagineUrl || "/images/aereo.jpg"}
                         className="card-img"
                       />
                       <Nav

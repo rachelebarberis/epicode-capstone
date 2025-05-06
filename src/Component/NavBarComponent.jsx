@@ -25,7 +25,7 @@ const NavBarComponent = () => {
       <Navbar expand="lg" className=" p-0" id="navbar">
         <Container fluid={true}>
           <Link to="/" className="m-0 p-0 nav-link">
-            <img src="/public/images/WanderLost.png" id="imglogo" />
+            <img src="/images/WanderLost.png" id="imglogo" />
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse

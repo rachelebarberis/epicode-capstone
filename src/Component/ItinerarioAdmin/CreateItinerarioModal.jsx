@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { createItinerario } from "../../Redux/Actions/itinerarioActions";
+import { getPaesi } from "../../Redux/Actions/paeseAction";
 
 const CreateItinerarioModal = ({ show, handleClose, onCreated }) => {
   const [formData, setFormData] = useState({
@@ -20,23 +21,18 @@ const CreateItinerarioModal = ({ show, handleClose, onCreated }) => {
   ]);
 
   // Funzione per caricare i paesi dal back-end
-  const fetchPaesi = async () => {
-    try {
-      const response = await fetch("https://localhost:7007/api/Paese"); // Assicurati di sostituire l'URL con quello corretto
-      if (!response.ok) {
-        throw new Error("Errore durante il recupero dei paesi");
-      }
-      const data = await response.json();
-      setPaesi(data); // Memorizza i paesi
-    } catch (error) {
-      console.error("Errore:", error.message);
-    }
-  };
-
   useEffect(() => {
-    fetchPaesi(); // Carica i paesi quando il componente è montato
-  }, []);
+    const fetchData = async () => {
+      try {
+        const data = await getPaesi();
+        setPaesi(data);
+      } catch (error) {
+        console.error("Errore nel caricamento dei paesi:", error.message);
+      }
+    };
 
+    fetchData();
+  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "paeseId") {
