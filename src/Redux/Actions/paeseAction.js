@@ -14,7 +14,7 @@ export const createPaese = async (data) => {
   });
 
   if (!response.ok) throw new Error('Errore nella creazione del Paese');
-  return await response.text(); // o .json() se il server ritorna JSON
+  return await response.text();
 };
 
 export const updatePaese = async (id, data) => {

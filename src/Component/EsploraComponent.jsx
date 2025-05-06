@@ -13,6 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CreateItinerarioModal from "./ItinerarioAdmin/CreateItinerarioModal";
+import { getItinerari } from "../Redux/Actions/itinerarioActions";
 
 const EsploraComponent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -22,17 +23,15 @@ const EsploraComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    const fetchItinerari = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("https://localhost:7007/api/Itinerario");
-        if (!response.ok) throw new Error("Errore nel recupero itinerari");
-        const data = await response.json();
+        const data = await getItinerari();
         setItinerari(data);
       } catch (error) {
-        console.error("Errore:", error.message);
+        console.error("Errore nel caricamento degli itinerari:", error.message);
       }
     };
-    fetchItinerari();
+    fetchData();
   }, []);
 
   const itinerariPerPaese = itinerari.reduce((acc, itinerario) => {

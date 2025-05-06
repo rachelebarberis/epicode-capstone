@@ -12,6 +12,8 @@ import {
 import { useSelector } from "react-redux";
 import DeleteItinerarioModal from "./ItinerarioAdmin/DeleteItinerarioModal";
 import UpdateItinerarioModal from "./ItinerarioAdmin/UpdateItinerarioModal";
+import { getItinerarioById } from "../Redux/Actions/itinerarioActions";
+import { createCarrello } from "../Redux/Actions/carrelloAction";
 
 const ItinerarioDettagli = () => {
   const { id } = useParams();
@@ -28,8 +30,7 @@ const ItinerarioDettagli = () => {
   useEffect(() => {
     const fetchDettagli = async () => {
       try {
-        const res = await fetch(`https://localhost:7007/api/Itinerario/${id}`);
-        const data = await res.json();
+        const data = await getItinerarioById(id);
         setDettagli(data);
       } catch (error) {
         console.error("Errore nel caricamento del dettaglio:", error);
@@ -43,11 +44,7 @@ const ItinerarioDettagli = () => {
       alert("Seleziona fascia di prezzo e data di partenza");
       return;
     }
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("Devi essere loggato per aggiungere al carrello.");
-      return;
-    }
+
     const itinerarioSelezionato = {
       idItinerario: dettagli.idItinerario,
       idItinerarioFasciaPrezzo: selectedFascia.idItinerarioFasciaPrezzo,
@@ -55,20 +52,13 @@ const ItinerarioDettagli = () => {
       prezzo: selectedFascia.prezzo,
       quantita: 1,
     };
+
     try {
-      const response = await fetch("https://localhost:7007/api/carrello", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          userEmail,
-          carrelloItems: [itinerarioSelezionato],
-        }),
+      await createCarrello({
+        userEmail,
+        carrelloItems: [itinerarioSelezionato],
       });
-      if (response.ok) navigate("/carrello");
-      else alert("Errore nell'aggiungere al carrello.");
+      navigate("/carrello");
     } catch (error) {
       console.error("Errore:", error);
       alert("Errore nell'invio della richiesta.");

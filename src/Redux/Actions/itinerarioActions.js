@@ -22,6 +22,27 @@ const fetchWithAuth = async (url, options = {}) => {
   return response.json();
 };
 
+export const getItinerari = async () => {
+  try {
+    const response = await fetch(`${API}`);
+    if (!response.ok) {
+      throw new Error("Errore nel recupero degli itinerari");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Errore durante il fetch degli itinerari:", error);
+    throw error;
+  }
+};
+
+
+export const getItinerarioById = async (id) => {
+  const response = await fetch(`${API}/${id}`);
+  if (!response.ok) throw new Error("Errore nel recupero dell'itinerario");
+  return await response.json();
+};
+
+
 // POST - Crea un nuovo itinerario
 export const createItinerario = async (itinerarioData) => {
   return fetchWithAuth(`${API}`, {
