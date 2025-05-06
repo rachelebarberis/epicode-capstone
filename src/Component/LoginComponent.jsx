@@ -33,15 +33,16 @@ const LoginComponent = () => {
 
   return (
     <>
-      <Container
-        id="login-page"
-        className="d-flex justify-content-center align-items-center mt-5 pt-5 mb-5 pb-5"
-      >
-        <Row className="w-100 justify-content-center pt-5 pb-5">
+      <Container className="d-flex justify-content-center align-items-center mt-5 pt-5 mb-5 pb-5">
+        <Row className="w-100 justify-content-center  pb-5">
           <Col xs={10} sm={8} md={6} lg={4}>
-            <div id="login-header" className="text-center mb-5">
-              <h1 className=" fw-bolder">WanderLOst</h1>
-              <p>“Ogni viaggio inizia con un passo… il tuo inizia qui.”</p>
+            <div className="text-center mb-5">
+              <h1 id="orange" className=" fw-bolder">
+                WanderLOst
+              </h1>
+              <p className=" fst-italic">
+                “Ogni viaggio inizia con un passo… il tuo inizia qui.”
+              </p>
             </div>
 
             <Form onSubmit={handleSubmit} className="login-form">
@@ -75,9 +76,9 @@ const LoginComponent = () => {
                 </Button>
               </div>
 
-              <p className="text-center" id="register-link">
+              <p className="text-center">
                 Non hai un account?{" "}
-                <Link to="/Register" className="navlink ">
+                <Link to="/Register" id="orange" className="fw-bold">
                   Registrati!
                 </Link>
               </p>
@@ -92,13 +93,11 @@ const LoginComponent = () => {
           <Modal.Title>Login Effettuato</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Benvenuto, <strong>{user?.nome || "utente"}</strong>! Login effettuato
-          con successo.
+          Benvenuto, <strong>{user?.firstName || "utente"}</strong>! Login
+          effettuato con successo.
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseModal}>
-            Continua
-          </Button>
+          <Button onClick={handleCloseModal}>Continua</Button>
         </Modal.Footer>
       </Modal>
     </>

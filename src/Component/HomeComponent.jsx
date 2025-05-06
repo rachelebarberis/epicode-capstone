@@ -66,11 +66,11 @@ const HomeComponent = () => {
 
       <section className="mt-5">
         <h4 className="text-center fw-bold text-black">I nostri itinerari</h4>
-        <p className="text-center" id="p-recensioni" onClick={handleNextPage}>
+        <p className="text-center fw-bold" id="orange" onClick={handleNextPage}>
           Sfoglia il catalogo
         </p>
 
-        <div id="tour-div">
+        <div className="d-flex justify-content-center" id="tour-div">
           <ReactPageFlip
             ref={bookRef}
             width={800}
@@ -83,10 +83,17 @@ const HomeComponent = () => {
               <div id="itinerario" key={itinerario.idItinerario}>
                 <img
                   id="itinerario-img"
-                  src={itinerario.immagineUrl || "/public/images/default.jpg"}
+                  src={itinerario.immagineUrl || "/images/logosito.jpg"}
                   alt={itinerario.nomeItinerario}
                 />
-                <p id="itinerario-nome">{itinerario.nomeItinerario}</p>
+                <Link
+                  to={`/itinerario/${itinerario.idItinerario}`}
+                  id="itinerario-nome"
+                >
+                  <p className="text-center mt-1 mt-md-3">
+                    {itinerario.nomeItinerario}
+                  </p>
+                </Link>
               </div>
             ))}
           </ReactPageFlip>
@@ -107,7 +114,9 @@ const HomeComponent = () => {
           <h4 className="text-center fw-bold text-black">Recensioni</h4>
           <div>
             <Link to="/Recensioni" className="text-decoration-none">
-              <p id="p-recensioni">Leggi tutte le recensioni</p>
+              <p id="orange" className="fw-bold">
+                Leggi tutte le recensioni
+              </p>
             </Link>
           </div>
         </div>
@@ -159,11 +168,11 @@ const HomeComponent = () => {
                       </div>
 
                       <Card.Body className="text-center p-0">
-                        <h5 id="titolo-recensioni" className="fw-bold mb-1">
+                        <h5 className="fw-bold mb-1">
                           {recensione.nomeUtente}
                         </h5>
 
-                        <h6 className="text-black mb-2">
+                        <h6 className=" mb-2" id="orange">
                           {recensione.titoloItinerario}
                         </h6>
 
@@ -176,7 +185,7 @@ const HomeComponent = () => {
                             : recensione.commento}
                         </p>
 
-                        <div className="pb-3" id="stelle-recensioni">
+                        <div className="pb-3" id="orange">
                           {[...Array(5)].map((_, i) => (
                             <i
                               key={i}
@@ -201,10 +210,10 @@ const HomeComponent = () => {
 
       <section id="about-us" className="mt-5">
         <div className="d-flex flex-column justify-content-center align-items-center text-center p-4">
-          <h4 id="titolo-about" className="mb-3">
+          <h2 id="orange" className="mb-3 fw-bold">
             About Us
-          </h4>
-          <p id="p-about">
+          </h2>
+          <p className="mb-3">
             Siamo un team di appassionati viaggiatori pronti a guidarti verso le
             migliori esperienze del mondo.
             <br />

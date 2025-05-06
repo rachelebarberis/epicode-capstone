@@ -20,11 +20,11 @@ const ContattiComponent = () => {
   };
 
   return (
-    <Container className="ms-3" id="contatti-wrapper">
-      <h2 id="contatti-titolo" className="text-center fw-bold mb-4">
+    <Container className="ms-3 my-5 py-5">
+      <h2 id="orange" className="text-center fw-bold mb-4">
         Contattaci
       </h2>
-      <p id="contatti-sottotitolo" className="text-center text-muted mb-5">
+      <p className="text-center text-muted mb-5">
         Hai domande sui nostri itinerari o vuoi ricevere assistenza? Scrivici!
       </p>
 
@@ -32,7 +32,9 @@ const ContattiComponent = () => {
         <Col md={6}>
           <Card id="contatti-card" className="mb-4">
             <Card.Body>
-              <h5 className="fw-bold">I nostri contatti</h5>
+              <h5 id="orange" className="fw-bold">
+                I nostri contatti
+              </h5>
               <p>
                 <strong>Email:</strong> WanderLost@gmail.com
               </p>

@@ -75,14 +75,17 @@ const RegisterComponent = () => {
     <>
       <Container
         fluid
-        id="register-page"
-        className="d-flex justify-content-center align-items-center mt-5 pt-5"
+        className="d-flex justify-content-center align-items-center my-5  py-5 "
       >
         <Row className="w-100 justify-content-center">
           <Col xs={12} sm={10} md={8} lg={6}>
-            <div id="register-header" className="text-center">
-              <h1 className="fw-bolder">WanderLOst</h1>
-              <p>“Ogni viaggio inizia con un passo… il tuo inizia qui.”</p>
+            <div className="text-center">
+              <h1 className="fw-bolder" id="orange">
+                WanderLOst
+              </h1>
+              <p className=" fst-italic">
+                “Ogni viaggio inizia con un passo… il tuo inizia qui.”
+              </p>
             </div>
             <Form className="register-form" onSubmit={handleRegister}>
               <Row className="mb-4">
@@ -156,9 +159,9 @@ const RegisterComponent = () => {
                 </Button>
               </div>
 
-              <p className="text-center" id="login-link">
+              <p className="text-center">
                 Hai già un account?{" "}
-                <Link to="/login" className="navlink">
+                <Link to="/login" id="orange" className="fw-bold">
                   Accedi
                 </Link>
               </p>

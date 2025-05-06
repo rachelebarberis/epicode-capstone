@@ -2,20 +2,23 @@
 
 html, body {
   background-color:white; 
-  color: black; /* Colore principale del testo */
-
+  color: black;
+  font-family: 'Poppins', sans-serif;
 }
 #root {
   margin: 0 auto;
   padding: 0;
- 
   height: 100%;
-  font-family: 'Poppins', sans-serif;
+
+}
+#orange {
+  color: orangered;
+
 }
 
 /*NAVBAR*/
 #navbar {
-  background-color: white; 
+  background-color: white;
   position: fixed;
   top: 0;
   right: 0;
@@ -44,10 +47,8 @@ html, body {
   text-decoration: underline;
 }
 
-#navbar .nav-link:hover {
+ #navbar .nav-link:hover {
   color: orangered !important; 
-  transform: scale(1.1); /* ingrandisce del 20% */
-  transition: transform 0.3s; /* aggiunge una transizione morbida */
 }
 
 /*INIZIO HOME*/
@@ -94,7 +95,7 @@ html, body {
 #h1-home {
   font-weight: 900;
   font-size: 5rem;
-  opacity: 0;
+
   animation: fadeIn 2s ease forwards;
   animation-delay: 0.5s;
 }
@@ -103,7 +104,7 @@ html, body {
   font-weight: 700;
   font-size: 2rem;
   margin-bottom: 30px;
-  opacity: 0;
+
   animation: fadeIn 2s ease forwards;
   animation-delay: 1s;
 }
@@ -113,7 +114,7 @@ html, body {
   border: none;
   border-radius: 30px;
   background-color: orangered;
-  color: #fff;
+  color: white;
   font-weight: 600;
   font-size: 1.1rem;
   cursor: pointer;
@@ -123,30 +124,12 @@ html, body {
   animation-delay: 1.5s;
 }
 
-#btn-hero:hover {
-  background-color: rgb(227, 227, 0);
-  transform: scale(1.05);
-}
 
-
-#homeabout {
-  padding: 12px 30px;
-  border-radius: 30px;
-  background-color: orangered;
-  color: white;
-  font-weight: 700;
-  letter-spacing: 1px;
-  font-size: 1rem;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
 
 /*tour*/
 #tour-div {
-  display: flex;
-  justify-content: center;
   margin-top: 20px;
-  border: 2px solid whitesmoke;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4) ;
+  border: 4px solid whitesmoke;
   border-radius: 15px;
 }
 #itinerario {
@@ -166,13 +149,11 @@ html, body {
   object-fit: cover;
   border-radius: 10px;
 }
-
 #itinerario-nome {
-  color: orangered;
-  font-weight: 500;
-  text-align: center;
-  margin-top: 10px;
+  color: orangered !important;
+  text-decoration: none !important;
 }
+
 
 #itinerario-btn {
 
@@ -180,9 +161,11 @@ html, body {
  background-color: transparent;
  color: orangered;
  border: none;
-
  font-size: 1.2rem; 
  cursor: pointer;
+}
+#itinerario-btn:hover {
+  background-color: transparent !important;
 }
 /*recensioni*/
 #imgrecensioni {
@@ -192,11 +175,7 @@ html, body {
   object-fit: cover;
   margin: 0 auto;
 }
-#p-recensioni {
-  color: orangered !important;
-  font-weight: 800 !important;
-  cursor: pointer;
-}
+
 #card-recensioni {
   width: 100%;
   max-width: 280px;
@@ -212,38 +191,19 @@ html, body {
   height: 100%;
   object-fit: cover;
 }
-
-#titolo-recensioni, #stelle-recensioni {
-  color: orangered;
-}
-
 /*about us*/
-#titolo-about {
-  color: orangered;
-  font-weight: 800;
-  font-size: 2rem;
+#homeabout {
+  padding: 12px 30px;
+  border-radius: 30px;
+  color: white;
+  background-color: orangered;
+  font-weight: 700;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
-#p-about {
-  color: black;
-  font-size: 1.5rem;
-  max-width: 700px;
-  line-height: 1.8;
-  margin-bottom: 30px;
-}
+
 /*FINE HOME*/
 /*----------------------*/
 /*INIZIO LOGIN E REGISTRAZIONE*/
-
-#login-header h1, #register-header h1 {
-  font-size: 3rem;
-  color: orangered !important; /* Un arancione più scuro */
-}
-
-#login-header p, #register-header p {
-  font-style: italic;
-  color: black !important;
-  font-size: 1.2rem;
-}
 
 .login-form, .register-form {
   background: rgba(255, 255, 255, 0.9); /* Fondo bianco semi-trasparente */
@@ -265,48 +225,15 @@ html, body {
 
 #login-button, #register-button {
   border-radius: 25px;
-  background-color: orangered; /* Arancione scuro */
+  background-color: orangered; 
   border: none;
   padding: 12px;
   font-size: 1.2rem;
   transition: background-color 0.3s ease;
 }
-
-#login-button:hover, #register-button:hover {
-  background-color: orangered; /* Arancione più scuro al passaggio del mouse */
-}
-
-#login-link, #register-link {
-  margin-top: 10px;
-}
-
-#login-link .navlink, #register-link .navlink {
-  font-weight: bold;
-  text-decoration: none;
-  color: orangered; /* Colore arancione per il link */
-}
-
-#login-link .navlink:hover, #register-link .navlink:hover {
-  text-decoration: underline;
-  color: orangered; /* Arancione più scuro al passaggio del mouse */
-}
-
 /*FINE LOGIN E REGISTRAZIONE*/
 
-/*Contatti*/
-#contatti-wrapper {
-  padding: 5rem 0;
-  margin: 5rem 0;
-}
-
-#contatti-titolo {
-  color: orangered;
-}
-
-#contatti-sottotitolo {
-  color: #6c757d;
-}
-
+/*CONTATTI*/  
 #contatti-card {
   background-color: #fff5f0;
   border: none;
