@@ -99,14 +99,20 @@ const ItinerarioDettagli = () => {
           </Col>
 
           <Col lg={7} className="text-center text-lg-start">
-            <h2 className="fw-bold text-orange">{dettagli.nomeItinerario}</h2>
+            <h2 className="fw-bold" id="orange">
+              {dettagli.nomeItinerario}
+            </h2>
             <p className="fw-medium text-center">
               <strong>Durata:</strong> {dettagli.durata} giorni
             </p>
 
-            <h5 className="text-center text-orange">Fasce di Prezzo</h5>
+            <h5 className="text-center" id="orange">
+              Fasce di Prezzo
+            </h5>
             {isAuthenticated && userRole === "User" && (
-              <h5 className="mt-4 text-orange">Scegli la fascia di prezzo:</h5>
+              <h5 className="mt-4" id="orange">
+                Scegli la fascia di prezzo:
+              </h5>
             )}
             <ListGroup className="mb-3">
               {dettagli.itinerarioFascePrezzo?.map((fascia) => (
@@ -150,9 +156,13 @@ const ItinerarioDettagli = () => {
               ))}
             </ListGroup>
 
-            <h5 className="text-center text-orange">Partenze:</h5>
+            <h5 className="text-center" id="orange">
+              Partenze:
+            </h5>
             {isAuthenticated && userRole === "User" && (
-              <h5 className="mt-4 text-orange">Seleziona una partenza:</h5>
+              <h5 className="mt-4" id="orange">
+                Seleziona una partenza:
+              </h5>
             )}
             <Row>
               {dettagli.partenze?.map((partenza) => (
@@ -200,13 +210,13 @@ const ItinerarioDettagli = () => {
 
         <hr className="w-100 mt-5 custom-divider" />
 
-        <h4 className="text-center mt-5 fw-bold text-orange">
+        <h4 className="text-center mt-5 fw-bold" id="orange">
           Programma Giornaliero
         </h4>
         <ListGroup className="mt-3">
           {dettagli.giorni?.map((giorno, idx) => (
             <ListGroup.Item key={idx} className="rounded-3 my-2 shadow-sm">
-              <h5 className="fw-bold mb-1 text-orange">
+              <h5 className="fw-bold mb-1" id="orange">
                 Giorno {giorno.giorno}: {giorno.titolo}
               </h5>
               <p className="text-muted mb-0">{giorno.descrizione}</p>

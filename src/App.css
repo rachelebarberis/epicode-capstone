@@ -251,13 +251,14 @@ html, body {
   box-shadow: 0 0 0 0.2rem rgba(255, 69, 0, 0.25);
 }
 
-#contatti-invia-btn {
+#contatti-invia-btn, .custom-btn {
   background-color: orangered;
   border-color: orangered;
   font-weight: bold;
   padding: 10px 24px;
   border-radius: 30px;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  color: white !important;
 }
 
 #contatti-invia-btn:hover {
@@ -265,16 +266,13 @@ html, body {
   transform: translateY(-2px);
 }
 
-/*itinerario dettagli */
+/*ITINERARI DETTAGLI */
 #btn-modifica,
-#btn-elimina,
-#btn-modifica-admin,
-#btn-elimina-admin {
+#btn-elimina {
   border-radius: 50%;
 background-color: white;
   color: orangered;
   border-color: orangered;
-
   width: 40px;
   height: 40px;
   display: flex;
@@ -283,9 +281,7 @@ background-color: white;
 }
 
 #btn-modifica:hover,
-#btn-elimina:hover,
-#btn-modifica-admin:hover,
-#btn-elimina-admin:hover {
+#btn-elimina:hover {
   background-color: white;
 }
 
@@ -294,27 +290,20 @@ background-color: white;
   object-fit: cover;
 }
 
-.text-orange {
-  color: #FF4500;
-}
 
-.custom-fascia {
+
+.custom-fascia, .custom-partenza {
   cursor: pointer;
   background-color: #fff7f0;
 }
 
-.selected-fascia {
+.selected-fascia, .selected-partenza {
   border-color: orange !important;
 }
 
-.custom-partenza {
-  cursor: pointer;
-  background-color: #fff7f0;
-}
 
-.selected-partenza {
-  border-color: orange !important;
-}
+
+
 
 #btn-carrello {
   background-color: #FF4500;
@@ -331,12 +320,8 @@ background-color: white;
 
 
 
-/*Area Personale*/
-#area-personale-title {
-  font-weight: bold;
-  letter-spacing: 1px;
-  color: orangered;
-}
+/*AREA PERSONALE*/
+
 
 #area-card {
   background-color: #fff5f0;
@@ -349,29 +334,6 @@ background-color: white;
   object-fit: cover;
   background-color: #ffffff;
   border: 2px solid orangered;
-}
-
-.text-info-custom {
-  color: #7A3E1F;
-}
-
-.custom-btn {
-  font-weight: bold;
-  padding: 8px 20px;
-  border-radius: 25px;
-  transition: background-color 0.3s, color 0.3s;
-  border: 1px solid orangered;
-  color: orangered;
-  background-color: transparent;
-}
-
-.custom-btn:hover {
-  background-color: orangered;
-  color: white;
-}
-
-#modal-title {
-  color: orangered;
 }
 
 /*INIZIO ESPLORA*/
@@ -436,14 +398,14 @@ background-color: white;
 /* Stile per la navbar dei tabs */
 .card .nav-pills .nav-link {
   background-color: rgba(255, 255, 255, 0.7);  /* Colore di sfondo trasparente */
-  color: #05264a;
+color: black !important;
   border-radius: 0px;
   margin-bottom: 5px;
 }
 
 .card .nav-pills .nav-link.active {
   background-color: orangered; /* Colore di sfondo quando attivo */
-  color: white;
+
 }
 
 .card .nav-pills {
@@ -452,22 +414,6 @@ background-color: white;
   left: 0;
   right: 0;
   z-index: 2;
-}
-
-.card-body {
-  padding-top: 40px; /* Distanza tra l'immagine e il contenuto */
-}
-#titolo-paese {
-  color: #FF5722;
-}
-
-.link-itinerari {
-  text-decoration: none;
-  color: #343a40;
-  transition: color 0.3s ease;
-}
-.link-itinerari:hover {
-  color: #FF5722;
 }
 
 .card-itinerario {
@@ -483,10 +429,7 @@ background-color: white;
   object-fit: cover;
 }
 
-.titolo-itinerario {
-  font-size: 1.3rem;
-  color: #FF5722;
-}
+
 
 .prezzo-itinerario {
   font-size: 1rem;

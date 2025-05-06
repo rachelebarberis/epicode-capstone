@@ -93,7 +93,7 @@ const AreaPersonaleComponent = () => {
 
   return (
     <Container id="area-personale" className="mt-5 pt-5 mb-5">
-      <h4 id="area-personale-title" className="text-center pb-4">
+      <h4 id="orange" className="text-center fw-bold pb-4">
         Area Personale - Documento di Viaggio
       </h4>
 
@@ -139,16 +139,16 @@ const AreaPersonaleComponent = () => {
                 )}
               </Col>
 
-              <Col xs={12} md={8} className="pt-4 pt-md-0">
-                <div className="mb-3 text-info-custom">
+              <Col xs={12} md={8} className="pt-4 pt-md-0" id="orange">
+                <div className="mb-3">
                   <strong>Nome:</strong>{" "}
                   <span className="ms-2">{user.firstName}</span>
                 </div>
-                <div className="mb-3 text-info-custom">
+                <div className="mb-3">
                   <strong>Cognome:</strong>{" "}
                   <span className="ms-2">{user.lastName}</span>
                 </div>
-                <div className="mb-3 text-info-custom">
+                <div className="mb-3">
                   <strong>Email:</strong>{" "}
                   <span className="ms-2">{user.email}</span>
                 </div>
@@ -168,7 +168,7 @@ const AreaPersonaleComponent = () => {
 
       <Modal show={showModal} onHide={closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title id="modal-title">Modifica Informazioni</Modal.Title>
+          <Modal.Title id="orange">Modifica Informazioni</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>

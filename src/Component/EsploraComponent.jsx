@@ -95,11 +95,14 @@ const EsploraComponent = () => {
       ) : (
         Object.entries(filteredItinerari).map(([paese, lista], index) => (
           <div key={index} className="mb-5">
-            <h4 id="titolo-paese" className="fw-bold text-center mb-2">
+            <h4 id="orange" className="fw-bold text-center mb-2">
               {paese}
             </h4>
             <div className="text-center mb-3">
-              <Link to={`/paese/${paese}`} className="link-itinerari">
+              <Link
+                to={`/paese/${paese}`}
+                className=" text-decoration-none text-black"
+              >
                 Scopri tutti gli itinerari su: <strong>{paese}</strong>
               </Link>
             </div>
@@ -149,8 +152,11 @@ const EsploraComponent = () => {
                               const prezzo = Object.values(prezzi)[i];
                               return (
                                 <Tab.Pane eventKey={key} key={key}>
-                                  <Card.Body className="text-center">
-                                    <Card.Title className="fw-bold mb-2 titolo-itinerario">
+                                  <Card.Body className="text-center pt-3 ">
+                                    <Card.Title
+                                      className="fw-bold mb-2"
+                                      id="orange"
+                                    >
                                       {itinerario.nomeItinerario}
                                     </Card.Title>
                                     <p className="mb-1 prezzo-itinerario">
