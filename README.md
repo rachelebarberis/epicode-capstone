@@ -1,6 +1,6 @@
 # 🌍 WanderLost — Perditi nelle meraviglie del mondo! ✈️🧳
 
-**TravelMate** è un'applicazione web dove puoi esplorare, selezionare e acquistare tour organizzati in tutto il mondo.  
+**WanderLost** è un'applicazione web dove puoi esplorare, selezionare e acquistare tour organizzati in tutto il mondo.  
 Ogni itinerario è pensato per adattarsi alle tue esigenze con **diverse fasce di prezzo** e **date flessibili di partenza**.
 
 Autenticati, sfoglia le destinazioni, scegli il tuo viaggio e preparati a partire! 🌟
@@ -60,6 +60,35 @@ Autenticati, sfoglia le destinazioni, scegli il tuo viaggio e preparati a partir
 - Visualizza il tuo carrello
 - Procedi all’inserimento dei dati della carta per il pagamento 💳
 - Gestisci i tuoi itinerari salvati
+---
+## 🔐 Funzionalità Admin
+
+Se ti registri con le seguenti credenziali:
+
+- 📧 **Email:** `ep@email.com`  
+- 🔑 **Password:** `adminadmin`
+
+avrai accesso a una sezione riservata con funzionalità avanzate per la gestione del sito.
+
+### ✈️ Itinerari
+
+- 🔘 **Aggiungi Itinerario:**  
+  Nella sezione *Itinerari*, apparirà un pulsante **"Aggiungi Itinerario"**.  
+  Cliccandolo, si aprirà una **modale** che permette di inserire un nuovo itinerario completo di tutte le informazioni necessarie.
+
+- ✏️ **Modifica Itinerario:**  
+  Accedendo alla **pagina di dettaglio** di un itinerario, l'admin potrà modificarne i dati o sostituirlo tramite una **modale di modifica**.
+  
+- ❌ **Elimina Paese:**
+-   Accedendo alla **pagina di dettaglio** di un itinerario, l'admin potrà tramite una modale eliminare un itinerario.
+
+### 🌍 Paesi
+
+- ➕ **Aggiungi Paese:**  
+  Nella sezione *Paesi* è possibile aggiungere nuovi paesi da associare agli itinerari.
+
+- ❌ **Elimina Paese:**  
+  Sempre dalla sezione *Paesi*, l'admin può eliminare quelli esistenti.
 
 ---
 ## 🛠️ Tecnologie Utilizzate
