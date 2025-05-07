@@ -138,7 +138,7 @@ Per eseguire il **FRONTED**
 2.🧑‍💻**Aprire il progetto in visual studio code**
 
 3.📦**Nel terminale eseguire i seguenti comandi**:
-   1. npm i install
+   1. npm install
    2. npm install react-router-dom redux react-redux react-pageflip react-bootstrap bootstrap
    3. npm run dev
 
