@@ -119,7 +119,7 @@ Per eseguire correttamente il **BACKEND** in locale, segui questi passaggi 👇
 
 1. 📁 **Scarica o clona il progetto**
    ```bash
-   git clone https://github.com/rachelebarberis/Capstone
+   https://github.com/rachelebarberis/Capstone
 2. 🛠️ **Modifica e sostuire la stringa di connessione nell' appsettings.json**
    "ConnectionStrings": {
   "DefaultConnection": "Server=TUO_SERVER;Database=NomeDatabase;Trusted_Connection=True;MultipleActiveResultSets=true"
