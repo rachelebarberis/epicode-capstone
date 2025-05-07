@@ -134,11 +134,14 @@ Per eseguire correttamente il **BACKEND** in locale, segui questi passaggi 👇
 Per eseguire il **FRONTED**
 
 1.📂**Accedere al frontend tramite questa repository**
+
 2.🧑‍💻**Aprire il progetto in visual studio code**
+
 3.📦**Nel terminale eseguire i seguenti comandi**:
    1. npm i install
    2. npm install react-router-dom redux react-redux react-pageflip react-bootstrap bootstrap
    3. npm run dev
+
 4.🚀 **Avvia l’app React in locale**
 
 ---
