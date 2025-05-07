@@ -79,7 +79,7 @@ avrai accesso a una sezione riservata con funzionalità avanzate per la gestione
 - ✏️ **Modifica Itinerario:**  
   Accedendo alla **pagina di dettaglio** di un itinerario, l'admin potrà modificarne i dati o sostituirlo tramite una **modale di modifica**.
   
-- ❌ **Elimina Paese:**
+- ❌ **Elimina Itinerario:**
 -   Accedendo alla **pagina di dettaglio** di un itinerario, l'admin potrà tramite una modale eliminare un itinerario.
 
 ### 🌍 Paesi
