@@ -132,6 +132,7 @@ Per eseguire correttamente il **BACKEND** in locale, segui questi passaggi 👇
 4. ▶️**Avviare il progetto**
 
 Per eseguire il **FRONTED**
+
 1.📂**Accedere al frontend tramite questa repository**
 2.🧑‍💻**Aprire il progetto in visual studio code**
 3.📦**Nel terminale eseguire i seguenti comandi**:
