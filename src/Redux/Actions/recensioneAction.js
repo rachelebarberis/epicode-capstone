@@ -62,7 +62,7 @@ export const postRecensione = async (recensioneDto) => {
       "Authorization": `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(recensioneDto), // DTO con commento, valutazione, idItinerario e email utente
+    body: JSON.stringify(recensioneDto), 
   });
 
   if (!response.ok) {

@@ -87,13 +87,12 @@ const PaeseComponent = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="fw-bold text-orange">Lista dei Paesi</h2>
         {isAuthenticated && userRole === "Admin" && (
-          <Button onClick={() => setShowAddModal(true)}>
+          <Button variant="success" onClick={() => setShowAddModal(true)}>
             + Aggiungi Paese
           </Button>
         )}
       </div>
 
-      {/* Barra Alfabeto */}
       <div className="d-flex justify-content-between align-items-center flex-wrap mb-4">
         <div className="alphabet-bar d-flex flex-wrap">
           {alphabet.map((letter) => (
@@ -138,7 +137,6 @@ const PaeseComponent = () => {
         </InputGroup>
       </div>
 
-      {/* Lista Paesi */}
       {filteredAndSortedPaesi.length > 0 ? (
         <ul className="list-group">
           {filteredAndSortedPaesi.map((paese) => (

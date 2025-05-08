@@ -11,12 +11,6 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {
-  getRecensione,
-  deleteRecensione,
-  createRecensione,
-} from "../Redux/Actions/recensioneAction";
-import { getItinerari } from "../Redux/Actions/itinerarioActions";
 
 const RecensioniComponent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -32,12 +26,21 @@ const RecensioniComponent = () => {
   const [idItinerario, setIdItinerario] = useState("");
   const [showModal, setShowModal] = useState(false);
 
+  const API_URL = "https://localhost:7007/api/Recensioni";
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const [recRes, itiRes] = await Promise.all([
+          fetch(API_URL),
+          fetch("https://localhost:7007/api/Itinerario"),
+        ]);
+
+        if (!recRes.ok || !itiRes.ok) throw new Error("Errore nei fetch");
+
         const [recData, itiData] = await Promise.all([
-          getRecensione(),
-          getItinerari(),
+          recRes.json(),
+          itiRes.json(),
         ]);
 
         setRecensioni(recData);
@@ -56,7 +59,19 @@ const RecensioniComponent = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Sei sicuro di voler eliminare questa recensione?")) {
       try {
-        await deleteRecensione(id, userEmail);
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${API_URL}/${id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: userEmail }),
+        });
+
+        if (!response.ok)
+          throw new Error("Errore durante l'eliminazione della recensione");
+
         setRecensioni((prev) => prev.filter((r) => r.idRecensione !== id));
       } catch (err) {
         alert(err.message);
@@ -67,13 +82,30 @@ const RecensioniComponent = () => {
   const handlePost = async (e) => {
     e.preventDefault();
     try {
-      const nuovaRecensione = await createRecensione({
-        commento,
-        valutazione,
-        idItinerario,
-        imgUser,
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+      const nomeUtente = localStorage.getItem("nomeUtente") || "";
+      const imgUserPath = localStorage.getItem("imgUserPath") || null;
+
+      const formData = new FormData();
+      formData.append("Commento", commento);
+      formData.append("Valutazione", valutazione);
+      formData.append("IdItinerario", idItinerario);
+      formData.append("UserId", userId);
+      formData.append("NomeUtente", nomeUtente);
+      formData.append("ImgUserPath", imgUserPath);
+
+      if (imgUser) formData.append("ImgUser", imgUser);
+
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
       });
 
+      if (!response.ok) throw new Error(await response.text());
+
+      const nuovaRecensione = await response.json();
       setRecensioni((prev) => [...prev, nuovaRecensione]);
       setCommento("");
       setValutazione(5);
