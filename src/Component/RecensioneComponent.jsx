@@ -236,7 +236,7 @@ const RecensioniComponent = () => {
                   </Card.Title>
                   <Card.Text>{recensione.commento}</Card.Text>
                   <div className="fw-bold">
-                    valutazione: {recensione.valutazione} / 5
+                    Valutazione: {recensione.valutazione} / 5
                   </div>
 
                   {userEmail === recensione.email && (

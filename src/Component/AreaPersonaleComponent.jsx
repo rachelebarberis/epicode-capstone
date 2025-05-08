@@ -98,12 +98,12 @@ const AreaPersonaleComponent = () => {
       </h4>
 
       <Row className="justify-content-center">
-        <Col xs={12} md={8}>
+        <Col xs={12} lg={8}>
           <div id="area-card" className="border rounded-4 p-4 shadow">
             <Row className="align-items-center mb-4">
               <Col
                 xs={12}
-                md={4}
+                lg={4}
                 className="d-flex flex-column align-items-center"
               >
                 <img

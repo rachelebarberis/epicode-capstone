@@ -122,7 +122,7 @@ const EsploraComponent = () => {
                 };
 
                 return (
-                  <Col key={idx} xs={12} sm={6} md={4} lg={3} className="mb-4">
+                  <Col key={idx} xs={12} sm={6} md={6} lg={3} className="mb-4">
                     <Card className="h-100 shadow-sm border-0 card-itinerario">
                       <Tab.Container defaultActiveKey="first">
                         <>
