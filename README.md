@@ -1,6 +1,6 @@
 # 🌍 WanderLost — Perditi nelle meraviglie del mondo! ✈️🧳
 
-**WanderLost** è un'applicazione web dove puoi esplorare, selezionare e acquistare tour organizzati in tutto il mondo.  
+**WanderLost** è un'applicazione web dove puoi esplorare, selezionare e acquistare tour organizzati in diverse parti del mondo.  
 Ogni itinerario è pensato per adattarsi alle tue esigenze con **diverse fasce di prezzo** e **date flessibili di partenza**.
 
 Autenticati, sfoglia le destinazioni, scegli il tuo viaggio e preparati a partire! 🌟
