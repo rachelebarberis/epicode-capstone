@@ -139,9 +139,13 @@ Per eseguire il **FRONTED**
 
 3.📦**Nel terminale eseguire i seguenti comandi**:
    1. npm install
-   2. npm install react-router-dom redux react-redux react-pageflip react-bootstrap bootstrap
-   3. npm run dev
+   2. npm install @reduxjs/toolkit react-redux
+   3. npm install react-router-dom
+   4. npm install bootstrap react-bootstrap
+   5. npm install react-pageflip
+   6. npm run dev
 
+      
 4.🚀 **Avvia l’app React in locale**
 
 ---
