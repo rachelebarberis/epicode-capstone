@@ -2,7 +2,7 @@ import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { login } from "../Redux/Actions/authActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
@@ -12,15 +12,13 @@ const LoginComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((state) => state.auth.user);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const isLoggedIn = await dispatch(login(email, password));
 
     if (isLoggedIn) {
-      setShowWelcomeModal(true); // Mostra la modale
+      setShowWelcomeModal(true);
     } else {
       alert("Login fallito");
     }
@@ -28,7 +26,7 @@ const LoginComponent = () => {
 
   const handleCloseModal = () => {
     setShowWelcomeModal(false);
-    navigate("/"); // Reindirizza dopo aver chiuso la modale
+    navigate("/");
   };
 
   return (
@@ -87,17 +85,15 @@ const LoginComponent = () => {
         </Row>
       </Container>
 
-      {/* Modale di benvenuto dopo il login */}
       <Modal show={showWelcomeModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Login Effettuato</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Benvenuto, <strong>{user?.firstName || "utente"}</strong>! Login
-          effettuato con successo.
-        </Modal.Body>
+        <Modal.Body>Benvenuto! Login effettuato con successo.</Modal.Body>
         <Modal.Footer>
-          <Button onClick={handleCloseModal}>Continua</Button>
+          <Button variant="success" onClick={handleCloseModal}>
+            Continua
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
