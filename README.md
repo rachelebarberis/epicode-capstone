@@ -1,6 +1,6 @@
 # 🌍 WanderLost — Perditi nelle meraviglie del mondo! ✈️🧳
 
-**WanderLost** è un'applicazione web dove puoi esplorare, selezionare e acquistare tour organizzati in tutto il mondo.  
+**WanderLost** è un'applicazione web dove puoi esplorare, selezionare e acquistare tour organizzati in diverse parti del mondo.  
 Ogni itinerario è pensato per adattarsi alle tue esigenze con **diverse fasce di prezzo** e **date flessibili di partenza**.
 
 Autenticati, sfoglia le destinazioni, scegli il tuo viaggio e preparati a partire! 🌟
@@ -101,7 +101,9 @@ avrai accesso a una sezione riservata con funzionalità avanzate per la gestione
 - 📖 **React Page Flip**: per l’effetto sfogliabile nel catalogo della pagina Home
 
 ### ⚙️ Backend
-- 🧩 [**ASP.NET Core Web API** con C#, Identity e Serilog](https://github.com/rachelebarberis/Capstone): per la creazione degli endpoint REST che comunicano con il frontend React
+- 🧩**ASP.NET Core Web API** con C#, Identity e Serilog: per la creazione degli endpoint REST che comunicano con il frontend React.
+
+[Link Repo BackEnd](https://github.com/rachelebarberis/Capstone)
 
 ### 🗄️ Database
 - 🛢️ **SQL Server Management Studio (SSMS)**
@@ -133,7 +135,9 @@ Per eseguire correttamente il **BACKEND** in locale, segui questi passaggi 👇
 
 Per eseguire il **FRONTED**
 
-1.📂**Accedere al frontend tramite questa repository**
+1.📂**Accedere al frontend tramite questa repository** 
+(segue nuovamente il link):
+[Link repo frontEnd:](https://github.com/rachelebarberis/Capstone)
 
 2.🧑‍💻**Aprire il progetto in visual studio code**
 
