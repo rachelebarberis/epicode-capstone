@@ -101,7 +101,7 @@ avrai accesso a una sezione riservata con funzionalità avanzate per la gestione
 - 📖 **React Page Flip**: per l’effetto sfogliabile nel catalogo della pagina Home
 
 ### ⚙️ Backend
-- 🧩 [**ASP.NET Core Web API** con C#, Identity e Serilog](https://github.com/rachelebarberis/Capstone): per la creazione degli endpoint REST che comunicano con il frontend React
+- 🧩**ASP.NET Core Web API** con C#, Identity e Serilog [Link Repo BackEnd](https://github.com/rachelebarberis/Capstone): per la creazione degli endpoint REST che comunicano con il frontend React
 
 ### 🗄️ Database
 - 🛢️ **SQL Server Management Studio (SSMS)**
@@ -133,7 +133,8 @@ Per eseguire correttamente il **BACKEND** in locale, segui questi passaggi 👇
 
 Per eseguire il **FRONTED**
 
-1.📂**Accedere al frontend tramite questa repository**
+1.📂**Accedere al frontend tramite questa repository** (segue nuovamente il link):
+[Link:](https://github.com/rachelebarberis/Capstone)
 
 2.🧑‍💻**Aprire il progetto in visual studio code**
 
